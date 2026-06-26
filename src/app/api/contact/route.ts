@@ -1,72 +1,116 @@
-import { NextResponse } from 'next/server';
-import nodemailer from 'nodemailer';
+import { NextResponse } from "next/server";
+import nodemailer from "nodemailer";
+
+const escapeHtml = (str: string) =>
+  str.replace(/[&<>"']/g, (char) => {
+    const map: Record<string, string> = {
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#039;",
+    };
+
+    return map[char];
+  });
 
 export async function POST(req: Request) {
   try {
-    const data = await req.json();
-    const { name, email, contact, course, location } = data;
+    const body = await req.json();
 
-    // Create a transporter using Hostinger SMTP (or specified provider)
+    const name = body.name?.trim();
+    const email = body.email?.trim();
+    const contact = body.contact?.trim();
+    const course = body.course?.trim();
+    const location = body.location?.trim();
+
+    if (!name || !email || !contact) {
+      return NextResponse.json(
+        { message: "Missing required fields." },
+        { status: 400 }
+      );
+    }
+
+    if (name.length > 100) {
+      return NextResponse.json(
+        { message: "Invalid name." },
+        { status: 400 }
+      );
+    }
+
+    if (contact.length > 20) {
+      return NextResponse.json(
+        { message: "Invalid contact number." },
+        { status: 400 }
+      );
+    }
+
+    const emailRegex =
+      /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+
+    if (!emailRegex.test(email)) {
+      return NextResponse.json(
+        { message: "Invalid email address." },
+        { status: 400 }
+      );
+    }
+
+    if (
+      !process.env.EMAIL_HOST ||
+      !process.env.EMAIL_USER ||
+      !process.env.EMAIL_PASS
+    ) {
+      console.error("Missing SMTP environment variables.");
+
+      return NextResponse.json(
+        { message: "Server configuration error." },
+        { status: 500 }
+      );
+    }
+
     const transporter = nodemailer.createTransport({
-      host: process.env.EMAIL_HOST || 'smtp.hostinger.com',
+      host: process.env.EMAIL_HOST,
       port: 465,
       secure: true,
       auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS,
       },
-      tls: {
-        rejectUnauthorized: false
-      },
-      family: 4 // Force IPv4 to avoid ENETUNREACH errors
-    } as any);
+      family: 4,
+      connectionTimeout: 10000,
+      greetingTimeout: 10000,
+      socketTimeout: 10000,
+    });
 
-    // Email content for the business
-    const mailOptions = {
-      from: process.env.EMAIL_USER,
-      to: process.env.EMAIL_TO || process.env.EMAIL_USER,
-      subject: `New Inquiry from ${name} - ${course || 'General'}`,
+    await transporter.sendMail({
+      from: `"Website Contact" <${process.env.EMAIL_USER}>`,
+      to: process.env.EMAIL_TO ?? process.env.EMAIL_USER,
+      replyTo: email,
+      subject: `New Inquiry - ${escapeHtml(course || "General")}`,
       html: `
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 12px;">
-          <h2 style="color: #1e293b; border-bottom: 2px solid #3b82f6; padding-bottom: 10px;">New Inquiry Received</h2>
-          <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
-            <tr>
-              <td style="padding: 10px; font-weight: bold; color: #64748b; width: 150px;">Name:</td>
-              <td style="padding: 10px; color: #1e293b;">${name}</td>
-            </tr>
-            <tr>
-              <td style="padding: 10px; font-weight: bold; color: #64748b;">Email:</td>
-              <td style="padding: 10px; color: #1e293b;">${email}</td>
-            </tr>
-            <tr>
-              <td style="padding: 10px; font-weight: bold; color: #64748b;">Contact:</td>
-              <td style="padding: 10px; color: #1e293b;">${contact}</td>
-            </tr>
-            <tr>
-              <td style="padding: 10px; font-weight: bold; color: #64748b;">Course/Program:</td>
-              <td style="padding: 10px; color: #1e293b;">${course || 'Not Specified'}</td>
-            </tr>
-            ${location ? `
-            <tr>
-              <td style="padding: 10px; font-weight: bold; color: #64748b;">Location:</td>
-              <td style="padding: 10px; color: #1e293b;">${location}</td>
-            </tr>` : ''}
-          </table>
-          <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e2e8f0; font-size: 12px; color: #94a3b8; text-align: center;">
-            This email was sent from the AIMS Training Center website contact form.
-          </div>
-        </div>
+        <h2>New Inquiry</h2>
+
+        <p><strong>Name:</strong> ${escapeHtml(name)}</p>
+
+        <p><strong>Email:</strong> ${escapeHtml(email)}</p>
+
+        <p><strong>Contact:</strong> ${escapeHtml(contact)}</p>
+
+        <p><strong>Course:</strong> ${escapeHtml(course || "Not specified")}</p>
+
+        <p><strong>Location:</strong> ${escapeHtml(location || "Not specified")}</p>
       `,
-    };
+    });
 
-    // Send the email
-    await transporter.sendMail(mailOptions);
-
-    return NextResponse.json({ message: 'Email sent successfully' }, { status: 200 });
-  } catch (error: any) {
-    console.error('Email send error:', error);
     return NextResponse.json(
-      { message: 'Error sending email', error: error.message },
+      { message: "Email sent successfully." },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error("Mail Error:", error);
+
+    return NextResponse.json(
+      { message: "Unable to process your request." },
       { status: 500 }
     );
   }
