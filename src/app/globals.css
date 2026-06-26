@@ -1,0 +1,157 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #1d4ed8;
+  --color-primary-hover: #1e40af;
+  --color-background: #ffffff;
+  --color-foreground: #0f172a;
+  --color-border-gray: #f1f5f9;
+  --font-figtree: var(--font-figtree), sans-serif;
+}
+
+:root {
+  --primary: #1d4ed8;
+  --primary-hover: #1e40af;
+  --background: #ffffff;
+  --foreground: #0f172a;
+  --nav-height: 80px;
+  --border: #f1f5f9;
+  --muted: #64748b;
+  --accent: #eff6ff;
+}
+
+@layer base {
+  body {
+    background-color: white;
+    color: #0f172a;
+    @apply font-figtree antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-figtree font-bold tracking-tight;
+  }
+}
+
+@layer components {
+  .section-padding {
+    @apply py-20 md:py-32;
+  }
+
+  .container-custom {
+    @apply max-w-[1280px] mx-auto px-6 w-full;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center font-bold rounded-2xl transition-all duration-300 transform active:scale-95;
+  }
+
+  .btn-primary {
+    @apply bg-blue-700 text-white px-8 py-4 hover:bg-blue-800 shadow-xl shadow-blue-700/10;
+  }
+
+  .btn-secondary {
+    @apply border-2 border-blue-700 text-blue-700 px-8 py-4 hover:bg-blue-50;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Lenis CSS */
+html.lenis {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: white;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2563eb;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #1d4ed8;
+}
+
+/* Custom Animations used in Hero */
+@keyframes float {
+  0% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-12px) rotate(-1deg); }
+  100% { transform: translateY(0px) rotate(0deg); }
+}
+
+@keyframes floatDelayed {
+  0% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-16px) rotate(1deg); }
+  100% { transform: translateY(0px) rotate(0deg); }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: floatDelayed 7s ease-in-out infinite 1s;
+}
+
+@keyframes scroll-left {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes scroll-right {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+
+.animate-scroll-left {
+  animation: scroll-left linear infinite;
+}
+
+.animate-scroll-right {
+  animation: scroll-right linear infinite;
+}
+
+/* Hide default google translate UI */
+.goog-te-banner-frame { display: none !important; }
+.goog-te-balloon-frame { display: none !important; }
+.goog-logo-link { display: none !important; }
+.goog-te-gadget { color: transparent !important; }
+.goog-te-gadget .goog-te-combo { display: none !important; }
+body { top: 0 !important; }
+.skiptranslate iframe { display: none !important; }
+#goog-gt-tt { display: none !important; }
+.goog-text-highlight { background-color: transparent !important; box-shadow: none !important; }
