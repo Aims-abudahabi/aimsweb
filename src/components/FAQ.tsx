@@ -6,7 +6,7 @@ import { Plus, Minus } from "lucide-react"
 const faqs = [
     {
         question: "Is AIMS Training Center ACTVET Licensed?",
-        answer: "Yes, AIMS Training Center is fully licensed by the Abu Dhabi Centre for Technical and Vocational Education and Training (ACTVET). This licensure ensures that our programs meet the highest quality standards for technical and vocational education in the UAE, providing our students with credible, government-recognized certifications."
+        answer: "Yes, AIMS Training Center is fully licensed by the Abu Dhabi Centre for Technical and Vocational Education and Training (ACTVET). This licensure ensures that our programs meet the highest quality standards for technical and vocational education in the Abu Dhabi, providing our students with credible, government-recognized certifications."
     },
     {
         question: "Will I get a certificate after completing the course?",
@@ -14,7 +14,7 @@ const faqs = [
     },
     {
         question: "Do you provide job placement support?",
-        answer: "Absolutely. We have a dedicated career support team that helps with resume building, interview preparation, and connecting you with our network of industry partners in the UAE."
+        answer: "Absolutely. We have a dedicated career support team that helps with resume building, interview preparation, and connecting you with our network of industry partners in the Abu Dhabi."
     },
     {
         question: "Can I pay in installments?",

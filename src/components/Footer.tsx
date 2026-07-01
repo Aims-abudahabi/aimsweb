@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from "react"
 import gsap from "gsap"
 import { useGSAP } from "@gsap/react"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
-import { ArrowRight, MapPin, Phone, Mail } from "lucide-react"
+import { ArrowRight, MapPin, Phone, Mail, Download, Loader2 } from "lucide-react"
 import { Facebook, Twitter, Linkedin, Instagram, Youtube } from "@/components/BrandIcons"
 
 gsap.registerPlugin(ScrollTrigger)
@@ -20,6 +20,41 @@ export default function Footer() {
 
     // State for user's current location
     const [userLocation, setUserLocation] = useState("Abu Dhabi, UAE")
+    const [subscribeEmail, setSubscribeEmail] = useState("")
+    const [subscribeStatus, setSubscribeStatus] = useState<"idle" | "loading" | "success" | "error">("idle")
+    const [subscribeMessage, setSubscribeMessage] = useState("")
+
+    const handleSubscribe = async (e: React.FormEvent) => {
+        e.preventDefault()
+        if (!subscribeEmail) return
+
+        setSubscribeStatus("loading")
+        setSubscribeMessage("")
+
+        try {
+            const response = await fetch("/api/subscribe", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ email: subscribeEmail }),
+            })
+
+            const data = await response.json()
+
+            if (response.ok) {
+                setSubscribeStatus("success")
+                setSubscribeMessage("Thank you for subscribing!")
+                setSubscribeEmail("")
+            } else {
+                setSubscribeStatus("error")
+                setSubscribeMessage(data.error || "Something went wrong. Please try again.")
+            }
+        } catch (error) {
+            setSubscribeStatus("error")
+            setSubscribeMessage("Failed to connect. Please check your network.")
+        }
+    }
 
     const navLinks = [
         { name: "Home", path: "/" },
@@ -173,13 +208,49 @@ export default function Footer() {
                         <p className="text-slate-400 font-light font-figtree leading-relaxed">
                             Ready to advance your career? Join our newsletter for updates.
                         </p>
-                        <div className="relative group">
-                            <Link
-                                href="/courses"
-                                className="inline-flex items-center gap-3 px-8 py-4 bg-blue-600 text-white rounded-2xl font-bold hover:bg-blue-700 transition-all shadow-xl shadow-blue-900/40 group-hover:-translate-y-1"
+                        <form onSubmit={handleSubscribe} className="space-y-3">
+                            <div className="flex flex-col sm:flex-row gap-2">
+                                <input
+                                    type="email"
+                                    required
+                                    placeholder="Enter your email"
+                                    value={subscribeEmail}
+                                    onChange={(e) => setSubscribeEmail(e.target.value)}
+                                    disabled={subscribeStatus === "loading"}
+                                    className="w-full px-4 py-3 bg-slate-800/40 border border-slate-700/60 rounded-xl focus:outline-none focus:border-blue-500 text-white text-sm transition-colors font-figtree disabled:opacity-50"
+                                />
+                                <button
+                                    type="submit"
+                                    disabled={subscribeStatus === "loading"}
+                                    className="px-6 py-3 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-bold rounded-xl text-sm flex items-center justify-center gap-2 transition-all shadow-lg shadow-blue-900/40 disabled:opacity-50 disabled:cursor-not-allowed shrink-0 font-figtree"
+                                >
+                                    {subscribeStatus === "loading" ? (
+                                        <Loader2 size={16} className="animate-spin" />
+                                    ) : (
+                                        "Subscribe"
+                                    )}
+                                </button>
+                            </div>
+                            {subscribeMessage && (
+                                <p className={`text-xs font-figtree ${subscribeStatus === "success" ? "text-green-400" : "text-red-400"}`}>
+                                    {subscribeMessage}
+                                </p>
+                            )}
+                        </form>
+
+                        {/* PDF Download Button */}
+                        <div className="pt-4 border-t border-slate-800/50">
+                            <p className="text-slate-400 text-xs font-light font-figtree mb-2">
+                                Learn more about our courses and facilities:
+                            </p>
+                            <a
+                                href="/doc/Aims Business Profile_AIC.pdf"
+                                download="Aims Business Profile_AIC.pdf"
+                                className="w-full inline-flex items-center justify-center gap-2 px-5 py-3.5 bg-slate-800/50 border border-slate-700 hover:bg-slate-800 hover:border-slate-600 text-slate-200 hover:text-white rounded-xl font-semibold text-sm transition-all hover:-translate-y-0.5 shadow-md font-figtree group"
                             >
-                                Enroll Now <ArrowRight size={20} />
-                            </Link>
+                                <Download size={16} className="text-blue-500 group-hover:scale-110 transition-transform" />
+                                Download Company Profile
+                            </a>
                         </div>
                     </div>
                 </div>

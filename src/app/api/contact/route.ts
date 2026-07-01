@@ -55,11 +55,13 @@ export async function POST(req: Request) {
       );
     }
 
-    if (
-      !process.env.EMAIL_HOST ||
-      !process.env.EMAIL_USER ||
-      !process.env.EMAIL_PASS
-    ) {
+    const emailHost = process.env.EMAIL_HOST?.replace(/^["']|["']$/g, '');
+    const emailUser = process.env.EMAIL_USER?.replace(/^["']|["']$/g, '');
+    const emailPass = process.env.EMAIL_PASS?.replace(/^["']|["']$/g, '');
+    const emailPortStr = process.env.EMAIL_PORT?.replace(/^["']|["']$/g, '');
+    const emailTo = process.env.EMAIL_TO?.replace(/^["']|["']$/g, '');
+
+    if (!emailHost || !emailUser || !emailPass) {
       console.error("Missing SMTP environment variables.");
 
       return NextResponse.json(
@@ -68,23 +70,29 @@ export async function POST(req: Request) {
       );
     }
 
+    const emailPort = emailPortStr ? parseInt(emailPortStr, 10) : 465;
+    const isSecure = emailPort === 465;
+
     const transporter = nodemailer.createTransport({
-      host: process.env.EMAIL_HOST,
-      port: 465,
-      secure: true,
+      host: emailHost,
+      port: emailPort,
+      secure: isSecure,
       auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
+        user: emailUser,
+        pass: emailPass,
+      },
+      tls: {
+        rejectUnauthorized: false,
       },
       family: 4,
       connectionTimeout: 10000,
       greetingTimeout: 10000,
       socketTimeout: 10000,
-    });
+    } as any);
 
     await transporter.sendMail({
-      from: `"Website Contact" <${process.env.EMAIL_USER}>`,
-      to: process.env.EMAIL_TO ?? process.env.EMAIL_USER,
+      from: `"Website Contact" <${emailUser}>`,
+      to: emailTo ?? emailUser,
       replyTo: email,
       subject: `New Inquiry - ${escapeHtml(course || "General")}`,
       html: `

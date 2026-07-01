@@ -32,7 +32,7 @@ export default function Hero() {
                         <span className="relative inline-flex rounded-full h-2 w-2 bg-[#794d00]"></span>
                     </span>
                     <span className="text-[11px] sm:text-xs font-black tracking-[0.15em] text-[#794d00] uppercase">
-                        #1 Professional Training Center in UAE
+                        #1 Professional Training Center in Abu Dhabi
                     </span>
                 </div>
 

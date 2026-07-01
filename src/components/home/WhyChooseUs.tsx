@@ -12,7 +12,7 @@ gsap.registerPlugin(ScrollTrigger)
 const features = [
     {
         title: "ACTVET Licenced",
-        description: "Official government recognition ensuring your training meets the highest UAE regulatory standards.",
+        description: "Official government recognition ensuring your training meets the highest Abu Dhabi regulatory standards.",
         stat: "Gov. Licenced",
         variant: "large", // spans 4 columns on lg
         image: "https://images.unsplash.com/photo-1589330694653-ded6df03f754?q=80&w=800&auto=format&fit=crop"
@@ -102,7 +102,7 @@ export default function WhyChooseUs() {
                         </h2>
                     </div>
                     <p className="text-slate-600 text-sm md:text-lg max-w-xl leading-relaxed">
-                        Six pillars that separate AIMS from every other training centre in the UAE.
+                        Six pillars that separate AIMS from every other training centre in the Abu Dhabi.
                     </p>
                 </div>
 

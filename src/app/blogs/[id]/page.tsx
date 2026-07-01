@@ -7,13 +7,13 @@ import Image from "next/image"
 import gsap from "gsap"
 import { useGSAP } from "@gsap/react"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
-import { 
-    ArrowLeft, 
-    Calendar, 
-    BookOpen, 
-    ChevronRight, 
-    Wind, 
-    Clock, 
+import {
+    ArrowLeft,
+    Calendar,
+    BookOpen,
+    ChevronRight,
+    Wind,
+    Clock,
     ArrowRight,
     MessageCircle,
     User
@@ -77,7 +77,7 @@ export default function SingleBlog() {
 
     return (
         <main ref={containerRef} className="min-h-screen bg-[#fffbf5] font-figtree pb-24">
-            
+
             {/* ── Breadcrumbs ── */}
             <div className="pt-32 pb-8 container-custom mx-auto px-6">
                 <nav className="blog-reveal flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400">
@@ -99,7 +99,7 @@ export default function SingleBlog() {
                         <h1 className="blog-reveal text-3xl md:text-5xl lg:text-6xl font-bold text-[#794d00] tracking-tight uppercase leading-[1.1]">
                             {post.title.split(' ').slice(0, -1).join(' ')} <span className="text-slate-900">{post.title.split(' ').slice(-1)}</span>
                         </h1>
-                        
+
                         <div className="blog-reveal flex flex-wrap items-center gap-6 text-[13px] font-bold text-slate-400 uppercase tracking-widest border-t border-slate-100 pt-8 mt-8">
                             <div className="flex items-center gap-2">
                                 <Calendar size={16} className="text-blue-500" />
@@ -132,10 +132,10 @@ export default function SingleBlog() {
             {/* ── Content Grid ── */}
             <section className="blog-content-grid container-custom mx-auto px-6">
                 <div className="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-12 xl:gap-20 items-start">
-                    
+
                     {/* Main Article Body */}
                     <article className="card-reveal space-y-12">
-                        <div 
+                        <div
                             className="prose prose-slate prose-lg max-w-none text-slate-600 font-medium leading-[1.8]
                             prose-headings:text-[#794d00] prose-headings:font-bold prose-headings:tracking-tight prose-headings:uppercase
                             prose-h3:text-2xl md:text-3xl prose-h3:mt-12 prose-h3:mb-6
@@ -160,7 +160,7 @@ export default function SingleBlog() {
                                 </div>
                             </div>
 
-                            <Link 
+                            <Link
                                 href="/blogs"
                                 className="group inline-flex items-center gap-2 text-[10px] font-black tracking-widest uppercase text-[#794d00] hover:text-slate-900 transition-colors"
                             >
@@ -172,7 +172,7 @@ export default function SingleBlog() {
 
                     {/* Professional Sidebar */}
                     <aside className="space-y-8 lg:sticky lg:top-32">
-                        
+
                         {/* Author Card - Matches FeaturedCourses style */}
                         <div className="card-reveal bg-white p-8 rounded-[20px] border border-slate-100 shadow-xl shadow-slate-200/50 flex flex-col gap-6 group">
                             <div className="flex items-center gap-4 border-b border-slate-50 pb-6">
@@ -186,7 +186,7 @@ export default function SingleBlog() {
                             </div>
 
                             <p className="text-[14px] text-slate-500 font-medium leading-relaxed">
-                                Expert instructor at AIMS Training Center with specialized knowledge in {post.category.toLowerCase()} and UAE professional standards.
+                                Expert instructor at AIMS Training Center with specialized knowledge in {post.category.toLowerCase()} and Abu Dhabi professional standards.
                             </p>
 
                             <div className="flex items-center gap-4 pt-2">
@@ -201,13 +201,13 @@ export default function SingleBlog() {
                         <div className="card-reveal bg-[#1e2a3b] p-8 rounded-[20px] shadow-2xl relative overflow-hidden group">
                             {/* Blue Accent */}
                             <div className="absolute top-0 left-0 right-0 h-[3px] bg-blue-500" />
-                            
+
                             <div className="relative z-10 space-y-6">
                                 <div className="space-y-2">
                                     <h4 className="text-xl font-bold text-white uppercase tracking-tight leading-tight">Advance Your <span className="text-blue-400">Career.</span></h4>
-                                    <p className="text-slate-400 text-[14px] font-medium leading-relaxed">Enroll in our {post.category} certification programs and stand out in the UAE job market.</p>
+                                    <p className="text-slate-400 text-[14px] font-medium leading-relaxed">Enroll in our {post.category} certification programs and stand out in the Abu Dhabi job market.</p>
                                 </div>
-                                <Link 
+                                <Link
                                     href="/courses"
                                     className="inline-flex items-center gap-3 text-[10px] font-black tracking-widest uppercase text-white hover:text-blue-400 transition-colors group/btn"
                                 >

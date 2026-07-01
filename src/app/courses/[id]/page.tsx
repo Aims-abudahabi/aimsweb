@@ -51,8 +51,8 @@ function CourseEnquiryForm({ submitLabel = "Submit Now", defaultCourse }: { subm
     const watchedCourse = watch('course')
 
     // Group courses by category, applying search filter using lodash
-    const filteredCourses = _.filter(Object.values(coursesData), (course) => 
-        course.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
+    const filteredCourses = _.filter(Object.values(coursesData), (course) =>
+        course.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
         course.category.toLowerCase().includes(searchTerm.toLowerCase())
     )
 
@@ -134,7 +134,7 @@ function CourseEnquiryForm({ submitLabel = "Submit Now", defaultCourse }: { subm
                         <label className="text-[14px] font-medium text-white ml-1">Contact Number</label>
                         <input
                             type="text"
-                            {...register("contact", { 
+                            {...register("contact", {
                                 required: "Contact number is required",
                                 pattern: { value: /^[0-9+\s-]{7,15}$/, message: "Invalid contact number" }
                             })}
@@ -148,7 +148,7 @@ function CourseEnquiryForm({ submitLabel = "Submit Now", defaultCourse }: { subm
                         <label className="text-[14px] font-medium text-white ml-1">Email Address</label>
                         <input
                             type="email"
-                            {...register("email", { 
+                            {...register("email", {
                                 required: "Email is required",
                                 pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: "Invalid email format" }
                             })}
@@ -183,7 +183,7 @@ function CourseEnquiryForm({ submitLabel = "Submit Now", defaultCourse }: { subm
 
                         {/* Custom Searchable Dropdown */}
                         {isDropdownOpen && !defaultCourse && (
-                            <div 
+                            <div
                                 data-lenis-prevent
                                 className="absolute top-[calc(100%+8px)] left-0 w-full z-[100] bg-[#0f172a]/95 backdrop-blur-2xl border border-white/10 rounded-2xl shadow-2xl max-h-[280px] overflow-y-auto overscroll-contain scrollbar-thin scrollbar-thumb-white/10 p-2 animate-in fade-in slide-in-from-top-2 duration-200"
                             >
@@ -269,7 +269,7 @@ function CurriculumItem({ index, item }: { index: number; item: string }) {
             >
                 <div className="px-14 pb-6 pt-5 text-[13px] text-slate-500 font-medium leading-relaxed">
                     Hands-on training covering all core aspects of {item.toLowerCase()}, with practical exercises
-                    tailored to UAE industry standards and employer expectations.
+                    tailored to Abu Dhabi industry standards and employer expectations.
                 </div>
             </div>
         </div>
@@ -453,7 +453,7 @@ export default function CourseDetail() {
                                 <p className="text-[15px] text-slate-500 font-medium leading-relaxed">
                                     Our learning model is hands-on and project-driven. Each module ends with practical applications
                                     that go directly into your professional portfolio. By the end, you&apos;ll have a set of
-                                    industry-ready skills that make you stand out to employers across the UAE.
+                                    industry-ready skills that make you stand out to employers across the Abu Dhabi.
                                 </p>
                             </div>
 

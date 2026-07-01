@@ -49,12 +49,12 @@ function CoursesContent() {
     ), [coursesData, searchTerm])
 
     // Grouped & ordered - Exclude signature cards from the list using lodash reject/groupBy
-    const groupedCourses = useMemo(() => 
+    const groupedCourses = useMemo(() =>
         _.groupBy(
-            _.reject(filteredCourses, course => SIGNATURE_COURSE_IDS.includes(course.id)), 
+            _.reject(filteredCourses, course => SIGNATURE_COURSE_IDS.includes(course.id)),
             'category'
-        ), 
-    [filteredCourses])
+        ),
+        [filteredCourses])
 
     const categories = useMemo(() =>
         CATEGORY_ORDER.filter(cat => groupedCourses[cat]?.length > 0),
@@ -118,7 +118,7 @@ function CoursesContent() {
                         </h1>
 
                         <p className="hero-reveal text-slate-500 text-sm sm:text-base font-medium leading-relaxed max-w-xl">
-                            Industry-recognised certifications crafted for ambitious professionals in the UAE. Find the program that accelerates your career.
+                            Industry-recognised certifications crafted for ambitious professionals in the Abu Dhabi. Find the program that accelerates your career.
                         </p>
 
                         {/* Search bar — matches site's card aesthetic */}
@@ -195,7 +195,7 @@ function CoursesContent() {
                                 </h2>
                             </div>
                             <p className="text-slate-600 text-base max-w-sm leading-relaxed">
-                                The most requested certifications by professionals across the UAE right now.
+                                The most requested certifications by professionals across the Abu Dhabi right now.
                             </p>
                         </div>
 

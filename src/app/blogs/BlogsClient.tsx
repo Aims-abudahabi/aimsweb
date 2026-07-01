@@ -49,7 +49,7 @@ export default function BlogsClient() {
                         </h2>
                     </div>
                     <p className="text-slate-600 text-lg max-w-xl leading-relaxed">
-                        Stay updated with the latest trends in professional training, industry insights, and career growth strategies across the UAE.
+                        Stay updated with the latest trends in professional training, industry insights, and career growth strategies across the Abu Dhabi.
                     </p>
                 </div>
 

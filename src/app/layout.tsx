@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     template: "%s | AIMS Training Center"
   },
   description: "AIMS Training Center in Abu Dhabi offers specialized courses in OET, IELTS, PTE, Spoken English, Engineering (CAD/BIM), Finance, and IT. Enhance your professional skills with expert trainers.",
-  keywords: ["OET Training Abu Dhabi", "IELTS Coaching Abu Dhabi", "PTE Academic UAE", "Spoken English Course", "Engineering Software Training", "BIM Courses Abu Dhabi", "AIMS Training Center"],
+  keywords: ["OET Training Abu Dhabi", "IELTS Coaching Abu Dhabi", "PTE Academic Abu Dhabi", "Spoken English Course", "Engineering Software Training", "BIM Courses Abu Dhabi", "AIMS Training Center"],
   authors: [{ name: "AIMS Training Center" }],
   creator: "AIMS Training Center",
   publisher: "AIMS Training Center",
