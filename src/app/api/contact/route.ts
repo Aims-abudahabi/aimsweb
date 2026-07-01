@@ -97,15 +97,10 @@ export async function POST(req: Request) {
       subject: `New Inquiry - ${escapeHtml(course || "General")}`,
       html: `
         <h2>New Inquiry</h2>
-
         <p><strong>Name:</strong> ${escapeHtml(name)}</p>
-
         <p><strong>Email:</strong> ${escapeHtml(email)}</p>
-
         <p><strong>Contact:</strong> ${escapeHtml(contact)}</p>
-
         <p><strong>Course:</strong> ${escapeHtml(course || "Not specified")}</p>
-
         <p><strong>Location:</strong> ${escapeHtml(location || "Not specified")}</p>
       `,
     });
