@@ -116,7 +116,11 @@ export async function POST(req: Request) {
       { 
         message: "Unable to process your request.",
         error: error.message || String(error),
-        code: error.code
+        code: error.code,
+        debug: {
+          host: process.env.EMAIL_HOST,
+          port: process.env.EMAIL_PORT,
+        }
       },
       { status: 500 }
     );
