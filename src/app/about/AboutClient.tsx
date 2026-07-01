@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react"
 import gsap from "gsap"
 import { useGSAP } from "@gsap/react"
+import { Download, FileText } from "lucide-react"
 
 import WhyChooseAIMS from "@/components/WhyChooseAIMS"
 import Stats from "@/components/Stats"
@@ -75,6 +76,87 @@ export default function AboutClient() {
             </section>
 
             <MissionVision />
+
+            {/* Redesigned Company Profile Download Section */}
+            <section className="py-20 bg-white relative overflow-hidden font-figtree">
+                {/* Decorative blobs */}
+                <div className="absolute top-[20%] right-[-10%] w-[350px] h-[350px] bg-[#794d00]/5 rounded-full blur-[80px] pointer-events-none" />
+                <div className="absolute bottom-[10%] left-[-5%] w-[300px] h-[300px] bg-blue-500/5 rounded-full blur-[90px] pointer-events-none" />
+
+                <div className="container-custom mx-auto px-6 relative z-10">
+                    <div className="bg-[#fffbf5] border border-[#794d00]/10 rounded-[32px] p-8 md:p-16 shadow-xl shadow-slate-100 flex flex-col lg:flex-row items-center justify-between gap-12 max-w-5xl mx-auto group">
+                        
+                        {/* Visual Mockup Column */}
+                        <div className="w-full lg:w-1/3 flex justify-center">
+                            <div className="relative w-48 h-64 bg-white rounded-[24px] shadow-2xl border border-slate-100 flex flex-col justify-between p-6 transform group-hover:-translate-y-2 group-hover:rotate-1 transition-all duration-500 ease-out">
+                                {/* Top bar */}
+                                <div className="space-y-3">
+                                    <div className="flex justify-between items-center">
+                                        <div className="w-8 h-8 rounded-lg bg-[#794d00]/10 flex items-center justify-center">
+                                            <FileText size={16} className="text-[#794d00]" />
+                                        </div>
+                                        <span className="text-[10px] font-bold text-slate-400 tracking-wider uppercase">PDF Profile</span>
+                                    </div>
+                                    <div className="space-y-1.5 pt-2">
+                                        <div className="h-4 bg-slate-100 rounded w-5/6" />
+                                        <div className="h-3 bg-slate-50 rounded w-full" />
+                                        <div className="h-3 bg-slate-50 rounded w-4/6" />
+                                    </div>
+                                </div>
+
+                                {/* Logo / Bottom */}
+                                <div className="border-t border-slate-100 pt-4 flex items-center justify-between">
+                                    <div>
+                                        <h4 className="text-xs font-bold text-slate-800 leading-none">AIMS Profile</h4>
+                                        <span className="text-[9px] text-slate-400 font-medium">2026 Edition</span>
+                                    </div>
+                                    <div className="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center text-blue-500">
+                                        <Download size={14} className="animate-bounce" />
+                                    </div>
+                                </div>
+
+                                {/* Decorative cover circles */}
+                                <div className="absolute top-0 right-0 w-24 h-24 bg-[#794d00]/5 rounded-bl-full pointer-events-none rounded-tr-[24px]" />
+                            </div>
+                        </div>
+
+                        {/* Text and Download Actions Column */}
+                        <div className="w-full lg:w-2/3 space-y-6 text-center lg:text-left">
+                            <div className="space-y-2">
+                                <span className="text-[11px] font-bold tracking-[0.2em] text-[#794d00] uppercase block">Corporate Overview</span>
+                                <h2 className="text-3xl md:text-4xl font-black text-slate-900 leading-tight">
+                                    Download AIMS Corporate Brochure & Profile
+                                </h2>
+                            </div>
+                            
+                            <p className="text-slate-500 text-sm md:text-base leading-relaxed max-w-xl font-medium">
+                                Get immediate access to our detailed company profile. Explore our technical & soft skills courses, ACTVET licensing details, infrastructure, corporate partners, and learning pathways.
+                            </p>
+
+                            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-2">
+                                <a
+                                    href="/doc/Aims Business Profile_AIC.pdf"
+                                    download="Aims Business Profile_AIC.pdf"
+                                    className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-[#794d00] hover:bg-[#633e00] text-white rounded-2xl font-bold transition-all shadow-lg shadow-[#794d00]/20 hover:-translate-y-0.5 active:translate-y-0"
+                                >
+                                    <Download size={18} />
+                                    Download Profile PDF
+                                </a>
+                                <a
+                                    href="/doc/Aims Business Profile_AIC.pdf"
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    className="inline-flex items-center justify-center gap-2 px-6 py-4 bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 rounded-2xl font-semibold transition-all hover:border-slate-300"
+                                >
+                                    View in Browser
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
             <BrandSlider />
             <CTA />
             <WhyChooseAIMS />

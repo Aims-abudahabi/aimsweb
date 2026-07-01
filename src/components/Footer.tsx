@@ -65,10 +65,10 @@ export default function Footer() {
     ]
 
     const socialLinks = [
-        { icon: <Facebook size={20} />, path: "https://www.facebook.com/AIMSABUDHABI" },
+        { icon: <Facebook size={20} />, path: "https://www.facebook.com/share/18BgQojbuX/" },
         { icon: <Twitter size={20} />, path: "https://x.com/AimsTrainingCen" },
         { icon: <Linkedin size={20} />, path: "https://www.linkedin.com/in/aims-training-center/" },
-        { icon: <Instagram size={20} />, path: "https://www.instagram.com/aimsabudhabi/" },
+        { icon: <Instagram size={20} />, path: "https://www.instagram.com/aims.training.center?igsh=MWV3eDdkMzd4NGh0bw==" },
         { icon: <Youtube size={20} />, path: "https://www.youtube.com/channel/UCujIydyHEVpkjxQQkXrMWDQ" },
     ]
 
@@ -152,6 +152,8 @@ export default function Footer() {
                                 <Link
                                     key={i}
                                     href={social.path}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
                                     className="w-10 h-10 rounded-full bg-slate-800/50 border border-slate-700 flex items-center justify-center text-slate-400 hover:bg-blue-600 hover:text-white hover:border-blue-600 transition-all duration-300"
                                 >
                                     {social.icon}
