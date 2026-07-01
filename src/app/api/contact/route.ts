@@ -73,22 +73,32 @@ export async function POST(req: Request) {
     const emailPort = emailPortStr ? parseInt(emailPortStr, 10) : 465;
     const isSecure = emailPort === 465;
 
-    const transporter = nodemailer.createTransport({
-      host: emailHost,
-      port: emailPort,
-      secure: isSecure,
-      auth: {
-        user: emailUser,
-        pass: emailPass,
-      },
-      tls: {
-        rejectUnauthorized: false,
-      },
-      family: 4,
-      connectionTimeout: 10000,
-      greetingTimeout: 10000,
-      socketTimeout: 10000,
-    } as any);
+    let transporter;
+
+    if (emailHost.toLowerCase() === "sendmail") {
+      transporter = nodemailer.createTransport({
+        sendmail: true,
+        newline: 'unix',
+        path: '/usr/sbin/sendmail',
+      });
+    } else {
+      transporter = nodemailer.createTransport({
+        host: emailHost,
+        port: emailPort,
+        secure: isSecure,
+        auth: {
+          user: emailUser,
+          pass: emailPass,
+        },
+        tls: {
+          rejectUnauthorized: false,
+        },
+        family: 4,
+        connectionTimeout: 10000,
+        greetingTimeout: 10000,
+        socketTimeout: 10000,
+      } as any);
+    }
 
     await transporter.sendMail({
       from: `"Website Contact" <${emailUser}>`,
