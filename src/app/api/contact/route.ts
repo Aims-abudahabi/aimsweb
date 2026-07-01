@@ -109,11 +109,15 @@ export async function POST(req: Request) {
       { message: "Email sent successfully." },
       { status: 200 }
     );
-  } catch (error) {
+  } catch (error: any) {
     console.error("Mail Error:", error);
 
     return NextResponse.json(
-      { message: "Unable to process your request." },
+      { 
+        message: "Unable to process your request.",
+        error: error.message || String(error),
+        code: error.code
+      },
       { status: 500 }
     );
   }
