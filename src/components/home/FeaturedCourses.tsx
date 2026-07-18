@@ -80,10 +80,17 @@ const ParallaxCardItem = ({ course, id, total, progress }: { course: any; id: nu
             progress={progress}
             range={[id * (1 / total), 1]}
             targetScale={targetScale}
-            className={`relative flex flex-col md:flex-row items-stretch w-full max-w-[1000px] h-[520px] md:h-[320px] rounded-[32px] shadow-[0_-5px_30px_-10px_rgba(0,0,0,0.1)] origin-top overflow-hidden ${theme.bg}`}
+            className={`relative flex flex-col md:flex-row items-stretch w-full max-w-[1000px] h-[520px] md:h-[320px] rounded-[32px] shadow-[0_-5px_30px_-10px_rgba(0,0,0,0.1)] origin-top overflow-hidden transition-all duration-500 hover:shadow-[0_15px_40px_-5px_rgba(0,0,0,0.15)] group ${theme.bg}`}
         >
+            {/* Clickable Overlay Link covering the entire card */}
+            <Link
+                href={`/courses?category=${encodeURIComponent(course.category)}`}
+                className="absolute inset-0 z-20 cursor-pointer"
+                aria-label={`Explore ${course.title}`}
+            />
+
             {/* Left Content Area */}
-            <div className="w-full md:w-[55%] flex flex-col md:flex-row items-start md:items-center p-8 md:p-10 gap-6 md:gap-8 z-10">
+            <div className="w-full md:w-[55%] flex flex-col md:flex-row items-start md:items-center p-8 md:p-10 gap-6 md:gap-8 z-10 pointer-events-none">
                 {/* Large Number */}
                 <div className={`text-4xl md:text-5xl font-black ${theme.text} shrink-0 mt-2 md:mt-0`}>
                     0{id + 1}
@@ -97,17 +104,16 @@ const ParallaxCardItem = ({ course, id, total, progress }: { course: any; id: nu
                     <p className="text-sm md:text-base text-slate-600 leading-relaxed line-clamp-4 md:line-clamp-4">
                         {course.description || "Comprehensive high-impact training designed for your professional success. Equip yourself with practical skills and knowledge to excel in your career path."}
                     </p>
-                    <Link
-                        href={`/courses?category=${encodeURIComponent(course.category)}`}
-                        className={`inline-flex items-center gap-2 mt-6 text-xs font-bold tracking-widest uppercase ${theme.text} hover:opacity-70 transition-opacity`}
+                    <div
+                        className={`inline-flex items-center gap-2 mt-6 text-xs font-bold tracking-widest uppercase ${theme.text} transition-all duration-300 group-hover:opacity-75`}
                     >
-                        Explore <ArrowRight size={14} />
-                    </Link>
+                        Explore <ArrowRight size={14} className="transform group-hover:translate-x-1.5 transition-transform duration-300" />
+                    </div>
                 </div>
             </div>
 
             {/* Right Image Area */}
-            <div className="w-full md:w-[45%] relative h-[220px] md:h-full flex-shrink-0">
+            <div className="w-full md:w-[45%] relative h-[220px] md:h-full flex-shrink-0 pointer-events-none">
                 {/* Desktop Mask (fade from left) */}
                 <div
                     className="absolute inset-0 w-full h-full hidden md:block"
@@ -119,7 +125,7 @@ const ParallaxCardItem = ({ course, id, total, progress }: { course: any; id: nu
                     <img
                         src={getImageForCategory(course.id)}
                         alt={course.title}
-                        className="w-full h-full object-cover object-center scale-105"
+                        className="w-full h-full object-cover object-center scale-105 group-hover:scale-110 transition-transform duration-700 ease-out"
                     />
                 </div>
                 {/* Mobile Mask (fade from top) */}
@@ -133,7 +139,7 @@ const ParallaxCardItem = ({ course, id, total, progress }: { course: any; id: nu
                     <img
                         src={getImageForCategory(course.id)}
                         alt={course.title}
-                        className="w-full h-full object-cover object-center scale-105"
+                        className="w-full h-full object-cover object-center scale-105 group-hover:scale-110 transition-transform duration-700 ease-out"
                     />
                 </div>
             </div>

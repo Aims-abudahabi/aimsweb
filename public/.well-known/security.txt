@@ -1,0 +1,10 @@
+# security.txt
+# RFC 9116
+
+Contact: mailto:contactus@edu-aims.com
+
+Canonical: https://aimstraingcenter.com/.well-known/security.txt
+
+Expires: 2027-07-06T00:00:00Z
+
+Preferred-Languages: en

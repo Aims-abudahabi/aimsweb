@@ -5,7 +5,8 @@ import { useParams } from "next/navigation"
 import {
     Clock, BookOpen, ArrowLeft,
     Plus, Minus, ArrowRight,
-    AlertCircle, Check, Download, Search, ChevronDown
+    AlertCircle, Check, Download, Search, ChevronDown,
+    CheckCircle2, Users, Star, Target, Zap
 } from "lucide-react"
 import { coursesData } from "@/data/courses"
 import Link from "next/link"
@@ -250,28 +251,14 @@ function CourseEnquiryForm({ submitLabel = "Submit Now", defaultCourse }: { subm
    Expandable curriculum accordion item
 ───────────────────────────────────────── */
 function CurriculumItem({ index, item }: { index: number; item: string }) {
-    const [open, setOpen] = useState(false)
     return (
-        <div className="border border-slate-200 rounded-xl mb-4 bg-white overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 hover:border-slate-300">
-            <button
-                onClick={() => setOpen(o => !o)}
-                className="w-full flex items-center gap-4 px-6 py-5 text-left group hover:bg-blue-50 transition-colors"
-            >
-                <div className={`transition-transform duration-300 ${open ? "rotate-180" : ""}`}>
-                    {open ? <Minus className="text-blue-600" size={16} /> : <Plus className="text-slate-400 group-hover:text-blue-600" size={16} />}
-                </div>
-                <span className={`text-[14px] font-bold transition-colors flex-1 ${open ? "text-[#794d00]" : "text-slate-800"}`}>
-                    {item}
-                </span>
-            </button>
-            <div
-                className={`overflow-hidden transition-all duration-500 ease-in-out ${open ? "max-h-[500px] opacity-100 border-t border-blue-50" : "max-h-0 opacity-0"}`}
-            >
-                <div className="px-14 pb-6 pt-5 text-[13px] text-slate-500 font-medium leading-relaxed">
-                    Hands-on training covering all core aspects of {item.toLowerCase()}, with practical exercises
-                    tailored to Abu Dhabi industry standards and employer expectations.
-                </div>
+        <div className="flex items-center gap-4 px-6 py-5 border border-slate-200 rounded-xl mb-4 bg-white shadow-sm hover:shadow-md transition-all duration-300 hover:border-slate-300">
+            <div className="w-8 h-8 rounded-lg bg-[#794d00]/10 flex items-center justify-center shrink-0">
+                <Check className="text-[#794d00]" size={16} />
             </div>
+            <span className="text-[14px] font-bold text-slate-800 flex-1">
+                {item}
+            </span>
         </div>
     )
 }
@@ -327,6 +314,18 @@ export default function CourseDetail() {
             gsap.from(".overview-reveal", {
                 y: 30, opacity: 0, stagger: 0.08, duration: 0.7, ease: "power2.out",
                 scrollTrigger: { trigger: ".overview-section", start: "top 85%" },
+            })
+            gsap.from(".learn-reveal", {
+                y: 30, opacity: 0, stagger: 0.05, duration: 0.6, ease: "power2.out",
+                scrollTrigger: { trigger: ".learn-section", start: "top 85%" },
+            })
+            gsap.from(".highlights-reveal", {
+                y: 20, opacity: 0, stagger: 0.04, duration: 0.5, ease: "power2.out",
+                scrollTrigger: { trigger: ".highlights-section", start: "top 88%" },
+            })
+            gsap.from(".prereq-reveal", {
+                y: 30, opacity: 0, stagger: 0.08, duration: 0.6, ease: "power2.out",
+                scrollTrigger: { trigger: ".prereq-section", start: "top 88%" },
             })
             gsap.from(".curriculum-reveal", {
                 y: 30, opacity: 0, stagger: 0.06, duration: 0.7, ease: "power2.out",
@@ -448,13 +447,15 @@ export default function CourseDetail() {
 
                             <div className="overview-reveal space-y-4">
                                 <p className="text-[15px] text-slate-700 font-medium leading-relaxed">
-                                    {course.description}
+                                    {course.overview ?? course.description}
                                 </p>
-                                <p className="text-[15px] text-slate-500 font-medium leading-relaxed">
-                                    Our learning model is hands-on and project-driven. Each module ends with practical applications
-                                    that go directly into your professional portfolio. By the end, you&apos;ll have a set of
-                                    industry-ready skills that make you stand out to employers across the Abu Dhabi.
-                                </p>
+                                {!course.overview && (
+                                    <p className="text-[15px] text-slate-500 font-medium leading-relaxed">
+                                        Our learning model is hands-on and project-driven. Each module ends with practical applications
+                                        that go directly into your professional portfolio. By the end, you&apos;ll have a set of
+                                        industry-ready skills that make you stand out to employers across the Abu Dhabi.
+                                    </p>
+                                )}
                             </div>
 
                             {/* Stat pills */}
@@ -504,45 +505,103 @@ export default function CourseDetail() {
                                             {course.title}
                                         </h3>
                                     </div>
-
-                                    <div className="relative z-10 grid grid-cols-2 gap-4 pt-4 border-t border-white/10">
-                                        {[
-                                            { label: "Duration", value: course.duration },
-                                            { label: "Level", value: course.level },
-                                            { label: "Seats Open", value: course.seats },
-                                            { label: "Modules", value: `${course.curriculum.length} Topics` },
-                                        ].map((s, i) => (
-                                            <div key={i}>
-                                                <p className="text-[9px] font-black tracking-widest uppercase text-white/40 mb-0.5">{s.label}</p>
-                                                <p className="text-[13px] font-bold text-white">{s.value}</p>
-                                            </div>
-                                        ))}
-                                    </div>
-
-                                    <a
-                                        href="#enroll-form"
-                                        className="relative z-10 inline-flex items-center gap-2 text-[11px] font-black tracking-widest uppercase text-[#c8915a] hover:text-white transition-colors group/link"
-                                    >
-                                        Enroll in This Program
-                                        <ArrowRight size={12} className="group-hover/link:translate-x-1 transition-transform" />
-                                    </a>
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </section>
+
             {/* ══════════════════════════════════════════════════════
-                ③ CURRICULUM & RELATED — Integrated Section
+                ④ COURSE HIGHLIGHTS
+            ══════════════════════════════════════════════════════ */}
+            {course.courseHighlights && course.courseHighlights.length > 0 && (
+                <section className="highlights-section bg-[#fffbf5] border-b border-slate-100 py-14">
+                    <div className="max-w-[1400px] mx-auto px-6 sm:px-8 md:px-12">
+                        <div className="highlights-reveal flex items-center gap-3 mb-8">
+                            <div className="w-7 h-7 rounded-full bg-[#794d00]/15 flex items-center justify-center shrink-0">
+                                <Star size={14} className="text-[#794d00]" />
+                            </div>
+                            <h2 className="text-xl font-bold text-slate-900 tracking-tight uppercase">
+                                Course <span className="text-[#794d00]">Highlights</span>
+                            </h2>
+                        </div>
+                        <div className="flex flex-wrap gap-3">
+                            {course.courseHighlights.map((hl, i) => (
+                                <div
+                                    key={i}
+                                    className="highlights-reveal inline-flex items-center gap-2.5 px-5 py-3 bg-white border border-slate-200 rounded-2xl shadow-sm hover:shadow-md hover:border-[#794d00]/30 hover:bg-[#794d00]/5 transition-all duration-300 group cursor-default"
+                                >
+                                    <Zap size={13} className="text-[#794d00] group-hover:scale-110 transition-transform shrink-0" />
+                                    <span className="text-[13px] font-bold text-slate-700 group-hover:text-[#794d00] transition-colors tracking-wide">{hl}</span>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+            )}
+
+            {/* ══════════════════════════════════════════════════════
+                ⑤ PREREQUISITE & THIS COURSE IS FOR — side by side
+            ══════════════════════════════════════════════════════ */}
+            {(course.prerequisite || (course.courseIsFor && course.courseIsFor.length > 0)) && (
+                <section className="prereq-section bg-white py-20 border-b border-slate-100">
+                    <div className="max-w-[1400px] mx-auto px-6 sm:px-8 md:px-12">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+                            {/* Prerequisite */}
+                            {course.prerequisite && (
+                                <div className="prereq-reveal relative overflow-hidden rounded-[24px] border border-amber-200 bg-amber-50 p-8 shadow-sm">
+                                    <div className="absolute top-0 right-0 w-40 h-40 bg-amber-100 rounded-full blur-[60px] opacity-60" />
+                                    <div className="relative z-10 space-y-4">
+                                        <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-amber-100 border border-amber-200 rounded-full">
+                                            <Target size={12} className="text-amber-700" />
+                                            <span className="text-[10px] font-black uppercase tracking-widest text-amber-700">Prerequisite</span>
+                                        </div>
+                                        <p className="text-[15px] text-slate-700 font-medium leading-relaxed">{course.prerequisite}</p>
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* This Course is For */}
+                            {course.courseIsFor && course.courseIsFor.length > 0 && (
+                                <div className="prereq-reveal relative overflow-hidden rounded-[24px] border border-blue-100 bg-blue-50 p-8 shadow-sm">
+                                    <div className="absolute top-0 right-0 w-40 h-40 bg-blue-100 rounded-full blur-[60px] opacity-60" />
+                                    <div className="relative z-10 space-y-4">
+                                        <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-blue-100 border border-blue-200 rounded-full">
+                                            <Users size={12} className="text-blue-700" />
+                                            <span className="text-[10px] font-black uppercase tracking-widest text-blue-700">This Course is For</span>
+                                        </div>
+                                        <ul className="space-y-3">
+                                            {course.courseIsFor.map((item, i) => (
+                                                <li key={i} className="flex items-start gap-3">
+                                                    <div className="mt-1 w-4 h-4 rounded-full bg-blue-200 flex items-center justify-center shrink-0">
+                                                        <Check size={9} className="text-blue-700" />
+                                                    </div>
+                                                    <span className="text-[14px] text-slate-700 font-medium leading-relaxed">{item}</span>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                </div>
+                            )}
+
+                        </div>
+                    </div>
+                </section>
+            )}
+
+            {/* ══════════════════════════════════════════════════════
+                ⑥ CURRICULUM & RELATED — Integrated Section
             ══════════════════════════════════════════════════════ */}
             <section id="curriculum" className="curriculum-section scroll-mt-24 py-24 bg-[#fffbf5]">
                 <div className="max-w-[1400px] mx-auto px-6 sm:px-8 md:px-12">
 
                     {/* Heading */}
+                    {/* Heading */}
                     <div className="curriculum-reveal mb-10">
                         <h2 className="text-2xl md:text-3xl font-bold text-[#794d00] tracking-tight uppercase leading-tight">
-                            COURSE <span className="text-slate-900">CURRICULUM</span>
+                            WHAT YOU WILL <span className="text-slate-900">LEARN</span>
                         </h2>
                     </div>
 
@@ -550,7 +609,7 @@ export default function CourseDetail() {
 
                         {/* Accordion List */}
                         <div className="curriculum-reveal">
-                            {course.curriculum.map((item, i) => (
+                            {(course.whatYouWillLearn ?? course.curriculum).map((item, i) => (
                                 <CurriculumItem key={i} index={i} item={item} />
                             ))}
                         </div>

@@ -214,7 +214,7 @@ function CoursesContent() {
                                     {/* Icon row */}
                                     <div className="flex items-center justify-between">
                                         <div className="text-blue-500 transform group-hover:scale-110 transition-transform duration-300">
-                                            <BookOpen size={window.innerWidth < 640 ? 24 : 32} />
+                                            <BookOpen className="w-6 h-6 sm:w-8 sm:h-8" />
                                         </div>
                                         <span className="text-2xl sm:text-3xl font-black text-slate-100 group-hover:text-slate-200 transition-colors select-none">
                                             0{idx + 1}
@@ -304,7 +304,7 @@ function CoursesContent() {
                                             {/* Top row */}
                                             <div className="flex items-center justify-between">
                                                 <div className="text-blue-500 transform group-hover:scale-110 transition-transform duration-300">
-                                                    <BookOpen size={window.innerWidth < 640 ? 24 : 32} />
+                                                    <BookOpen className="w-6 h-6 sm:w-8 sm:h-8" />
                                                 </div>
                                                 <span className="px-3 py-1 bg-slate-50 text-[10px] font-black text-slate-400 uppercase tracking-widest rounded-lg group-hover:bg-blue-50 group-hover:text-blue-600 transition-colors">
                                                     {course.level}

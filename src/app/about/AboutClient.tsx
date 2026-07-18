@@ -40,7 +40,7 @@ export default function AboutClient() {
                 {/* Background Blur Blobs */}
                 <div className="absolute top-[10%] left-[-10%] w-[500px] h-[500px] bg-[#794d00]/5 rounded-full blur-[120px] pointer-events-none" />
                 <div className="absolute bottom-[10%] right-[-10%] w-[600px] h-[600px] bg-blue-500/5 rounded-full blur-[150px] pointer-events-none" />
-                
+
                 {/* Grid Overlay */}
                 <div className="absolute inset-0 bg-[linear-gradient(to_right,#794d0006_1px,transparent_1px),linear-gradient(to_bottom,#794d0006_1px,transparent_1px)] bg-[size:30px_30px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] pointer-events-none" />
 
@@ -85,7 +85,7 @@ export default function AboutClient() {
 
                 <div className="container-custom mx-auto px-6 relative z-10">
                     <div className="bg-[#fffbf5] border border-[#794d00]/10 rounded-[32px] p-8 md:p-16 shadow-xl shadow-slate-100 flex flex-col lg:flex-row items-center justify-between gap-12 max-w-5xl mx-auto group">
-                        
+
                         {/* Visual Mockup Column */}
                         <div className="w-full lg:w-1/3 flex justify-center">
                             <div className="relative w-48 h-64 bg-white rounded-[24px] shadow-2xl border border-slate-100 flex flex-col justify-between p-6 transform group-hover:-translate-y-2 group-hover:rotate-1 transition-all duration-500 ease-out">
@@ -128,7 +128,7 @@ export default function AboutClient() {
                                     Download AIMS Corporate Brochure & Profile
                                 </h2>
                             </div>
-                            
+
                             <p className="text-slate-500 text-sm md:text-base leading-relaxed max-w-xl font-medium">
                                 Get immediate access to our detailed company profile. Explore our technical & soft skills courses, ACTVET licensing details, infrastructure, corporate partners, and learning pathways.
                             </p>
