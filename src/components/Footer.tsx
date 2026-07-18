@@ -80,12 +80,12 @@ export default function Footer() {
                 const controller = new AbortController()
                 const timeoutId = setTimeout(() => controller.abort(), 3000)
 
-                const response = await fetch("https://ipapi.co/json/", { signal: controller.signal })
+                const response = await fetch("/api/location", { signal: controller.signal })
                 clearTimeout(timeoutId)
 
                 const data = await response.json()
-                if (data.city && data.country_name) {
-                    setUserLocation(`${data.city}, ${data.country_name}`)
+                if (data.city && data.country) {
+                    setUserLocation(`${data.city}, ${data.country}`)
 
                     // Refresh ScrollTrigger silently
                     setTimeout(() => {

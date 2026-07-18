@@ -1,11 +1,9 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { useScroll, useTransform, motion, frame, cancelFrame } from "framer-motion";
-import { ReactLenis } from "lenis/react";
-import type { LenisRef } from "lenis/react";
+import { useScroll, useTransform, motion } from "framer-motion";
 
 import { useCourses } from "@/hooks/useCourse";
 
@@ -148,7 +146,6 @@ const ParallaxCardItem = ({ course, id, total, progress }: { course: any; id: nu
 };
 
 export default function FeaturedCourses() {
-    const lenisRef = useRef<LenisRef>(null);
     const containerRef = useRef<HTMLDivElement>(null);
     const { courses, loading } = useCourses();
 
@@ -156,14 +153,6 @@ export default function FeaturedCourses() {
         target: containerRef,
         offset: ["start start", "end end"]
     });
-
-    useEffect(() => {
-        function update(data: { timestamp: number }) {
-            lenisRef.current?.lenis?.raf(data.timestamp);
-        }
-        frame.update(update, true);
-        return () => cancelFrame(update);
-    }, []);
 
     if (loading) {
         return (
@@ -182,7 +171,6 @@ export default function FeaturedCourses() {
 
     return (
         <>
-            <ReactLenis root options={{ autoRaf: false }} ref={lenisRef} />
             <section className="bg-white pt-12 md:pt-32 font-figtree border-t border-slate-100/50">
                 <div className="container-custom mx-auto px-4 md:px-6">
                     <div className="flex flex-col lg:flex-row gap-12 lg:gap-8">

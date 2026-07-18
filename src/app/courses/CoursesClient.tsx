@@ -204,49 +204,53 @@ function CoursesContent() {
                             {popularCourses.map((course, idx) => (
                                 <div
                                     key={course.id}
-                                    className="bg-white p-5 pb-3 sm:p-8 rounded-[20px] border border-slate-100 shadow-xl shadow-slate-200/50 transition-all hover:scale-[1.01] duration-300 flex flex-col gap-3 sm:gap-6 group relative"
+                                    className="bg-white p-5 pb-3 sm:p-8 rounded-[20px] border border-slate-100 shadow-xl shadow-slate-200/50 transition-all hover:scale-[1.01] duration-300 flex flex-col gap-3 sm:gap-6 group relative hover:shadow-[0_15px_40px_-5px_rgba(0,0,0,0.15)]"
                                 >
-                                    {/* Trending badge */}
-                                    <div className="absolute top-5 right-5 text-amber-500 bg-amber-50 p-1.5 rounded-lg z-20">
-                                        <Star size={14} fill="currentColor" />
-                                    </div>
-
-                                    {/* Icon row */}
-                                    <div className="flex items-center justify-between">
-                                        <div className="text-blue-500 transform group-hover:scale-110 transition-transform duration-300">
-                                            <BookOpen className="w-6 h-6 sm:w-8 sm:h-8" />
-                                        </div>
-                                        <span className="text-2xl sm:text-3xl font-black text-slate-100 group-hover:text-slate-200 transition-colors select-none">
-                                            0{idx + 1}
-                                        </span>
-                                    </div>
-
-                                    {/* Content */}
-                                    <div className="space-y-1 sm:space-y-3 flex-1">
-                                        <h3 className="text-[16px] sm:text-[19px] font-bold text-[#0f172a] leading-[1.3]">
-                                            {course.title}
-                                        </h3>
-                                        <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">
-                                            {course.category}
-                                        </p>
-                                        <p className="text-[12px] sm:text-[14px] text-slate-500 font-medium leading-relaxed line-clamp-2">
-                                            {course.description}
-                                        </p>
-                                    </div>
-
-                                    {/* CTA - Hidden on mobile, matches FeaturedCourses */}
+                                    {/* Clickable Overlay Link covering the entire card */}
                                     <Link
                                         href={`/courses/${course.id}`}
-                                        className="block group/link"
-                                    >
-                                        <span className="absolute inset-0 z-10 sm:hidden"></span>
+                                        className="absolute inset-0 z-20 cursor-pointer"
+                                        aria-label={`Explore ${course.title}`}
+                                    />
+
+                                    {/* Content Wrapper for event transparency */}
+                                    <div className="flex flex-col gap-3 sm:gap-6 flex-1 pointer-events-none animate-all duration-300">
+                                        {/* Trending badge */}
+                                        <div className="absolute top-5 right-5 text-amber-500 bg-amber-50 p-1.5 rounded-lg z-20">
+                                            <Star size={14} fill="currentColor" />
+                                        </div>
+
+                                        {/* Icon row */}
+                                        <div className="flex items-center justify-between">
+                                            <div className="text-blue-500 transform group-hover:scale-110 transition-transform duration-300">
+                                                <BookOpen className="w-6 h-6 sm:w-8 sm:h-8" />
+                                            </div>
+                                            <span className="text-2xl sm:text-3xl font-black text-slate-100 group-hover:text-slate-200 transition-colors select-none">
+                                                0{idx + 1}
+                                            </span>
+                                        </div>
+
+                                        {/* Content */}
+                                        <div className="space-y-1 sm:space-y-3 flex-1">
+                                            <h3 className="text-[16px] sm:text-[19px] font-bold text-[#0f172a] leading-[1.3]">
+                                                {course.title}
+                                            </h3>
+                                            <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">
+                                                {course.category}
+                                            </p>
+                                            <p className="text-[12px] sm:text-[14px] text-slate-500 font-medium leading-relaxed line-clamp-2">
+                                                {course.description}
+                                            </p>
+                                        </div>
+
+                                        {/* Styled CTA at bottom */}
                                         <div className="hidden sm:flex items-center justify-between mt-auto pt-3 border-t border-slate-50">
                                             <span className="text-[10px] font-black tracking-widest uppercase text-[#794d00]">Learn More</span>
                                             <div className="w-7 h-7 rounded-full bg-slate-50 flex items-center justify-center text-[#794d00] group-hover/link:bg-[#794d00] group-hover/link:text-white transition-all duration-300">
                                                 <ArrowRight size={12} className="group-hover/link:translate-x-0.5 transition-transform" />
                                             </div>
                                         </div>
-                                    </Link>
+                                    </div>
                                 </div>
                             ))}
                         </div>
@@ -299,45 +303,49 @@ function CoursesContent() {
                                     {groupedCourses[cat].map((course) => (
                                         <div
                                             key={course.id}
-                                            className="group relative bg-white p-5 pb-3 sm:p-8 rounded-[20px] border border-slate-100 shadow-xl shadow-slate-200/50 transition-all hover:scale-[1.01] duration-300 flex flex-col gap-3 sm:gap-6"
+                                            className="group relative bg-white p-5 pb-3 sm:p-8 rounded-[20px] border border-slate-100 shadow-xl shadow-slate-200/50 transition-all hover:scale-[1.01] duration-300 flex flex-col gap-3 sm:gap-6 hover:shadow-[0_15px_40px_-5px_rgba(0,0,0,0.15)]"
                                         >
-                                            {/* Top row */}
-                                            <div className="flex items-center justify-between">
-                                                <div className="text-blue-500 transform group-hover:scale-110 transition-transform duration-300">
-                                                    <BookOpen className="w-6 h-6 sm:w-8 sm:h-8" />
-                                                </div>
-                                                <span className="px-3 py-1 bg-slate-50 text-[10px] font-black text-slate-400 uppercase tracking-widest rounded-lg group-hover:bg-blue-50 group-hover:text-blue-600 transition-colors">
-                                                    {course.level}
-                                                </span>
-                                            </div>
-
-                                            {/* Content */}
-                                            <div className="space-y-1 sm:space-y-3 flex-1">
-                                                <h3 className="text-[16px] sm:text-[19px] font-bold text-[#0f172a] leading-[1.25]">
-                                                    {course.title}
-                                                </h3>
-                                                <p className="text-[12px] sm:text-[14px] text-slate-500 font-medium leading-relaxed line-clamp-2">
-                                                    {course.description}
-                                                </p>
-                                                <div className="flex items-center gap-2 text-[11px] sm:text-[12px] text-slate-400 font-bold mt-1 sm:mt-2">
-                                                    <Clock size={14} className="text-blue-500" />
-                                                    {course.duration}
-                                                </div>
-                                            </div>
-
-                                            {/* CTA - Matches FeaturedCourses */}
+                                            {/* Clickable Overlay Link covering the entire card */}
                                             <Link
                                                 href={`/courses/${course.id}`}
-                                                className="block group/link"
-                                            >
-                                                <span className="absolute inset-0 z-10 sm:hidden"></span>
+                                                className="absolute inset-0 z-20 cursor-pointer"
+                                                aria-label={`Explore ${course.title}`}
+                                            />
+
+                                            {/* Content Wrapper for event transparency */}
+                                            <div className="flex flex-col gap-3 sm:gap-6 flex-1 pointer-events-none">
+                                                {/* Top row */}
+                                                <div className="flex items-center justify-between">
+                                                    <div className="text-blue-500 transform group-hover:scale-110 transition-transform duration-300">
+                                                        <BookOpen className="w-6 h-6 sm:w-8 sm:h-8" />
+                                                    </div>
+                                                    <span className="px-3 py-1 bg-slate-50 text-[10px] font-black text-slate-400 uppercase tracking-widest rounded-lg group-hover:bg-blue-50 group-hover:text-blue-600 transition-colors">
+                                                        {course.level}
+                                                    </span>
+                                                </div>
+
+                                                {/* Content */}
+                                                <div className="space-y-1 sm:space-y-3 flex-1">
+                                                    <h3 className="text-[16px] sm:text-[19px] font-bold text-[#0f172a] leading-[1.25]">
+                                                        {course.title}
+                                                    </h3>
+                                                    <p className="text-[12px] sm:text-[14px] text-slate-500 font-medium leading-relaxed line-clamp-2">
+                                                        {course.description}
+                                                    </p>
+                                                    <div className="flex items-center gap-2 text-[11px] sm:text-[12px] text-slate-400 font-bold mt-1 sm:mt-2">
+                                                        <Clock size={14} className="text-blue-500" />
+                                                        {course.duration}
+                                                    </div>
+                                                </div>
+
+                                                {/* Styled CTA at bottom */}
                                                 <div className="hidden sm:flex items-center justify-between mt-auto pt-3 border-t border-slate-50">
                                                     <span className="text-[10px] font-black tracking-widest uppercase text-[#794d00]">View Details</span>
                                                     <div className="w-7 h-7 rounded-full bg-slate-50 flex items-center justify-center text-[#794d00] group-hover/link:bg-[#794d00] group-hover/link:text-white transition-all duration-300">
                                                         <ArrowRight size={12} className="group-hover/link:translate-x-0.5 transition-transform" />
                                                     </div>
                                                 </div>
-                                            </Link>
+                                            </div>
                                         </div>
                                     ))}
                                 </div>
