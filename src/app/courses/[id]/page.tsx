@@ -20,8 +20,6 @@ import WhyChooseAIMS from "@/components/WhyChooseAIMS"
 import ContactForm from "@/components/ContactForm"
 import FAQ from "@/components/FAQ"
 
-gsap.registerPlugin(ScrollTrigger)
-
 /* ─────────────────────────────────────────
    Exact clone of ContactForm – glassmorphic style
    Used in Hero (enroll) and Curriculum (brochure)
@@ -308,6 +306,9 @@ export default function CourseDetail() {
 
     useGSAP(() => {
         if (!loading && course && allCourses.length > 0) {
+            if (typeof window !== "undefined") {
+                gsap.registerPlugin(ScrollTrigger)
+            }
             gsap.from(".hero-reveal", {
                 y: 40, opacity: 0, stagger: 0.1, duration: 0.9, ease: "power3.out",
             })

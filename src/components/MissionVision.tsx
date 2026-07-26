@@ -19,8 +19,6 @@ import {
     ArrowRight,
 } from "lucide-react"
 
-gsap.registerPlugin(ScrollTrigger)
-
 interface CardData {
     title: string
     description: string
@@ -132,6 +130,9 @@ export default function MissionVision() {
     const [missionActive, setMissionActive] = useState<number | null>(null)
 
     useGSAP(() => {
+        if (typeof window !== "undefined") {
+            gsap.registerPlugin(ScrollTrigger)
+        }
         gsap.from(".mv-header", {
             scrollTrigger: { trigger: sectionRef.current, start: "top 80%" },
             y: 30,

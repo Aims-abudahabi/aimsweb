@@ -30,6 +30,11 @@ export default function SmoothScroll({ children }: { children: ReactNode }) {
     const lenisRef = useRef<Lenis | null>(null)
 
     useEffect(() => {
+        if (typeof window === "undefined") return
+
+        // Safely register GSAP ScrollTrigger plugin on client
+        gsap.registerPlugin(ScrollTrigger)
+
         // Initialize Lenis
         const lenis = new Lenis({
             duration: 1.2,

@@ -7,8 +7,6 @@ import { useGSAP } from "@gsap/react"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { CheckCircle, ShieldCheck, Clock, Award, Zap, Layout, Sparkles, ArrowRight, Plus, Minus } from "lucide-react"
 
-gsap.registerPlugin(ScrollTrigger)
-
 const features = [
     {
         title: "ACTVET Licenced",
@@ -58,6 +56,9 @@ export default function WhyChooseUs() {
     const sectionRef = useRef<HTMLElement>(null)
 
     useGSAP(() => {
+        if (typeof window !== "undefined") {
+            gsap.registerPlugin(ScrollTrigger)
+        }
         // Snappier animations for mobile
         gsap.from(".wcu-header", {
             scrollTrigger: {

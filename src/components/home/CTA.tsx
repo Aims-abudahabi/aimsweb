@@ -7,12 +7,13 @@ import { useGSAP } from "@gsap/react"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { ArrowRight, Sparkles, Building2, Phone, Mail } from "lucide-react"
 
-gsap.registerPlugin(ScrollTrigger)
-
 export default function CTA() {
     const sectionRef = useRef<HTMLElement>(null)
 
     useGSAP(() => {
+        if (typeof window !== "undefined") {
+            gsap.registerPlugin(ScrollTrigger)
+        }
         gsap.from(".cta-banner", {
             scrollTrigger: {
                 trigger: sectionRef.current,

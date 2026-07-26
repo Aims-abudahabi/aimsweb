@@ -9,12 +9,13 @@ import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { ArrowRight, BookOpen, Calendar } from "lucide-react"
 import { blogPosts } from "@/data/blogs"
 
-gsap.registerPlugin(ScrollTrigger)
-
 export default function BlogsClient() {
     const containerRef = useRef<HTMLDivElement>(null)
 
     useGSAP(() => {
+        if (typeof window !== "undefined") {
+            gsap.registerPlugin(ScrollTrigger)
+        }
         gsap.from(".blog-header", {
             scrollTrigger: { trigger: containerRef.current, start: "top 80%" },
             y: 30,

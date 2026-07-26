@@ -21,8 +21,6 @@ import {
 import { Facebook, Twitter, Linkedin, Youtube, Instagram } from "@/components/BrandIcons"
 import { blogPosts, BlogPost } from "@/data/blogs"
 
-gsap.registerPlugin(ScrollTrigger)
-
 export default function SingleBlog() {
     const { id } = useParams()
     const router = useRouter()
@@ -47,6 +45,9 @@ export default function SingleBlog() {
 
     useGSAP(() => {
         if (!post || relatedPosts.length === 0) return
+        if (typeof window !== "undefined") {
+            gsap.registerPlugin(ScrollTrigger)
+        }
 
         gsap.from(".blog-reveal", {
             y: 30,

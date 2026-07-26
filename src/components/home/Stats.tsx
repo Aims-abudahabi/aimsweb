@@ -6,12 +6,13 @@ import { useGSAP } from "@gsap/react"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { BadgeCheck, Sparkles } from "lucide-react"
 
-gsap.registerPlugin(ScrollTrigger)
-
 export default function Stats() {
     const sectionRef = useRef<HTMLElement>(null)
 
     useGSAP(() => {
+        if (typeof window !== "undefined") {
+            gsap.registerPlugin(ScrollTrigger)
+        }
         gsap.from(".outcome-card", {
             scrollTrigger: {
                 trigger: sectionRef.current,

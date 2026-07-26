@@ -12,8 +12,6 @@ import { useCourses } from "@/hooks/useCourse"
 import ContactForm from "@/components/ContactForm"
 import FAQ from "@/components/FAQ"
 
-gsap.registerPlugin(ScrollTrigger)
-
 const CATEGORY_ORDER = [
     "Engineering and CAD",
     "Office Administration",
@@ -82,6 +80,9 @@ function CoursesContent() {
 
     useGSAP(() => {
         if (loading || coursesData.length === 0) return
+        if (typeof window !== "undefined") {
+            gsap.registerPlugin(ScrollTrigger)
+        }
         gsap.from(".hero-reveal", {
             y: 30,
             opacity: 0,

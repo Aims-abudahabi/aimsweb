@@ -7,8 +7,6 @@ import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { Star, BadgeCheck, MessageCircle, ArrowRight } from "lucide-react"
 import { getGoogleRating } from "@/data/googleReviews"
 
-gsap.registerPlugin(ScrollTrigger)
-
 interface ReviewData {
     text: string
     author: string
@@ -180,6 +178,9 @@ export default function Testimonials() {
     // Animate review cards AFTER reviews load into state
     useGSAP(() => {
         if (reviews.length === 0) return
+        if (typeof window !== "undefined") {
+            gsap.registerPlugin(ScrollTrigger)
+        }
         gsap.from(".review-card-wrap", {
             scrollTrigger: { trigger: ".reviews-slider", start: "top 85%" },
             y: 30,

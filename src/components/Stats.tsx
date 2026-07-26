@@ -5,8 +5,6 @@ import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { GraduationCap, Clock, Briefcase, BookOpen } from "lucide-react"
 
-gsap.registerPlugin(ScrollTrigger)
-
 // Custom hook for count-up effect
 function useCountUp(end: string, duration: number = 2, triggerRef?: React.RefObject<HTMLElement | null>) {
     const [count, setCount] = useState("0")
@@ -15,6 +13,9 @@ function useCountUp(end: string, duration: number = 2, triggerRef?: React.RefObj
     const targetStr = end
 
     useEffect(() => {
+        if (typeof window === "undefined") return
+        gsap.registerPlugin(ScrollTrigger)
+
         const triggerElement = triggerRef?.current || countRef.current
         if (!triggerElement) return
 

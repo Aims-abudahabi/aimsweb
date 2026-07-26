@@ -9,8 +9,6 @@ import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { ArrowRight, MapPin, Phone, Mail, Download, Loader2 } from "lucide-react"
 import { Facebook, Twitter, Linkedin, Instagram, Youtube } from "@/components/BrandIcons"
 
-gsap.registerPlugin(ScrollTrigger)
-
 export default function Footer() {
     const footerRef = useRef<HTMLElement>(null)
     const brandRef = useRef<HTMLDivElement>(null)
@@ -101,6 +99,9 @@ export default function Footer() {
     }, [])
 
     useGSAP(() => {
+        if (typeof window !== "undefined") {
+            gsap.registerPlugin(ScrollTrigger)
+        }
         // Reveal animations
         const revealTimeline = gsap.timeline({
             scrollTrigger: {

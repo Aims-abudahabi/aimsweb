@@ -30,8 +30,9 @@ export default function GoogleTranslate() {
     <div className="absolute top-0 left-0 w-0 h-0 overflow-hidden opacity-0 pointer-events-none -z-50">
       <div id="google_translate_element" style={{ display: "none" }} />
       <Script
-        src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+        src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
         strategy="afterInteractive"
+        onError={(e) => console.warn("Google Translate script failed to load:", e)}
       />
     </div>
   );
