@@ -58,6 +58,7 @@ export default function Footer() {
         { name: "Home", path: "/" },
         { name: "About Us", path: "/about" },
         { name: "Our Courses", path: "/courses" },
+        { name: "Offers", path: "/offers" },
         { name: "Blogs", path: "/blogs" },
         { name: "Contact", path: "/contact" },
     ]

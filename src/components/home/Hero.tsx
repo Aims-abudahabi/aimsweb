@@ -4,16 +4,20 @@ import Link from "next/link"
 import { Star, ArrowUpRight } from "lucide-react"
 import { useState, useEffect } from "react"
 import { getGoogleRating } from "@/data/googleReviews"
+import { getActiveOffers } from "@/data/offer"
 import { Whatsapp } from "@/components/BrandIcons"
+import OfferBannerSlider from "@/components/OfferBannerSlider"
 
 export default function Hero() {
     const [reviewData, setReviewData] = useState({ rating: "4.9", totalReviews: "1000+" })
+    const activeOffers = getActiveOffers()
+    const hasOffers = activeOffers.length > 0
 
     useEffect(() => {
         getGoogleRating().then(setReviewData).catch(console.error)
     }, [])
     return (
-        <section className="relative bg-[#fffbf5] pt-32 lg:pt-40 pb-16 lg:pb-28 font-figtree overflow-hidden">
+        <section className={`relative bg-[#fffbf5] ${hasOffers ? "pt-28 lg:pt-32" : "pt-32 lg:pt-40"} pb-16 lg:pb-28 font-figtree overflow-hidden`}>
             {/* Background Image */}
             <div className="absolute inset-0 bg-[url('/contact_hero_bg.png')] bg-cover bg-center bg-no-repeat opacity-[0.25] pointer-events-none" />
 
@@ -25,16 +29,20 @@ export default function Hero() {
             <div className="absolute inset-0 bg-[linear-gradient(to_right,#794d0006_1px,transparent_1px),linear-gradient(to_bottom,#794d0006_1px,transparent_1px)] bg-[size:30px_30px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] pointer-events-none" />
 
             <div className="max-w-[1200px] mx-auto px-6 sm:px-8 md:px-12 w-full relative z-10 flex flex-col items-center text-center">
-                {/* Badge at the Top */}
-                <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/80 backdrop-blur-md rounded-full border border-[#794d00]/10 shadow-sm shadow-[#794d00]/5 hover:scale-[1.02] hover:border-[#794d00]/25 transition-all duration-300 group mb-6 cursor-pointer">
-                    <span className="flex h-2 w-2 relative">
-                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#794d00] opacity-75"></span>
-                        <span className="relative inline-flex rounded-full h-2 w-2 bg-[#794d00]"></span>
-                    </span>
-                    <span className="text-[11px] sm:text-xs font-black tracking-[0.15em] text-[#794d00] uppercase">
-                        #1 Professional Training Center in Abu Dhabi
-                    </span>
-                </div>
+                {/* Offers Slider OR Fallback Badge at the Top */}
+                {hasOffers ? (
+                    <OfferBannerSlider offers={activeOffers} variant="hero" />
+                ) : (
+                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/80 backdrop-blur-md rounded-full border border-[#794d00]/10 shadow-sm shadow-[#794d00]/5 hover:scale-[1.02] hover:border-[#794d00]/25 transition-all duration-300 group mb-6 cursor-pointer">
+                        <span className="flex h-2 w-2 relative">
+                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#794d00] opacity-75"></span>
+                            <span className="relative inline-flex rounded-full h-2 w-2 bg-[#794d00]"></span>
+                        </span>
+                        <span className="text-[11px] sm:text-xs font-black tracking-[0.15em] text-[#794d00] uppercase">
+                            #1 Professional Training Center in Abu Dhabi
+                        </span>
+                    </div>
+                )}
 
                 {/* Headline */}
                 <h1 className="font-black text-slate-900 leading-[1.08] tracking-tight text-5xl sm:text-7xl xl:text-8xl max-w-4xl">
