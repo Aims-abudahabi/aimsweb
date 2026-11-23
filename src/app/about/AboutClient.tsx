@@ -145,7 +145,7 @@ export default function AboutClient() {
                                 <a
                                     href="/doc/Aims Business Profile_AIC.pdf"
                                     target="_blank"
-                                    rel="noreferrer"
+                                    rel="noopener noreferrer"
                                     className="inline-flex items-center justify-center gap-2 px-6 py-4 bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 rounded-2xl font-semibold transition-all hover:border-slate-300"
                                 >
                                     View in Browser

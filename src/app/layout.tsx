@@ -101,11 +101,11 @@ export default function RootLayout({
         />
 
         {/* Google Analytics / GTag */}
-        {process.env.NEXT_PUBLIC_GTAG_ID && (
+        {process.env.NEXT_PUBLIC_GTAG_ID && /^[A-Za-z0-9_-]+$/.test(process.env.NEXT_PUBLIC_GTAG_ID) && (
           <>
             <Script
               strategy="afterInteractive"
-              src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GTAG_ID}`}
+              src={`https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(process.env.NEXT_PUBLIC_GTAG_ID)}`}
             />
             <Script
               id="gtag-init"
@@ -115,7 +115,7 @@ export default function RootLayout({
                   window.dataLayer = window.dataLayer || [];
                   function gtag(){dataLayer.push(arguments);}
                   gtag('js', new Date());
-                  gtag('config', '${process.env.NEXT_PUBLIC_GTAG_ID}', {
+                  gtag('config', ${JSON.stringify(process.env.NEXT_PUBLIC_GTAG_ID)}, {
                     page_path: window.location.pathname,
                   });
                 `,
@@ -125,7 +125,7 @@ export default function RootLayout({
         )}
 
         {/* Microsoft Clarity */}
-        {process.env.NEXT_PUBLIC_CLARITY_ID && (
+        {process.env.NEXT_PUBLIC_CLARITY_ID && /^[A-Za-z0-9_-]+$/.test(process.env.NEXT_PUBLIC_CLARITY_ID) && (
           <Script
             id="clarity-init"
             strategy="afterInteractive"
@@ -135,7 +135,7 @@ export default function RootLayout({
                   c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
                   t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
                   y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-                })(window, document, "clarity", "script", "${process.env.NEXT_PUBLIC_CLARITY_ID}");
+                })(window, document, "clarity", "script", ${JSON.stringify(process.env.NEXT_PUBLIC_CLARITY_ID)});
               `,
             }}
           />

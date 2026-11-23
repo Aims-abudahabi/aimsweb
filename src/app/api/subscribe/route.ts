@@ -1,10 +1,24 @@
 import { NextResponse } from "next/server";
+import { checkRateLimit, getClientIp } from "@/lib/rateLimit";
 
 export async function POST(req: Request) {
   try {
-    const { email } = await req.json();
+    const ip = getClientIp(req);
+    const rate = checkRateLimit(`subscribe:${ip}`, 5, 10 * 60 * 1000);
+    if (!rate.allowed) {
+      return NextResponse.json(
+        { error: "Too many requests. Please try again later." },
+        {
+          status: 429,
+          headers: { "Retry-After": String(rate.retryAfterSeconds) },
+        }
+      );
+    }
 
-    if (!email || typeof email !== "string" || email.length > 254) {
+    const payload = await req.json().catch(() => null);
+    const email = typeof payload?.email === "string" ? payload.email.trim() : "";
+
+    if (!email || email.length > 254) {
       return NextResponse.json({ error: "Invalid email address" }, { status: 400 });
     }
 
@@ -17,13 +31,13 @@ export async function POST(req: Request) {
     if (!apiKey) {
       console.warn("BREVO_API_KEY is not configured.");
       return NextResponse.json(
-        { error: "Newsletter subscription is currently disabled (API key not configured)" },
-        { status: 500 }
+        { error: "Newsletter subscription is temporarily unavailable." },
+        { status: 503 }
       );
     }
 
     const listId = process.env.BREVO_LIST_ID;
-    const body: Record<string, any> = {
+    const body: { email: string; updateEnabled: boolean; listIds?: number[] } = {
       email,
       updateEnabled: true,
     };
@@ -38,7 +52,7 @@ export async function POST(req: Request) {
     const response = await fetch("https://api.brevo.com/v3/contacts", {
       method: "POST",
       headers: {
-        "accept": "application/json",
+        accept: "application/json",
         "content-type": "application/json",
         "api-key": apiKey,
       },
@@ -47,10 +61,10 @@ export async function POST(req: Request) {
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
-      console.error("Brevo API error:", errorData);
+      console.error("Brevo API error:", response.status, errorData);
       return NextResponse.json(
-        { error: errorData.message || "Failed to subscribe" },
-        { status: response.status }
+        { error: "Unable to complete subscription. Please try again later." },
+        { status: 502 }
       );
     }
 

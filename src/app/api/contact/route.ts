@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
+import { checkRateLimit, getClientIp } from "@/lib/rateLimit";
 
 const escapeHtml = (str: string) =>
   str.replace(/[&<>"']/g, (char) => {
@@ -14,15 +15,36 @@ const escapeHtml = (str: string) =>
     return map[char];
   });
 
+const sanitizeHeaderValue = (str: string) =>
+  str.replace(/[\r\n\0]+/g, " ").trim();
+
 export async function POST(req: Request) {
   try {
-    const body = await req.json();
+    const ip = getClientIp(req);
+    const rate = checkRateLimit(`contact:${ip}`, 5, 10 * 60 * 1000);
+    if (!rate.allowed) {
+      return NextResponse.json(
+        { message: "Too many requests. Please try again later." },
+        {
+          status: 429,
+          headers: { "Retry-After": String(rate.retryAfterSeconds) },
+        }
+      );
+    }
 
-    const name = body.name?.trim();
-    const email = body.email?.trim();
-    const contact = body.contact?.trim();
-    const course = body.course?.trim();
-    const location = body.location?.trim();
+    const body = await req.json().catch(() => null);
+    if (!body || typeof body !== "object") {
+      return NextResponse.json(
+        { message: "Invalid request payload." },
+        { status: 400 }
+      );
+    }
+
+    const name = typeof body.name === "string" ? body.name.trim() : "";
+    const email = typeof body.email === "string" ? body.email.trim() : "";
+    const contact = typeof body.contact === "string" ? body.contact.trim() : "";
+    const course = typeof body.course === "string" ? body.course.trim() : "";
+    const location = typeof body.location === "string" ? body.location.trim() : "";
 
     if (!name || !email || !contact) {
       return NextResponse.json(
@@ -38,34 +60,40 @@ export async function POST(req: Request) {
       );
     }
 
-    if (contact.length > 20) {
+    if (contact.length > 20 || !/^[0-9+\s()-]{7,20}$/.test(contact)) {
       return NextResponse.json(
         { message: "Invalid contact number." },
         { status: 400 }
       );
     }
 
-    const emailRegex =
-      /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+    if (course.length > 150 || location.length > 150) {
+      return NextResponse.json(
+        { message: "Input exceeds maximum allowed length." },
+        { status: 400 }
+      );
+    }
 
-    if (!emailRegex.test(email)) {
+    const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+
+    if (email.length > 254 || !emailRegex.test(email)) {
       return NextResponse.json(
         { message: "Invalid email address." },
         { status: 400 }
       );
     }
 
-    const emailHost = process.env.EMAIL_HOST?.replace(/^["']|["']$/g, '');
-    const emailUser = process.env.EMAIL_USER?.replace(/^["']|["']$/g, '');
-    const emailPass = process.env.EMAIL_PASS?.replace(/^["']|["']$/g, '');
-    const emailPortStr = process.env.EMAIL_PORT?.replace(/^["']|["']$/g, '');
-    const emailTo = process.env.EMAIL_TO?.replace(/^["']|["']$/g, '');
+    const emailHost = process.env.EMAIL_HOST?.replace(/^["']|["']$/g, "");
+    const emailUser = process.env.EMAIL_USER?.replace(/^["']|["']$/g, "");
+    const emailPass = process.env.EMAIL_PASS?.replace(/^["']|["']$/g, "");
+    const emailPortStr = process.env.EMAIL_PORT?.replace(/^["']|["']$/g, "");
+    const emailTo = process.env.EMAIL_TO?.replace(/^["']|["']$/g, "");
 
     if (!emailHost || !emailUser || !emailPass) {
       console.error("Missing SMTP environment variables.");
 
       return NextResponse.json(
-        { message: "Server configuration error." },
+        { message: "Unable to process your request right now." },
         { status: 500 }
       );
     }
@@ -73,38 +101,37 @@ export async function POST(req: Request) {
     const emailPort = emailPortStr ? parseInt(emailPortStr, 10) : 465;
     const isSecure = emailPort === 465;
 
-    let transporter;
+    const transporter =
+      emailHost.toLowerCase() === "sendmail"
+        ? nodemailer.createTransport({
+            sendmail: true,
+            newline: "unix",
+            path: "/usr/sbin/sendmail",
+          })
+        : nodemailer.createTransport({
+            host: emailHost,
+            port: emailPort,
+            secure: isSecure,
+            auth: {
+              user: emailUser,
+              pass: emailPass,
+            },
+            tls: {
+              minVersion: "TLSv1.2",
+              rejectUnauthorized: true,
+            },
+            connectionTimeout: 10000,
+            greetingTimeout: 10000,
+            socketTimeout: 10000,
+          });
 
-    if (emailHost.toLowerCase() === "sendmail") {
-      transporter = nodemailer.createTransport({
-        sendmail: true,
-        newline: 'unix',
-        path: '/usr/sbin/sendmail',
-      });
-    } else {
-      transporter = nodemailer.createTransport({
-        host: emailHost,
-        port: emailPort,
-        secure: isSecure,
-        auth: {
-          user: emailUser,
-          pass: emailPass,
-        },
-        tls: {
-          rejectUnauthorized: false,
-        },
-        family: 4,
-        connectionTimeout: 10000,
-        greetingTimeout: 10000,
-        socketTimeout: 10000,
-      } as any);
-    }
+    const safeSubjectCourse = sanitizeHeaderValue(course || "General");
 
     await transporter.sendMail({
       from: `"Website Contact" <${emailUser}>`,
       to: emailTo ?? emailUser,
-      replyTo: email,
-      subject: `New Inquiry - ${escapeHtml(course || "General")}`,
+      replyTo: sanitizeHeaderValue(email),
+      subject: `New Inquiry - ${safeSubjectCourse}`,
       html: `
         <h2>New Inquiry</h2>
         <p><strong>Name:</strong> ${escapeHtml(name)}</p>
@@ -119,19 +146,11 @@ export async function POST(req: Request) {
       { message: "Email sent successfully." },
       { status: 200 }
     );
-  } catch (error: any) {
+  } catch (error) {
     console.error("Mail Error:", error);
 
     return NextResponse.json(
-      { 
-        message: "Unable to process your request.",
-        error: error.message || String(error),
-        code: error.code,
-        debug: {
-          host: process.env.EMAIL_HOST,
-          port: process.env.EMAIL_PORT,
-        }
-      },
+      { message: "Unable to process your request." },
       { status: 500 }
     );
   }

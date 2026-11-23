@@ -191,10 +191,10 @@ export default function SingleBlog() {
                             </p>
 
                             <div className="flex items-center gap-4 pt-2">
-                                {post.author.socials?.linkedin && <a href={post.author.socials.linkedin} target="_blank" className="text-slate-300 hover:text-[#794d00] transition-colors"><Linkedin size={18} /></a>}
-                                {post.author.socials?.twitter && <a href={post.author.socials.twitter} target="_blank" className="text-slate-300 hover:text-[#794d00] transition-colors"><Twitter size={18} /></a>}
-                                {post.author.socials?.facebook && <a href={post.author.socials.facebook} target="_blank" className="text-slate-300 hover:text-[#794d00] transition-colors"><Facebook size={18} /></a>}
-                                {post.author.socials?.instagram && <a href={post.author.socials.instagram} target="_blank" className="text-slate-300 hover:text-[#794d00] transition-colors"><Instagram size={18} /></a>}
+                                {post.author.socials?.linkedin && <a href={post.author.socials.linkedin} target="_blank" rel="noopener noreferrer" className="text-slate-300 hover:text-[#794d00] transition-colors"><Linkedin size={18} /></a>}
+                                {post.author.socials?.twitter && <a href={post.author.socials.twitter} target="_blank" rel="noopener noreferrer" className="text-slate-300 hover:text-[#794d00] transition-colors"><Twitter size={18} /></a>}
+                                {post.author.socials?.facebook && <a href={post.author.socials.facebook} target="_blank" rel="noopener noreferrer" className="text-slate-300 hover:text-[#794d00] transition-colors"><Facebook size={18} /></a>}
+                                {post.author.socials?.instagram && <a href={post.author.socials.instagram} target="_blank" rel="noopener noreferrer" className="text-slate-300 hover:text-[#794d00] transition-colors"><Instagram size={18} /></a>}
                             </div>
                         </div>
 
