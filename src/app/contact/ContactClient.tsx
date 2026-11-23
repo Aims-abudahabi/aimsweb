@@ -85,7 +85,7 @@ export default function ContactClient() {
         <main className="contact-page min-h-screen bg-[#020617] font-figtree">
 
             {/* Hero Section with Background Image */}
-            <section ref={heroRef} className="relative min-h-screen pt-48 pb-20 overflow-hidden flex items-center">
+            <section ref={heroRef} className="relative min-h-0 lg:min-h-screen pt-24 sm:pt-36 lg:pt-48 pb-12 sm:pb-16 lg:pb-20 overflow-hidden flex items-center">
                 {/* Background Image with Overlay */}
                 <div className="absolute inset-0 z-0 text-white font-figtree">
                     <Image
@@ -98,34 +98,34 @@ export default function ContactClient() {
                     <div className="absolute inset-0 bg-gradient-to-br from-[#020617]/95 via-[#020617]/80 to-transparent"></div>
                 </div>
 
-                <div className="container-custom relative z-10 mx-auto px-6 max-w-[1300px] font-figtree">
-                    <div className="grid lg:grid-cols-2 gap-20 items-center">
+                <div className="container-custom relative z-10 mx-auto px-4 sm:px-6 max-w-[1300px] font-figtree">
+                    <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-20 items-center">
 
                         {/* Left Side: Contact Information */}
-                        <div className="flex flex-col gap-14">
-                            <div className="flex flex-col gap-12">
+                        <div className="flex flex-col gap-6 sm:gap-10 lg:gap-14">
+                            <div className="flex flex-col gap-5 sm:gap-8 lg:gap-12">
                                 {/* Call Us */}
-                                <div className="reveal-item space-y-4">
-                                    <span className="inline-block px-4 py-1 bg-blue-500/10 border border-blue-500/20 text-blue-400 font-bold rounded-full text-[10px] uppercase tracking-wider">
+                                <div className="reveal-item space-y-2 sm:space-y-4">
+                                    <span className="inline-block px-3.5 sm:px-4 py-1 bg-blue-500/10 border border-blue-500/20 text-blue-400 font-bold rounded-full text-[10px] uppercase tracking-wider">
                                         Call Us:
                                     </span>
-                                    <p className="text-lg sm:text-xl font-normal text-white/90 leading-relaxed font-figtree tracking-tight">+971 26724334</p>
+                                    <p className="text-base sm:text-xl font-normal text-white/90 leading-relaxed font-figtree tracking-tight">+971 26724334</p>
                                 </div>
 
                                 {/* Send Message */}
-                                <div className="reveal-item space-y-4">
-                                    <span className="inline-block px-4 py-1 bg-blue-500/10 border border-blue-500/20 text-blue-400 font-bold rounded-full text-[10px] uppercase tracking-wider">
+                                <div className="reveal-item space-y-2 sm:space-y-4">
+                                    <span className="inline-block px-3.5 sm:px-4 py-1 bg-blue-500/10 border border-blue-500/20 text-blue-400 font-bold rounded-full text-[10px] uppercase tracking-wider">
                                         Send Us a Message:
                                     </span>
-                                    <p className="text-lg sm:text-xl font-normal text-white/90 leading-relaxed font-figtree break-all">contactus@edu-aims.com</p>
+                                    <p className="text-base sm:text-xl font-normal text-white/90 leading-relaxed font-figtree break-all">contactus@edu-aims.com</p>
                                 </div>
 
                                 {/* Visit Us */}
-                                <div className="reveal-item space-y-4">
-                                    <span className="inline-block px-4 py-1 bg-blue-500/10 border border-blue-500/20 text-blue-400 font-bold rounded-full text-[10px] uppercase tracking-wider">
+                                <div className="reveal-item space-y-2 sm:space-y-4">
+                                    <span className="inline-block px-3.5 sm:px-4 py-1 bg-blue-500/10 border border-blue-500/20 text-blue-400 font-bold rounded-full text-[10px] uppercase tracking-wider">
                                         Visit Us:
                                     </span>
-                                    <p className="text-lg sm:text-xl font-normal text-white/90 leading-relaxed max-w-md font-figtree">
+                                    <p className="text-sm sm:text-xl font-normal text-white/90 leading-relaxed max-w-md font-figtree">
                                         Lulu Express Building, Benkaram Tower - Mezzanine 02 - Hamdan Bin Mohammed St, Abu Dhabi - UAE
                                     </p>
                                 </div>
@@ -136,17 +136,17 @@ export default function ContactClient() {
                         <div className="relative w-full flex justify-center lg:justify-end z-20">
                             {isSubmitted ? (
                                 // Success Message Card
-                                <div className="w-full max-w-[550px] bg-slate-900/80 backdrop-blur-3xl px-10 py-20 rounded-[2.5rem] border border-blue-500/30 shadow-[0_50px_100px_-20px_rgba(30,58,138,0.5)] flex flex-col items-center text-center space-y-8 animate-in fade-in zoom-in duration-500">
-                                    <div className="w-24 h-24 bg-blue-600/20 rounded-full flex items-center justify-center border border-blue-500/30">
-                                        <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center shadow-lg shadow-blue-500/40">
-                                            <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <div className="w-full max-w-[550px] bg-slate-900/80 backdrop-blur-3xl px-5 py-10 sm:px-10 sm:py-20 rounded-[20px] sm:rounded-[2.5rem] border border-blue-500/30 shadow-[0_50px_100px_-20px_rgba(30,58,138,0.5)] flex flex-col items-center text-center space-y-5 sm:space-y-8 animate-in fade-in zoom-in duration-500">
+                                    <div className="w-16 h-16 sm:w-24 sm:h-24 bg-blue-600/20 rounded-full flex items-center justify-center border border-blue-500/30">
+                                        <div className="w-12 h-12 sm:w-16 sm:h-16 bg-blue-600 rounded-full flex items-center justify-center shadow-lg shadow-blue-500/40">
+                                            <svg className="w-6 h-6 sm:w-10 sm:h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
                                             </svg>
                                         </div>
                                     </div>
-                                    <div className="space-y-4">
-                                        <h2 className="text-3xl font-bold text-white tracking-tight">Message Sent!</h2>
-                                        <p className="text-white/60 font-figtree leading-relaxed">
+                                    <div className="space-y-2 sm:space-y-4">
+                                        <h2 className="text-xl sm:text-3xl font-bold text-white tracking-tight">Message Sent!</h2>
+                                        <p className="text-xs sm:text-base text-white/60 font-figtree leading-relaxed">
                                             Thank you for reaching out. Our team will get back to you within 24 hours.
                                         </p>
                                     </div>
@@ -159,52 +159,58 @@ export default function ContactClient() {
                                 </div>
                             ) : (
                                 // Original Form Card
-                                <form ref={formRef} onSubmit={handleSubmit(onSubmit)} className="reveal-item w-full max-w-[550px] bg-slate-900/60 backdrop-blur-3xl px-10 py-12 sm:px-14 sm:py-16 rounded-[2.5rem] border border-white/20 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.8)] space-y-12 overflow-hidden relative group">
+                                <form
+                                    ref={formRef}
+                                    onSubmit={handleSubmit(onSubmit)}
+                                    toolname="submit_course_enquiry"
+                                    tooldescription="Submit a course enquiry to AIMS Training Center Abu Dhabi with full name, contact number, email address, and course interested."
+                                    className="reveal-item w-full max-w-[550px] bg-slate-900/60 backdrop-blur-3xl px-4 py-6 sm:px-14 sm:py-16 rounded-[20px] sm:rounded-[2.5rem] border border-white/20 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.8)] space-y-6 sm:space-y-12 overflow-hidden relative group"
+                                >
                                     {/* Subtle Inner Glow / Hover Effect */}
                                     <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
 
-                                    <div className="space-y-8 relative z-10 font-figtree transition-all">
-                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 font-figtree">
-                                            <div className="space-y-3">
-                                                <label className="text-[14px] font-medium text-white ml-1">Full Name</label>
+                                    <div className="space-y-4 sm:space-y-8 relative z-10 font-figtree transition-all">
+                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-8 font-figtree">
+                                            <div className="space-y-1.5 sm:space-y-3">
+                                                <label className="text-xs sm:text-[14px] font-medium text-white ml-1">Full Name</label>
                                                 <input
                                                     type="text"
                                                     {...register("name", { required: "Name is required" })}
-                                                    className={`w-full px-5 py-4 rounded-lg bg-white/[0.03] border ${errors.name ? 'border-red-500/50' : 'border-white/10'} focus:border-blue-500/40 focus:bg-white/[0.05] outline-none transition-all text-white font-normal`}
+                                                    className={`w-full px-3.5 py-2.5 sm:px-5 sm:py-4 rounded-lg bg-white/[0.03] border ${errors.name ? 'border-red-500/50' : 'border-white/10'} focus:border-blue-500/40 focus:bg-white/[0.05] outline-none transition-all text-white text-sm sm:text-base font-normal`}
                                                 />
                                                 {errors.name && <p className="text-[10px] text-red-500 ml-1 flex items-center gap-1"><AlertCircle size={10} /> {errors.name.message}</p>}
                                             </div>
-                                            <div className="space-y-3">
-                                                <label className="text-[14px] font-medium text-white ml-1">Contact Number</label>
+                                            <div className="space-y-1.5 sm:space-y-3">
+                                                <label className="text-xs sm:text-[14px] font-medium text-white ml-1">Contact Number</label>
                                                 <input
                                                     type="text"
                                                     {...register("contact", {
                                                         required: "Contact number is required",
                                                         pattern: { value: /^[0-9+\s-]{7,15}$/, message: "Invalid contact number" }
                                                     })}
-                                                    className={`w-full px-5 py-4 rounded-lg bg-white/[0.03] border ${errors.contact ? 'border-red-500/50' : 'border-white/10'} focus:border-blue-500/40 focus:bg-white/[0.05] outline-none transition-all text-white font-normal`}
+                                                    className={`w-full px-3.5 py-2.5 sm:px-5 sm:py-4 rounded-lg bg-white/[0.03] border ${errors.contact ? 'border-red-500/50' : 'border-white/10'} focus:border-blue-500/40 focus:bg-white/[0.05] outline-none transition-all text-white text-sm sm:text-base font-normal`}
                                                 />
                                                 {errors.contact && <p className="text-[10px] text-red-500 ml-1 flex items-center gap-1"><AlertCircle size={10} /> {errors.contact.message}</p>}
                                             </div>
                                         </div>
-                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 font-figtree">
-                                            <div className="space-y-3">
-                                                <label className="text-[14px] font-medium text-white ml-1 font-figtree">Email Address</label>
+                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-8 font-figtree">
+                                            <div className="space-y-1.5 sm:space-y-3">
+                                                <label className="text-xs sm:text-[14px] font-medium text-white ml-1 font-figtree">Email Address</label>
                                                 <input
                                                     type="email"
                                                     {...register("email", {
                                                         required: "Email is required",
                                                         pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: "Invalid email format" }
                                                     })}
-                                                    className={`w-full px-5 py-4 rounded-lg bg-white/[0.03] border ${errors.email ? 'border-red-500/50' : 'border-white/10'} focus:border-blue-500/40 focus:bg-white/[0.05] outline-none transition-all text-white font-normal font-figtree`}
+                                                    className={`w-full px-3.5 py-2.5 sm:px-5 sm:py-4 rounded-lg bg-white/[0.03] border ${errors.email ? 'border-red-500/50' : 'border-white/10'} focus:border-blue-500/40 focus:bg-white/[0.05] outline-none transition-all text-white text-sm sm:text-base font-normal font-figtree`}
                                                 />
                                                 {errors.email && <p className="text-[10px] text-red-500 ml-1 flex items-center gap-1"><AlertCircle size={10} /> {errors.email.message}</p>}
                                             </div>
-                                            <div className="space-y-3">
-                                                <label className="text-[14px] font-medium text-white ml-1 font-figtree">Course Interested</label>
+                                            <div className="space-y-1.5 sm:space-y-3">
+                                                <label className="text-xs sm:text-[14px] font-medium text-white ml-1 font-figtree">Course Interested</label>
                                                 <select
                                                     {...register("course", { required: "Please select a course" })}
-                                                    className={`w-full px-5 py-4 rounded-lg bg-white/[0.03] border ${errors.course ? 'border-red-500/50' : 'border-white/10'} focus:border-blue-500/40 focus:bg-white/[0.05] outline-none transition-all text-white font-normal font-figtree appearance-none cursor-pointer`}
+                                                    className={`w-full px-3.5 py-2.5 sm:px-5 sm:py-4 rounded-lg bg-white/[0.03] border ${errors.course ? 'border-red-500/50' : 'border-white/10'} focus:border-blue-500/40 focus:bg-white/[0.05] outline-none transition-all text-white text-sm sm:text-base font-normal font-figtree appearance-none cursor-pointer`}
                                                 >
                                                     <option value="" className="bg-[#020617] text-white">Select a Course</option>
                                                     {sortedCategories.map(([category, titles]) => (
@@ -222,11 +228,11 @@ export default function ContactClient() {
                                         </div>
                                     </div>
 
-                                    <div className="space-y-10 pt-4 text-center relative z-10">
+                                    <div className="space-y-4 sm:space-y-10 pt-1 sm:pt-4 text-center relative z-10">
                                         <button
                                             type="submit"
                                             disabled={isSubmitting}
-                                            className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 disabled:cursor-not-allowed text-white py-6 rounded-xl font-bold text-base transition-all hover:scale-[1.01] active:scale-[0.99] shadow-lg shadow-blue-900/40 flex items-center justify-center gap-3"
+                                            className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 disabled:cursor-not-allowed text-white py-3.5 sm:py-6 rounded-xl font-bold text-sm sm:text-base transition-all hover:scale-[1.01] active:scale-[0.99] shadow-lg shadow-blue-900/40 flex items-center justify-center gap-3"
                                         >
                                             {isSubmitting ? (
                                                 <>
@@ -235,7 +241,7 @@ export default function ContactClient() {
                                                 </>
                                             ) : "Submit Now"}
                                         </button>
-                                        <p className="text-[14px] font-normal text-white leading-relaxed font-figtree opacity-60">
+                                        <p className="text-xs sm:text-[14px] font-normal text-white leading-relaxed font-figtree opacity-60">
                                             From zero to job-ready. Apply in 60 seconds.
                                         </p>
                                     </div>

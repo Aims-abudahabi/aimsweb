@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import SmoothScroll from "@/components/SmoothScroll";
 import TawkToChat from "@/components/TawkToChat";
 import GoogleTranslate from "@/components/GoogleTranslate";
+import WebMCPTools from "@/components/WebMCPTools";
 import Script from "next/script";
 
 // Import Google Fonts
@@ -69,6 +70,9 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: baseUrl,
+    types: {
+      "text/markdown": "/api/markdown?path=%2F",
+    },
   },
 };
 
@@ -80,26 +84,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        {/* Automatic ChunkLoadError & Missing Asset Recovery Handler */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.addEventListener('error', function(e) {
-                if (e && e.target && (e.target.tagName === 'SCRIPT' || e.target.tagName === 'LINK')) {
-                  var src = e.target.src || e.target.href;
-                  if (src && src.indexOf('/_next/static/') !== -1) {
-                    var storageKey = 'chunk_reload_' + encodeURIComponent(src);
-                    if (!sessionStorage.getItem(storageKey)) {
-                      sessionStorage.setItem(storageKey, 'true');
-                      window.location.reload();
-                    }
-                  }
-                }
-              }, true);
-            `,
-          }}
-        />
-
+        <link rel="describedby" href="/llms.txt" type="text/plain" />
         {/* Google Analytics / GTag */}
         {process.env.NEXT_PUBLIC_GTAG_ID && /^[A-Za-z0-9_-]+$/.test(process.env.NEXT_PUBLIC_GTAG_ID) && (
           <>
@@ -152,6 +137,7 @@ export default function RootLayout({
         )}
       </head>
       <body suppressHydrationWarning className={`${figtree.variable} antialiased font-figtree`}>
+        <WebMCPTools />
         <GoogleTranslate />
         <SmoothScroll>
           <Navbar />

@@ -131,32 +131,32 @@ export default function Footer() {
             <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[120px] pointer-events-none"></div>
             <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-blue-500/5 rounded-full blur-[100px] pointer-events-none"></div>
 
-            <div className="container-custom relative z-10 mx-auto px-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 lg:gap-16 mb-12 sm:mb-20">
+            <div className="container-custom relative z-10 mx-auto px-4 sm:px-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-7 sm:gap-10 md:gap-12 lg:gap-16 mb-8 sm:mb-16 md:mb-20">
 
                     {/* Brand Column */}
-                    <div ref={brandRef} className="space-y-6">
+                    <div ref={brandRef} className="space-y-4 sm:space-y-6">
                         <Link href="/" className="inline-block group">
                             <Image
                                 src="/images/aims-logo.png"
                                 alt="AIMS Logo"
                                 width={200}
                                 height={70}
-                                className="h-16 w-auto object-contain"
+                                className="h-12 sm:h-16 w-auto object-contain"
                                 style={{ filter: "brightness(0) invert(1)" }}
                             />
                         </Link>
-                        <p className="text-slate-400 text-base md:text-lg leading-relaxed font-light font-figtree">
+                        <p className="text-slate-400 text-sm sm:text-base md:text-lg leading-relaxed font-light font-figtree">
                             Empowering individuals through specialized training programs in Abu Dhabi since 2010. Excellence in education and professional development.
                         </p>
-                        <div className="flex gap-4">
+                        <div className="flex flex-wrap gap-3 sm:gap-4">
                             {socialLinks.map((social, i) => (
                                 <Link
                                     key={i}
                                     href={social.path}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="w-10 h-10 rounded-full bg-slate-800/50 border border-slate-700 flex items-center justify-center text-slate-400 hover:bg-blue-600 hover:text-white hover:border-blue-600 transition-all duration-300"
+                                    className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-slate-800/50 border border-slate-700 flex items-center justify-center text-slate-400 hover:bg-blue-600 hover:text-white hover:border-blue-600 transition-all duration-300"
                                 >
                                     {social.icon}
                                 </Link>
@@ -165,9 +165,9 @@ export default function Footer() {
                     </div>
 
                     {/* Navigation Links */}
-                    <div ref={linksRef} className="space-y-6">
-                        <h4 className="text-sm font-bold tracking-[0.2em] uppercase text-blue-500 font-figtree">Navigation</h4>
-                        <nav className="flex flex-col gap-4 font-figtree">
+                    <div ref={linksRef} className="space-y-4 sm:space-y-6">
+                        <h4 className="text-xs sm:text-sm font-bold tracking-[0.2em] uppercase text-blue-500 font-figtree">Navigation</h4>
+                        <nav className="grid grid-cols-2 sm:flex sm:flex-col gap-3 sm:gap-4 font-figtree text-sm sm:text-base">
                             {navLinks.map((link) => (
                                 <Link
                                     key={link.name}
@@ -260,9 +260,9 @@ export default function Footer() {
                 </div>
 
                 {/* Bottom Bar */}
-                <div className="pt-8 sm:pt-12 border-t border-slate-800/50 flex flex-col md:flex-row items-center justify-between gap-6 opacity-60 text-[11px] sm:text-xs md:text-sm font-figtree">
+                <div className="pt-6 sm:pt-12 border-t border-slate-800/50 flex flex-col md:flex-row items-center justify-between gap-4 sm:gap-6 opacity-60 text-[11px] sm:text-xs md:text-sm font-figtree text-center md:text-left">
                     <p>© 2026 AIMS Training Center. All rights reserved.</p>
-                    <div className="flex items-center gap-8 text-white font-medium">
+                    <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 sm:gap-8 text-white font-medium">
                         <Link href="/privacy" className="hover:text-white/80 transition-colors">Privacy Policy</Link>
                         <Link href="/terms" className="hover:text-white/80 transition-colors">Terms of Service</Link>
                         <div className="flex items-center gap-2 text-white/60">

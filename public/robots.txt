@@ -1,0 +1,18 @@
+# AIMS Training Center — Abu Dhabi, UAE
+# Content Signals Policy (https://contentsignals.org/)
+# As a condition of accessing this website, you agree to abide by the following content signals:
+# (a) If a content-signal = yes, you may collect content for the corresponding use.
+# (b) If a content-signal = no, you may not collect content for the corresponding use.
+# search: building a search index and providing search results.
+# ai-input: inputting content into AI models for real-time answers (RAG, grounding, agents).
+# ai-train: training or fine-tuning AI models.
+
+User-agent: *
+Content-Signal: search=yes, ai-input=yes, ai-train=no
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Allow: /api/mcp
+Allow: /api/markdown
+
+Sitemap: https://aimstrainingcenter.com/sitemap.xml

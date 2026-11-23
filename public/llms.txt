@@ -1,0 +1,54 @@
+# AIMS Training Center
+
+> ACTVET-licensed professional training center in Abu Dhabi, UAE (established 2010) offering 50+ accredited technical, vocational, language, and soft skills courses with over 10,000 graduates.
+
+## Overview
+
+- **Website:** https://aimstrainingcenter.com/
+- **Location:** Lulu Express Building, Benkaram Tower - Mezzanine 02, Hamdan Bin Mohammed St, Abu Dhabi, UAE
+- **Phone:** +971 2 672 4334
+- **Email:** contactus@edu-aims.com
+- **Accreditation:** Licensed by ACTVET (Abu Dhabi Centre for Technical and Vocational Education and Training)
+- **Formats:** In-person classroom, hands-on computer labs, online live classes, corporate training, and flexible weekday/evening/weekend batches
+- **Markdown Negotiation:** Any page on this site supports `Accept: text/markdown` to return a clean, token-efficient Markdown representation.
+
+## Key Pages
+
+- [Home](https://aimstrainingcenter.com/): Overview of AIMS Training Center, featured programs, active offers, student stats, and FAQs.
+- [All Courses](https://aimstrainingcenter.com/courses/): Complete catalog of 50+ ACTVET-approved training courses across Engineering & CAD, Finance & Accounting, Office Administration, Graphic Design & Animation, IT & Networking, Project Management, Soft Skills, and Languages.
+- [About Us](https://aimstrainingcenter.com/about/): Mission, vision, ACTVET licensure, corporate brochure PDF, and center heritage since 2010.
+- [Special Offers](https://aimstrainingcenter.com/offers/): Current limited-time course discounts, early-bird savings, and corporate bundle offers.
+- [Blogs & Insights](https://aimstrainingcenter.com/blogs/): Exam preparation guides (OET, IELTS) and UAE career development articles.
+- [Enroll as Trainer / Student](https://aimstrainingcenter.com/enroll/): Direct enrollment and trainer registration portal.
+- [Contact Us](https://aimstrainingcenter.com/contact/): Admissions contact details, Abu Dhabi campus map, and enquiry form.
+
+## Course Tracks & Popular Programs
+
+- [Engineering & CAD](https://aimstrainingcenter.com/courses/engineering-cad/): AutoCAD 2D/3D, Revit Architecture/Structure/MEP, BIM, Civil 3D, 3ds Max, STAAD.Pro, ETABS, SolidWorks.
+- [Finance & Accounting](https://aimstrainingcenter.com/courses/finance-accounting/): Tally Prime, QuickBooks, SAP FICO, Peachtree, UAE VAT & Corporate Tax Compliance.
+- [Office Administration](https://aimstrainingcenter.com/courses/office-administration/): Advanced MS Excel, MS Office, ICDL Certification, Document Control, Executive Secretarial.
+- [Graphic Design & Animation](https://aimstrainingcenter.com/courses/graphic-design-animation/): Adobe Photoshop, Illustrator, InDesign, Premiere Pro, After Effects, Motion Graphics, 2D/3D Animation.
+- [IT & Networking](https://aimstrainingcenter.com/courses/network-it/): Cisco CCNA/CCNP, CompTIA A+/Network+/Security+, Cloud Computing, Web Development, Python.
+- [Language Courses](https://aimstrainingcenter.com/courses/language-courses/): IELTS Preparation, OET for Healthcare Professionals, PTE Academic, Spoken English, Spoken Arabic.
+
+## Active Special Offers
+
+- **Master AutoCAD & Revit BIM** — 25% OFF, starting from AED 750/course ([View Offers](https://aimstrainingcenter.com/offers/))
+- **Career-Ready Accounting & UAE VAT** — 20% OFF, starting from AED 650/course ([View Offers](https://aimstrainingcenter.com/offers/))
+- **Design Your Future with Adobe Suite** — Early Bird, starting from AED 700/course ([View Offers](https://aimstrainingcenter.com/offers/))
+
+## Recent Articles
+
+- [Mastering the OET: Tips from Top Instructors](https://aimstrainingcenter.com/blogs/1/)
+- [Why Dubai is the Best Global Training Hub](https://aimstrainingcenter.com/blogs/2/)
+- [IELTS Speaking: Five Common Mistakes to Avoid](https://aimstrainingcenter.com/blogs/3/)
+- [The Future of Professional Career Development](https://aimstrainingcenter.com/blogs/4/)
+
+## Agent & Machine-Readable Resources
+
+- [MCP Server Card (SEP-1649)](https://aimstrainingcenter.com/.well-known/mcp/server-card.json): Model Context Protocol discovery document.
+- [MCP Streamable HTTP Endpoint](https://aimstrainingcenter.com/api/mcp): JSON-RPC 2.0 endpoint exposing `search_courses`, `get_course_details`, `get_active_offers`, `list_blogs`, and `get_center_info`.
+- [Markdown API](https://aimstrainingcenter.com/api/markdown?path=%2F): Direct Markdown representation of any site route.
+- [XML Sitemap](https://aimstrainingcenter.com/sitemap.xml): Canonical URL index.
+- [Robots & Content Signals](https://aimstrainingcenter.com/robots.txt): Crawler permissions and Content-Signal policy (`search=yes, ai-input=yes, ai-train=no`).
+- [Corporate Profile PDF](https://aimstrainingcenter.com/doc/Aims%20Business%20Profile_AIC.pdf): Downloadable AIMS Business Profile brochure.

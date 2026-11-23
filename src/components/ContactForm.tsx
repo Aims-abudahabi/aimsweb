@@ -86,20 +86,20 @@ export default function ContactForm({ defaultCourse }: ContactFormProps) {
       </div>
 
       {/* Container */}
-      <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-12 xl:px-24 flex flex-col md:flex-row items-center md:items-end justify-between min-h-[400px] sm:min-h-[500px]">
+      <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-12 xl:px-24 flex flex-col md:flex-row items-center md:items-end justify-between min-h-0 sm:min-h-[500px] py-4 sm:py-0">
         
         {/* Form or Success Message container */}
-        <div className="w-full max-w-[550px] mb-8 md:mb-0 relative">
+        <div className="w-full max-w-[550px] mb-5 md:mb-0 relative">
           {isSubmitted ? (
-            <div className="w-full bg-white/10 backdrop-blur-xl px-10 py-16 rounded-[2.5rem] border border-white/20 shadow-2xl flex flex-col items-center text-center space-y-6">
-              <div className="w-20 h-20 bg-blue-600/20 rounded-full flex items-center justify-center border border-blue-500/30">
-                <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center shadow-lg">
-                  <Check className="text-white w-6 h-6" />
+            <div className="w-full bg-white/10 backdrop-blur-xl px-6 py-10 sm:px-10 sm:py-16 rounded-[1.5rem] sm:rounded-[2.5rem] border border-white/20 shadow-2xl flex flex-col items-center text-center space-y-5 sm:space-y-6">
+              <div className="w-16 h-16 sm:w-20 sm:h-20 bg-blue-600/20 rounded-full flex items-center justify-center border border-blue-500/30">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-600 rounded-full flex items-center justify-center shadow-lg">
+                  <Check className="text-white w-5 h-5 sm:w-6 sm:h-6" />
                 </div>
               </div>
               <div className="space-y-2">
-                <h2 className="text-2xl font-bold text-white">Message Sent!</h2>
-                <p className="text-white/60 text-sm">Thank you for reaching out. We'll get back to you soon.</p>
+                <h2 className="text-xl sm:text-2xl font-bold text-white">Message Sent!</h2>
+                <p className="text-white/60 text-xs sm:text-sm">Thank you for reaching out. We&apos;ll get back to you soon.</p>
               </div>
               <button
                 onClick={() => setIsSubmitted(false)}
@@ -109,46 +109,51 @@ export default function ContactForm({ defaultCourse }: ContactFormProps) {
               </button>
             </div>
           ) : (
-          <form onSubmit={handleSubmit(onSubmit)} className="w-full bg-white/10 backdrop-blur-xl px-6 py-8 sm:px-12 sm:py-14 rounded-[1.5rem] sm:rounded-[2.5rem] border border-white/20 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.8)] space-y-5 sm:space-y-8 relative group">
-            <div className="space-y-4 sm:space-y-6 relative z-50 transition-all">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <label className="text-[14px] font-medium text-white ml-1">Full Name</label>
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            toolname="submit_course_enquiry"
+            tooldescription="Submit a course enquiry or admission request to AIMS Training Center Abu Dhabi with full name, contact number, email address, and course of interest."
+            className="w-full bg-white/10 backdrop-blur-xl px-4 py-6 sm:px-12 sm:py-14 rounded-[1.5rem] sm:rounded-[2.5rem] border border-white/20 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.8)] space-y-4 sm:space-y-8 relative group"
+          >
+            <div className="space-y-3.5 sm:space-y-6 relative z-50 transition-all">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-6">
+                  <div className="space-y-1.5 sm:space-y-2">
+                    <label className="text-[13px] sm:text-[14px] font-medium text-white ml-1">Full Name</label>
                     <input
                       type="text"
                       {...register("name", { required: "Name is required" })}
-                      className={`w-full px-5 py-3 sm:py-4 rounded-lg bg-white/[0.03] border ${errors.name ? 'border-red-500/50' : 'border-white/10'} focus:border-blue-500/40 focus:bg-white/[0.05] outline-none transition-all text-white font-normal`}
+                      className={`w-full px-4 py-2.5 sm:px-5 sm:py-4 rounded-lg bg-white/[0.03] border ${errors.name ? 'border-red-500/50' : 'border-white/10'} focus:border-blue-500/40 focus:bg-white/[0.05] outline-none transition-all text-sm sm:text-base text-white font-normal`}
                     />
                     {errors.name && <p className="text-[10px] text-red-500 ml-1 flex items-center gap-1"><AlertCircle size={10} /> {errors.name.message}</p>}
                   </div>
-                  <div className="space-y-2">
-                    <label className="text-[14px] font-medium text-white ml-1">Contact Number</label>
+                  <div className="space-y-1.5 sm:space-y-2">
+                    <label className="text-[13px] sm:text-[14px] font-medium text-white ml-1">Contact Number</label>
                     <input
                       type="text"
                       {...register("contact", { 
                         required: "Contact number is required",
                         pattern: { value: /^[0-9+\s-]{7,15}$/, message: "Invalid contact number" }
                       })}
-                      className={`w-full px-5 py-3 sm:py-4 rounded-lg bg-white/[0.03] border ${errors.contact ? 'border-red-500/50' : 'border-white/10'} focus:border-blue-500/40 focus:bg-white/[0.05] outline-none transition-all text-white font-normal`}
+                      className={`w-full px-4 py-2.5 sm:px-5 sm:py-4 rounded-lg bg-white/[0.03] border ${errors.contact ? 'border-red-500/50' : 'border-white/10'} focus:border-blue-500/40 focus:bg-white/[0.05] outline-none transition-all text-sm sm:text-base text-white font-normal`}
                     />
                     {errors.contact && <p className="text-[10px] text-red-500 ml-1 flex items-center gap-1"><AlertCircle size={10} /> {errors.contact.message}</p>}
                   </div>
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-                  <div className="space-y-2">
-                    <label className="text-[14px] font-medium text-white ml-1">Email Address</label>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-6">
+                  <div className="space-y-1.5 sm:space-y-2">
+                    <label className="text-[13px] sm:text-[14px] font-medium text-white ml-1">Email Address</label>
                     <input
                       type="email"
                       {...register("email", { 
                         required: "Email is required",
                         pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: "Invalid email format" }
                       })}
-                      className={`w-full px-5 py-3 sm:py-4 rounded-lg bg-white/[0.03] border ${errors.email ? 'border-red-500/50' : 'border-white/10'} focus:border-blue-500/40 focus:bg-white/[0.05] outline-none transition-all text-white font-normal`}
+                      className={`w-full px-4 py-2.5 sm:px-5 sm:py-4 rounded-lg bg-white/[0.03] border ${errors.email ? 'border-red-500/50' : 'border-white/10'} focus:border-blue-500/40 focus:bg-white/[0.05] outline-none transition-all text-sm sm:text-base text-white font-normal`}
                     />
                     {errors.email && <p className="text-[10px] text-red-500 ml-1 flex items-center gap-1"><AlertCircle size={10} /> {errors.email.message}</p>}
                   </div>
-                  <div className="space-y-2 relative" ref={dropdownRef}>
-                    <label className="text-[14px] font-medium text-white ml-1">Course Interested</label>
+                  <div className="space-y-1.5 sm:space-y-2 relative" ref={dropdownRef}>
+                    <label className="text-[13px] sm:text-[14px] font-medium text-white ml-1">Course Interested</label>
                     <div className="relative group/input">
                       <input
                         type="text"
@@ -162,7 +167,7 @@ export default function ContactForm({ defaultCourse }: ContactFormProps) {
                           setValue('course', val, { shouldValidate: true })
                           setIsDropdownOpen(true)
                         }}
-                        className={`w-full px-5 py-3 sm:py-4 pr-12 rounded-lg bg-white/[0.03] border ${errors.course ? 'border-red-500/50' : 'border-white/10'} focus:border-blue-500/40 focus:bg-white/[0.05] outline-none transition-all text-white font-normal ${defaultCourse ? 'opacity-70 cursor-not-allowed' : 'cursor-text'}`}
+                        className={`w-full px-4 py-2.5 sm:px-5 sm:py-4 pr-11 sm:pr-12 rounded-lg bg-white/[0.03] border ${errors.course ? 'border-red-500/50' : 'border-white/10'} focus:border-blue-500/40 focus:bg-white/[0.05] outline-none transition-all text-sm sm:text-base text-white font-normal ${defaultCourse ? 'opacity-70 cursor-not-allowed' : 'cursor-text'}`}
                       />
                       {!defaultCourse && (
                         <div className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center gap-2 text-white/40 group-focus-within/input:text-blue-400 transition-colors pointer-events-none">

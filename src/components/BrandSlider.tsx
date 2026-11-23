@@ -1,8 +1,6 @@
 "use client"
 
-import React, { useEffect, useRef } from "react"
-import Image from "next/image"
-import { Wind } from "lucide-react"
+import React, { useEffect, useRef, useState } from "react"
 import { gsap } from "gsap"
 
 const logos = [
@@ -137,12 +135,12 @@ const LogoTrack = ({
                         key={index}
                         className="w-28 md:w-40 h-16 md:h-20 relative grayscale hover:grayscale-0 transition-all duration-500 opacity-40 hover:opacity-100 cursor-pointer flex items-center justify-center p-2 hover:scale-110 active:scale-95 shrink-0"
                     >
-                        <Image
+                        <img
                             src={logo.path}
                             alt={logo.name}
-                            fill
-                            className="object-contain"
-                            sizes="(max-width: 768px) 112px, 160px"
+                            loading="lazy"
+                            decoding="async"
+                            className="max-h-full max-w-full object-contain"
                         />
                     </div>
                 ))}
@@ -151,36 +149,66 @@ const LogoTrack = ({
     )
 }
 
+const FEATURED_PARTNER_NAMES = [
+    "ACTVET",
+    "Cleveland Clinic Abu Dhabi",
+    "Etihad Airways Engineering",
+    "TotalEnergies",
+    "FedEx",
+    "Yas Marina Circuit",
+    "British Embassy Abu Dhabi",
+    "Abu Dhabi Terminals",
+    "Marriott",
+    "Crown Prince Court",
+    "NMDC",
+    "Arabtec",
+]
+
 const BrandSlider = () => {
+    const [mounted, setMounted] = useState(false)
+
+    useEffect(() => {
+        setMounted(true)
+    }, [])
+
     return (
-        <section className="pt-6 pb-6 md:pt-24 md:pb-12 bg-[#fffbf5] font-figtree border-t border-slate-100/50 overflow-hidden relative">
-            <div className="container-custom mx-auto px-6 mb-8 sm:mb-12">
-                <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8">
-                    <div className="space-y-2 sm:space-y-4">
-                        <span className="text-[#794d00] font-bold tracking-widest text-[10px] sm:text-xs uppercase flex items-center gap-2">Strategic Partners
+        <section className="py-10 sm:py-14 md:pt-24 md:pb-12 bg-[#fffbf5] font-figtree border-t border-slate-100/50 overflow-hidden relative">
+            <div className="container-custom mx-auto px-4 sm:px-6 mb-6 sm:mb-12">
+                <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-3 sm:gap-8">
+                    <div className="space-y-1.5 sm:space-y-4">
+                        <span className="text-[#794d00] font-bold tracking-widest text-[10px] sm:text-xs uppercase block">
+                            Strategic Partners
                         </span>
-                        <h2 className="text-2xl md:text-5xl font-bold text-[#794d00] tracking-tight uppercase max-w-2xl leading-tight">
+                        <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold text-[#794d00] tracking-tight uppercase max-w-2xl leading-tight">
                             Trusted by <span className="text-slate-900">Industry Leaders.</span>
                         </h2>
                     </div>
-                    <p className="text-slate-600 text-base sm:text-lg max-w-xl leading-relaxed">
+                    <p className="text-slate-600 text-sm sm:text-base md:text-lg max-w-xl leading-relaxed">
                         Collaborating with world-class organizations to deliver professional excellence and certified training benchmarks across the globe.
                     </p>
                 </div>
             </div>
 
-            <div className="max-w-[100vw] relative flex flex-col gap-8">
-                {/* Row 1 → Left */}
-                <LogoTrack items={row1} direction="left" speed={50} />
-                {/* Row 2 → Right (opposite) */}
-                <LogoTrack items={row2} direction="right" speed={50} />
-                {/* Row 3 → Left */}
-                <LogoTrack items={row3} direction="left" speed={50} />
+            {mounted ? (
+                <div className="max-w-[100vw] relative flex flex-col gap-4 sm:gap-8">
+                    {/* Row 1 → Left */}
+                    <LogoTrack items={row1} direction="left" speed={50} />
+                    {/* Row 2 → Right (opposite) */}
+                    <LogoTrack items={row2} direction="right" speed={50} />
+                    {/* Row 3 → Left */}
+                    <LogoTrack items={row3} direction="left" speed={50} />
 
-                {/* Edge fades */}
-                <div className="absolute inset-y-0 left-0 w-32 md:w-64 bg-gradient-to-r from-[#fffbf5] to-transparent z-10 pointer-events-none" />
-                <div className="absolute inset-y-0 right-0 w-32 md:w-64 bg-gradient-to-l from-[#fffbf5] to-transparent z-10 pointer-events-none" />
-            </div>
+                    {/* Edge fades */}
+                    <div className="absolute inset-y-0 left-0 w-12 sm:w-32 md:w-64 bg-gradient-to-r from-[#fffbf5] to-transparent z-10 pointer-events-none" />
+                    <div className="absolute inset-y-0 right-0 w-12 sm:w-32 md:w-64 bg-gradient-to-l from-[#fffbf5] to-transparent z-10 pointer-events-none" />
+                </div>
+            ) : (
+                <div className="container-custom mx-auto px-4 sm:px-6 min-h-[224px] md:min-h-[304px] flex items-center">
+                    <p className="text-sm text-slate-500 font-medium leading-relaxed">
+                        Partner organizations include {FEATURED_PARTNER_NAMES.join(", ")}, and 60+ leading enterprises across Abu Dhabi and the UAE.
+                    </p>
+                </div>
+            )}
         </section>
     )
 }

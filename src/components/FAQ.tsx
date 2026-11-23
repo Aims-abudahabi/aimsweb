@@ -30,32 +30,32 @@ export default function FAQ() {
     const [openIndex, setOpenIndex] = useState<number | null>(null)
 
     return (
-        <section className="pt-6 pb-6 md:pt-12 md:pb-12 bg-[#fffbf5] font-figtree">
-            <div className="container-custom mx-auto px-6 max-w-4xl">
-                <div className="text-center mb-8 md:mb-12 space-y-4">
-                    <h2 className="text-2xl md:text-4xl font-bold text-[#794d00] tracking-tight uppercase">
+        <section className="py-10 sm:py-12 bg-[#fffbf5] font-figtree">
+            <div className="container-custom mx-auto px-4 sm:px-6 max-w-4xl">
+                <div className="text-center mb-6 md:mb-12 space-y-3">
+                    <h2 className="text-xl sm:text-3xl md:text-4xl font-bold text-[#794d00] tracking-tight uppercase">
                         Frequently Asked Questions
                     </h2>
                 </div>
 
-                <div className="space-y-4">
+                <div className="space-y-2.5 sm:space-y-4">
                     {faqs.map((faq, index) => (
                         <div
                             key={index}
-                            className="bg-white border border-slate-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300"
+                            className="bg-white border border-slate-100 rounded-xl sm:rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300"
                         >
                             <button
                                 onClick={() => setOpenIndex(openIndex === index ? null : index)}
-                                className="w-full px-5 sm:px-8 py-4 sm:py-6 flex items-center justify-between text-left hover:bg-blue-50 transition-colors group"
+                                className="w-full px-4 sm:px-8 py-3.5 sm:py-6 flex items-center justify-between gap-3 text-left hover:bg-blue-50 transition-colors group"
                             >
-                                <span className={`text-base sm:text-lg font-bold transition-colors ${openIndex === index ? "text-[#794d00]" : "text-slate-800"}`}>
+                                <span className={`text-sm sm:text-lg font-bold transition-colors ${openIndex === index ? "text-[#794d00]" : "text-slate-800"}`}>
                                     {faq.question}
                                 </span>
                                 <div className={`transition-transform duration-300 shrink-0 ${openIndex === index ? "rotate-180" : ""}`}>
                                     {openIndex === index ? (
-                                        <Minus className="text-blue-600" size={18} />
+                                        <Minus className="text-blue-600" size={16} />
                                     ) : (
-                                        <Plus className="text-slate-400 group-hover:text-blue-600" size={18} />
+                                        <Plus className="text-slate-400 group-hover:text-blue-600" size={16} />
                                     )}
                                 </div>
                             </button>
@@ -64,7 +64,7 @@ export default function FAQ() {
                                 className={`overflow-hidden transition-all duration-500 ease-in-out ${openIndex === index ? "max-h-[500px] opacity-100 border-t border-blue-50" : "max-h-0 opacity-0"
                                     }`}
                             >
-                                <div className="px-5 sm:px-8 py-4 sm:py-6 text-slate-600 leading-relaxed font-medium text-[14px] sm:text-base">
+                                <div className="px-4 sm:px-8 py-3.5 sm:py-6 text-slate-600 leading-relaxed font-medium text-xs sm:text-base">
                                     {faq.answer}
                                 </div>
                             </div>

@@ -52,7 +52,7 @@ function ReviewCard({ data, onExpandChange }: { data: ReviewData, onExpandChange
 
     return (
         <div
-            className="group relative bg-white rounded-[20px] border border-slate-100 shadow-xl shadow-slate-200/50 p-5 sm:p-6 flex flex-col gap-3 sm:gap-4 transition-all duration-300 hover:scale-[1.01] overflow-hidden"
+            className="group relative bg-white rounded-[16px] sm:rounded-[20px] border border-slate-100 shadow-xl shadow-slate-200/50 p-4 sm:p-6 flex flex-col gap-2.5 sm:gap-4 transition-all duration-300 hover:scale-[1.01] overflow-hidden"
         >
             {/* Google colour bar on hover */}
             <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-blue-500 via-red-400 to-yellow-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -65,7 +65,7 @@ function ReviewCard({ data, onExpandChange }: { data: ReviewData, onExpandChange
 
             {/* Review text */}
             <div className="flex-1 z-10 relative">
-                <p className="text-[14px] text-slate-500 font-medium leading-relaxed">
+                <p className="text-[13px] sm:text-[14px] text-slate-500 font-medium leading-relaxed">
                     &ldquo;{isExpanded ? data.text : displayText}&rdquo;
                     {isLong && (
                         <button
@@ -164,12 +164,15 @@ export default function Testimonials() {
     }, [activeDot, displayReviews.length, isPaused])
 
     useGSAP(() => {
+        if (typeof window !== "undefined") {
+            gsap.registerPlugin(ScrollTrigger)
+        }
         // Animate header immediately
         gsap.from(".t-header", {
-            scrollTrigger: { trigger: sectionRef.current, start: "top 80%" },
-            y: 30,
+            scrollTrigger: { trigger: sectionRef.current, start: "top 85%" },
+            y: 24,
             opacity: 0,
-            duration: 0.8,
+            duration: 0.65,
             ease: "power2.out",
             clearProps: "all",
         })
@@ -203,16 +206,17 @@ export default function Testimonials() {
     return (
         <section
             ref={sectionRef}
-            className="pt-6 pb-6 md:pt-12 md:pb-12 bg-[#fffbf5] font-figtree overflow-hidden border-t border-slate-100/50"
+            className="py-10 sm:py-12 md:py-16 bg-[#fffbf5] font-figtree overflow-hidden border-t border-slate-100/50"
         >
-            <div className="container-custom mx-auto px-6">
+            <div className="container-custom mx-auto px-4 sm:px-6">
 
                 {/* ── Header ── */}
-                <div className="t-header flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 sm:gap-8 mb-8 sm:mb-12">
-                    <div className="space-y-2 sm:space-y-4">
-                        <span className="text-[#794d00] font-bold tracking-widest text-[10px] sm:text-xs uppercase flex items-center gap-2">Student Success
+                <div className="t-header flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 sm:gap-8 mb-6 sm:mb-12">
+                    <div className="space-y-1.5 sm:space-y-4">
+                        <span className="text-[#794d00] font-bold tracking-widest text-[10px] sm:text-xs uppercase block">
+                            Student Success
                         </span>
-                        <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold text-[#794d00] tracking-tight uppercase max-w-xl leading-tight">
+                        <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-[#794d00] tracking-tight uppercase max-w-xl leading-tight">
                             Our Community&apos;s <span className="text-slate-900">Success Stories.</span>
                         </h2>
                     </div>
@@ -222,7 +226,7 @@ export default function Testimonials() {
                         href={`https://search.google.com/local/reviews?placeid=${process.env.NEXT_PUBLIC_GOOGLE_PLACE_ID || 'ChIJH1GPIFlmXj4RGXfJA5vymIo'}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-3 px-4 py-2.5 sm:px-5 sm:py-3 bg-white rounded-[20px] border border-slate-100 shadow-xl shadow-slate-200/50 hover:shadow-slate-300/60 hover:border-blue-100 transition-all duration-200 cursor-pointer"
+                        className="flex items-center gap-3 px-4 py-2.5 sm:px-5 sm:py-3 bg-white rounded-[18px] sm:rounded-[20px] border border-slate-100 shadow-lg shadow-slate-200/50 hover:shadow-slate-300/60 hover:border-blue-100 transition-all duration-200 cursor-pointer"
                     >
                         <GoogleLogo className="w-5 h-5 sm:w-6 sm:h-6" />
                         <div>
@@ -237,17 +241,16 @@ export default function Testimonials() {
                     </a>
                 </div>
 
-                {/* ── Lunchbox Grid ── */}
                 {/* ── Mobile/Desktop Reviews Container ── */}
                 <div className="relative group/slider">
                     <div
                         ref={scrollRef}
                         onScroll={handleScroll}
                         data-lenis-prevent
-                        className="reviews-slider flex items-start sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 overflow-x-auto sm:overflow-x-visible snap-x snap-mandatory sm:snap-none no-scrollbar pb-4 sm:pb-0"
+                        className="reviews-slider flex items-stretch sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-6 overflow-x-auto sm:overflow-x-visible snap-x snap-mandatory sm:snap-none no-scrollbar pb-3 sm:pb-0"
                     >
                         {displayReviews.map((review, i) => (
-                            <div key={i} className="review-card-wrap flex-shrink-0 w-[calc(100vw-48px)] sm:w-auto snap-center">
+                            <div key={i} className="review-card-wrap flex-shrink-0 w-[80vw] max-w-[300px] sm:w-auto sm:max-w-none snap-start">
                                 <ReviewCard
                                     data={review}
                                     onExpandChange={(expanded) => setIsPaused(expanded)}
@@ -257,11 +260,21 @@ export default function Testimonials() {
                     </div>
 
                     {/* Mobile Dot Indicators */}
-                    <div className="flex sm:hidden justify-center gap-2 mt-4">
+                    <div className="flex sm:hidden justify-center gap-2 mt-3">
                         {displayReviews.map((_, i) => (
-                            <div
+                            <button
                                 key={i}
-                                className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${activeDot === i ? 'bg-blue-500 w-4' : 'bg-slate-200'}`}
+                                type="button"
+                                aria-label={`Go to review ${i + 1}`}
+                                onClick={() => {
+                                    if (!scrollRef.current) return
+                                    scrollRef.current.scrollTo({
+                                        left: i * scrollRef.current.offsetWidth * 0.88,
+                                        behavior: "smooth",
+                                    })
+                                    setActiveDot(i)
+                                }}
+                                className={`h-1.5 rounded-full transition-all duration-300 ${activeDot === i ? 'bg-[#794d00] w-5' : 'bg-slate-300 w-1.5'}`}
                             />
                         ))}
                     </div>

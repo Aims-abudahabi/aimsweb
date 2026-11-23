@@ -136,13 +136,13 @@ function CourseStackCard({
     total,
     smoothProgress,
 }: CourseStackCardProps) {
-    const localCardRef = useRef<HTMLDivElement>(null);
     const theme = CARD_THEMES[index % CARD_THEMES.length];
 
-    // Smooth depth recession as subsequent cards stack over this card
+    // Derive all transforms from the non-sticky parent stackRef progress (avoids sticky target jitter)
     const step = 1 / total;
     const start = index * step;
     const end = Math.min(1, start + step * 1.4);
+    const entryStart = Math.max(0, start - step);
     const targetScale = 1 - (total - 1 - index) * 0.028;
 
     const cardScale = useTransform(smoothProgress, [start, 1], [1, targetScale]);
@@ -151,29 +151,16 @@ function CourseStackCard({
         [start, end],
         [0, index === total - 1 ? 0 : 0.14]
     );
-
-    // Individual entrance parallax for the card image as it enters the viewport
-    const { scrollYProgress: entryProgress } = useScroll({
-        target: localCardRef,
-        offset: ["start end", "center center"],
-    });
-    const smoothEntry = useSpring(entryProgress, {
-        stiffness: 110,
-        damping: 22,
-        mass: 0.3,
-    });
-    const imageScale = useTransform(smoothEntry, [0, 1], [1.14, 1]);
-    const imageY = useTransform(smoothEntry, [0, 1], [18, 0]);
+    const imageScale = useTransform(smoothProgress, [entryStart, start + step * 0.25], [1.08, 1]);
 
     const topics = course.curriculum?.slice(0, 3) ?? [];
 
     return (
         <div
-            ref={localCardRef}
             className="sticky top-[var(--top-mobile)] lg:top-[var(--top-desktop)] will-change-transform"
             style={
                 {
-                    "--top-mobile": `${96 + index * 12}px`,
+                    "--top-mobile": `${84 + index * 10}px`,
                     "--top-desktop": `${112 + index * 20}px`,
                     zIndex: index + 1,
                 } as React.CSSProperties
@@ -181,11 +168,7 @@ function CourseStackCard({
         >
             <motion.article
                 style={{ scale: cardScale }}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.15 }}
-                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                className={`relative origin-top rounded-[24px] sm:rounded-[28px] border shadow-[0_14px_40px_rgba(15,23,42,0.09)] overflow-hidden transition-colors duration-300 group ${theme.surface} ${theme.border}`}
+                className={`relative origin-top rounded-[20px] sm:rounded-[28px] border shadow-[0_14px_40px_rgba(15,23,42,0.09)] overflow-hidden transition-colors duration-300 group ${theme.surface} ${theme.border}`}
             >
                 {/* Full-card accessible link */}
                 <Link
@@ -200,17 +183,19 @@ function CourseStackCard({
                     className="absolute inset-0 bg-slate-950 pointer-events-none z-10"
                 />
 
-                <div className="grid grid-cols-1 md:grid-cols-12 items-stretch gap-4 sm:gap-6 md:gap-7 p-5 sm:p-7 lg:p-8 relative z-0">
+                <div className="grid grid-cols-1 md:grid-cols-12 items-stretch gap-3 sm:gap-6 md:gap-7 p-4 sm:p-7 lg:p-8 relative z-0">
                     {/* Image — compact on top for mobile, right side for md+ */}
                     <div className="md:col-span-5 md:order-2 flex items-center pointer-events-none">
                         <div
-                            className={`relative w-full h-[160px] sm:h-[200px] md:h-full md:min-h-[260px] rounded-2xl overflow-hidden border ${theme.imageFrame}`}
+                            className={`relative w-full h-[136px] sm:h-[200px] md:h-full md:min-h-[260px] rounded-xl sm:rounded-2xl overflow-hidden border ${theme.imageFrame}`}
                         >
                             <motion.img
                                 src={getImageForCategory(course.id)}
                                 alt={course.title}
-                                style={{ scale: imageScale, y: imageY }}
-                                className="w-full h-full object-cover object-center transition-transform duration-500 ease-out group-hover:brightness-[1.03]"
+                                loading={index === 0 ? "eager" : "lazy"}
+                                decoding="async"
+                                style={{ scale: imageScale }}
+                                className="w-full h-full object-cover object-center transition-transform duration-500 ease-out group-hover:brightness-[1.03] will-change-transform"
                             />
                         </div>
                     </div>
@@ -312,7 +297,11 @@ export default function FeaturedCourses() {
         const stackTop = rect.top + window.scrollY;
         const scrollableSpan = Math.max(0, stackRef.current.offsetHeight - window.innerHeight);
         const targetY = stackTop + (idx / (featuredCourses.length - 1)) * scrollableSpan;
-        window.scrollTo({ top: targetY, behavior: "smooth" });
+        if (window.__lenis) {
+            window.__lenis.scrollTo(targetY, { duration: 0.9 });
+        } else {
+            window.scrollTo({ top: targetY, behavior: "smooth" });
+        }
     };
 
     if (loading) {
@@ -370,16 +359,14 @@ export default function FeaturedCourses() {
                                             key={course.id}
                                             type="button"
                                             onClick={() => scrollToCard(idx)}
-                                            className={`w-full text-left flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition-all duration-200 cursor-pointer ${
-                                                isActive
-                                                    ? "bg-[#fffbf5] border border-[#794d00]/20 text-slate-950 shadow-sm"
-                                                    : "border border-transparent text-slate-500 hover:text-slate-900 hover:bg-slate-50"
-                                            }`}
+                                            className={`w-full text-left flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition-all duration-200 cursor-pointer ${isActive
+                                                ? "bg-[#fffbf5] border border-[#794d00]/20 text-slate-950 shadow-sm"
+                                                : "border border-transparent text-slate-500 hover:text-slate-900 hover:bg-slate-50"
+                                                }`}
                                         >
                                             <span
-                                                className={`text-xs font-black tracking-wider ${
-                                                    isActive ? "text-[#794d00]" : "text-slate-300"
-                                                }`}
+                                                className={`text-xs font-black tracking-wider ${isActive ? "text-[#794d00]" : "text-slate-300"
+                                                    }`}
                                             >
                                                 0{idx + 1}
                                             </span>
@@ -414,11 +401,10 @@ export default function FeaturedCourses() {
                                             key={course.id}
                                             type="button"
                                             onClick={() => scrollToCard(idx)}
-                                            className={`shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all duration-200 cursor-pointer ${
-                                                isActive
-                                                    ? "bg-[#794d00] text-white shadow-sm"
-                                                    : "bg-[#fffbf5] border border-[#794d00]/15 text-slate-700"
-                                            }`}
+                                            className={`shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all duration-200 cursor-pointer ${isActive
+                                                ? "bg-[#794d00] text-white shadow-sm"
+                                                : "bg-[#fffbf5] border border-[#794d00]/15 text-slate-700"
+                                                }`}
                                         >
                                             <span className={isActive ? "text-amber-200" : "text-[#794d00]"}>
                                                 0{idx + 1}

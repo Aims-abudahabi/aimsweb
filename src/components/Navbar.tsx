@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import Image from "next/image"
 import { usePathname } from "next/navigation"
 import { useState, useEffect } from "react"
 import { Menu, X, ChevronDown } from "lucide-react"
@@ -49,20 +50,21 @@ export default function Navbar() {
 
     return (
         <div
-            className={`fixed top-0 left-0 w-full z-[1000] font-figtree flex justify-center transition-all duration-300 ${scrolled ? "pt-3" : "pt-5"
+            className={`fixed top-0 left-0 w-full z-[1000] font-figtree flex justify-center transition-all duration-300 ${scrolled ? "pt-2 sm:pt-3" : "pt-3 sm:pt-5"
                 }`}
         >
             {/* Pill Navbar Container */}
-            <nav className="w-full max-w-[1300px] mx-4 sm:mx-8 md:mx-10 lg:mx-16 xl:mx-auto bg-[#1e2a3b] rounded-full px-8 py-4 flex items-center justify-between shadow-[0_4px_30px_rgba(0,0,0,0.25)]">
+            <nav className="w-full max-w-[1300px] mx-3 sm:mx-8 md:mx-10 lg:mx-16 xl:mx-auto bg-[#1e2a3b] rounded-full px-4 sm:px-8 py-2.5 sm:py-4 flex items-center justify-between shadow-[0_4px_30px_rgba(0,0,0,0.25)]">
 
                 {/* Logo */}
                 <Link href="/" className="flex items-center shrink-0">
-                    <img
+                    <Image
                         src="/images/aims-logo.png"
-                        alt="AIMS Logo"
-                        loading="eager"
-                        fetchPriority="high"
-                        className="h-10 md:h-12 w-auto object-contain brightness-0 invert"
+                        alt="AIMS Training Center Logo"
+                        width={160}
+                        height={48}
+                        priority
+                        className="h-8 sm:h-10 md:h-12 w-auto object-contain brightness-0 invert"
                     />
                 </Link>
 

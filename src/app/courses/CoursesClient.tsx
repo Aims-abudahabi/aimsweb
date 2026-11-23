@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef, useMemo, Suspense } from "react"
 import { useSearchParams } from "next/navigation"
 import Link from "next/link"
-import { Search, BookOpen, Clock, ChevronRight, TrendingUp, ArrowRight, Star, X } from "lucide-react"
+import { ArrowRight } from "lucide-react"
 import _ from "lodash"
 import gsap from "gsap"
 import { useGSAP } from "@gsap/react"
@@ -24,12 +24,12 @@ const CATEGORY_ORDER = [
 ]
 
 const SIGNATURE_COURSE_IDS = [
-    'engineering-cad',
-    'office-administration',
-    'graphic-design-animation',
-    'finance-accounting',
-    'network-it',
-    'language-courses'
+    "engineering-cad",
+    "office-administration",
+    "graphic-design-animation",
+    "finance-accounting",
+    "network-it",
+    "language-courses",
 ]
 
 function CoursesContent() {
@@ -37,108 +37,130 @@ function CoursesContent() {
     const [activeCategory, setActiveCategory] = useState<string | null>(null)
     const { courses: coursesData, loading } = useCourses()
     const containerRef = useRef<HTMLDivElement>(null)
-    const stickyBarRef = useRef<HTMLDivElement>(null)
     const searchParams = useSearchParams()
 
-    // Filter using lodash
-    const filteredCourses = useMemo(() => _.filter(coursesData, course =>
-        course.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        course.category.toLowerCase().includes(searchTerm.toLowerCase())
-    ), [coursesData, searchTerm])
+    const filteredCourses = useMemo(
+        () =>
+            _.filter(
+                coursesData,
+                (course) =>
+                    course.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    course.category.toLowerCase().includes(searchTerm.toLowerCase())
+            ),
+        [coursesData, searchTerm]
+    )
 
-    // Grouped & ordered - Exclude signature cards from the list using lodash reject/groupBy
-    const groupedCourses = useMemo(() =>
-        _.groupBy(
-            _.reject(filteredCourses, course => SIGNATURE_COURSE_IDS.includes(course.id)),
-            'category'
-        ),
-        [filteredCourses])
+    const groupedCourses = useMemo(
+        () =>
+            _.groupBy(
+                _.reject(filteredCourses, (course) => SIGNATURE_COURSE_IDS.includes(course.id)),
+                "category"
+            ),
+        [filteredCourses]
+    )
 
-    const categories = useMemo(() =>
-        CATEGORY_ORDER.filter(cat => groupedCourses[cat]?.length > 0),
+    const categories = useMemo(
+        () => CATEGORY_ORDER.filter((cat) => groupedCourses[cat]?.length > 0),
         [groupedCourses]
     )
 
-    // Popular (most searched) courses
-    const popularCourses = useMemo(() =>
-        coursesData.filter(c => c.popular).slice(0, 4),
+    const popularCourses = useMemo(
+        () => coursesData.filter((c) => c.popular).slice(0, 4),
         [coursesData]
     )
-
-    // Handle category from URL
-    useEffect(() => {
-        if (!loading && coursesData.length > 0) {
-            const cat = searchParams.get("category")
-            if (cat) {
-                // Small delay to ensure layout is ready
-                setTimeout(() => {
-                    scrollToCategory(decodeURIComponent(cat))
-                }, 500)
-            }
-        }
-    }, [loading, searchParams, coursesData])
-
-    useGSAP(() => {
-        if (loading || coursesData.length === 0) return
-        if (typeof window !== "undefined") {
-            gsap.registerPlugin(ScrollTrigger)
-        }
-        gsap.from(".hero-reveal", {
-            y: 30,
-            opacity: 0,
-            stagger: 0.12,
-            duration: 0.8,
-            ease: "power3.out",
-        })
-    }, { dependencies: [loading, coursesData.length], scope: containerRef })
 
     const scrollToCategory = (cat: string) => {
         setActiveCategory(cat)
         const el = document.getElementById(`cat-${cat.replace(/\s+/g, "-").toLowerCase()}`)
-        el?.scrollIntoView({ behavior: "smooth", block: "start" })
+        if (!el) return
+        if (window.__lenis) {
+            window.__lenis.scrollTo(el, { offset: -140, duration: 0.85 })
+        } else {
+            el.scrollIntoView({ behavior: "smooth", block: "start" })
+        }
     }
 
+    useEffect(() => {
+        if (!loading && coursesData.length > 0) {
+            const cat = searchParams.get("category")
+            if (cat) {
+                setTimeout(() => {
+                    scrollToCategory(decodeURIComponent(cat))
+                }, 400)
+            }
+        }
+    }, [loading, searchParams, coursesData])
+
+    useGSAP(
+        () => {
+            if (loading || coursesData.length === 0) return
+            if (typeof window !== "undefined") {
+                gsap.registerPlugin(ScrollTrigger)
+            }
+            gsap.from(".hero-reveal", {
+                y: 24,
+                opacity: 0,
+                stagger: 0.1,
+                duration: 0.7,
+                ease: "power3.out",
+                clearProps: "all",
+            })
+        },
+        { dependencies: [loading, coursesData.length], scope: containerRef }
+    )
+
     return (
-        <div ref={containerRef} className="courses-page min-h-screen bg-[#fffbf5] font-figtree">
+        <div ref={containerRef} className="courses-page min-h-screen bg-white font-figtree">
+            {/* ── Dark Hero Header (Same model as Individual Courses & Enroll, no form) ── */}
+            <section className="relative w-full bg-[#020617] pt-24 sm:pt-36 lg:pt-40 pb-10 sm:pb-20 overflow-hidden">
+                {/* Background image — identical setup to CourseDetailClient & EnrollClient */}
+                <div className="absolute inset-0 z-0 bg-[url('/contact_hero_bg.png')] bg-cover bg-center bg-no-repeat transform scale-105">
+                    <div className="absolute inset-0 bg-[#020617]/65 bg-gradient-to-t from-[#020617] via-[#020617]/45 to-[#020617]/70" />
+                </div>
 
-            {/* ── Hero ── */}
-            <section className="relative bg-[#fffbf5] pt-28 pb-16 overflow-hidden border-b border-slate-100/60">
-                {/* Subtle warm background circle */}
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#794d00]/[0.03] rounded-full blur-[80px] pointer-events-none" />
+                <div className="container-custom mx-auto px-4 sm:px-6 max-w-[1400px] relative z-10">
+                    {/* Breadcrumb */}
+                    <nav
+                        aria-label="Breadcrumb"
+                        className="hero-reveal flex flex-wrap items-center gap-2 text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.16em] text-slate-400 mb-5 sm:mb-9"
+                    >
+                        <Link href="/" className="hover:text-white transition-colors">
+                            Home
+                        </Link>
+                        <span className="text-slate-600">/</span>
+                        <span className="text-[#c8915a]">Courses</span>
+                    </nav>
 
-                <div className="container-custom relative z-10 max-w-[1400px] mx-auto px-6 sm:px-8 md:px-12">
-                    <div className="flex flex-col items-center text-center gap-8 max-w-3xl mx-auto">
+                    <div className="max-w-3xl mx-auto flex flex-col items-center text-center space-y-4 sm:space-y-7">
+                        {/* Title & Description */}
+                        <div className="hero-reveal space-y-2.5 sm:space-y-4 flex flex-col items-center">
+                            <h1 className="font-black text-white leading-[1.06] tracking-tight text-3xl sm:text-5xl lg:text-6xl uppercase">
+                                Explore Our{" "}
+                                <span className="text-[#c8915a]">Training Catalog.</span>
+                            </h1>
 
-                        <div className="hero-reveal inline-flex items-center gap-2 px-4 py-2 bg-[#794d00]/10 border border-[#794d00]/20 rounded-full text-[#794d00] text-xs font-black uppercase tracking-[0.2em]">
-                            <BookOpen size={13} /> 50+ Professional Programs
+                            <p className="text-slate-300 text-xs sm:text-base lg:text-lg font-medium leading-relaxed max-w-2xl">
+                                Industry-recognised certifications crafted for ambitious professionals in Abu Dhabi. Find the program that accelerates your career.
+                            </p>
                         </div>
 
-                        <h1 className="hero-reveal font-extrabold text-slate-900 leading-[1.1] tracking-tight text-4xl sm:text-5xl xl:text-[64px]">
-                            Explore Our Complete <br className="hidden md:block" />
-                            <span className="text-[#794d00]">Training Catalog</span>
-                        </h1>
-
-                        <p className="hero-reveal text-slate-500 text-sm sm:text-base font-medium leading-relaxed max-w-xl">
-                            Industry-recognised certifications crafted for ambitious professionals in the Abu Dhabi. Find the program that accelerates your career.
-                        </p>
-
-                        {/* Search bar — matches site's card aesthetic */}
-                        <div className="hero-reveal w-full max-w-2xl group">
-                            <div className="relative flex items-center bg-white rounded-[20px] border border-slate-200 shadow-xl shadow-slate-200/50 transition-all focus-within:border-[#794d00]/40 focus-within:shadow-2xl focus-within:shadow-[#794d00]/10">
-                                <Search className="ml-6 text-slate-400 group-focus-within:text-[#794d00] transition-colors shrink-0" size={22} />
+                        {/* Clean Dark-Glass Pill Search Bar (No Icons) */}
+                        <div className="hero-reveal w-full max-w-2xl pt-0.5 sm:pt-1">
+                            <div className="relative flex items-center bg-white/10 backdrop-blur-xl rounded-full border border-white/20 focus-within:border-[#c8915a]/70 focus-within:bg-white/15 shadow-2xl transition-all p-1 sm:p-1.5">
                                 <input
                                     type="text"
-                                    placeholder="Search by course or category…"
+                                    placeholder="Search by course or category (e.g. AutoCAD, IELTS, Excel)…"
                                     value={searchTerm}
                                     onChange={(e) => setSearchTerm(e.target.value)}
-                                    className="w-full pl-4 pr-6 py-5 outline-none text-[17px] font-medium text-slate-900 bg-transparent placeholder:text-slate-400"
+                                    className="w-full pl-4 pr-3 py-2.5 sm:pl-5 sm:pr-4 sm:py-3.5 outline-none text-xs sm:text-base font-medium text-white bg-transparent placeholder:text-slate-300/70"
                                 />
                                 {searchTerm && (
                                     <button
+                                        type="button"
                                         onClick={() => setSearchTerm("")}
-                                        className="mr-4 p-1.5 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 transition-colors"
+                                        className="mr-1 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-white/15 hover:bg-white/25 text-white text-[11px] sm:text-xs font-bold uppercase tracking-wider transition-colors shrink-0 cursor-pointer"
                                     >
-                                        <X size={16} />
+                                        Clear
                                     </button>
                                 )}
                             </div>
@@ -147,30 +169,41 @@ function CoursesContent() {
                 </div>
             </section>
 
-            {/* ── Sticky Category Bar ── */}
+            {/* ── Sticky Category Filter Bar ── */}
             {!loading && categories.length > 0 && (
-                <div
-                    ref={stickyBarRef}
-                    className="sticky top-[76px] z-30 bg-[#fffbf5]/90 backdrop-blur-md border-b border-slate-100"
-                >
-                    <div className="container-custom max-w-[1400px] mx-auto px-6 sm:px-8 md:px-12 py-3 overflow-x-auto scrollbar-hide">
-                        <div className="flex items-center gap-2 min-w-max">
+                <div className="sticky top-[62px] sm:top-[82px] z-30 bg-white/95 backdrop-blur-md border-b border-slate-200/70">
+                    <div className="container-custom mx-auto px-4 sm:px-6 py-2.5 sm:py-3 overflow-x-auto no-scrollbar">
+                        <div className="flex items-center gap-1.5 sm:gap-2 min-w-max">
                             {searchTerm === "" && (
                                 <button
+                                    type="button"
                                     onClick={() => {
-                                        window.scrollTo({ top: 0, behavior: "smooth" })
+                                        if (window.__lenis) {
+                                            window.__lenis.scrollTo(0, { duration: 0.85 })
+                                        } else {
+                                            window.scrollTo({ top: 0, behavior: "smooth" })
+                                        }
                                         setActiveCategory(null)
                                     }}
-                                    className={`px-4 py-2 rounded-xl text-[11px] font-black uppercase tracking-widest transition-all whitespace-nowrap ${activeCategory === null ? "bg-[#794d00] text-white" : "text-slate-500 hover:text-[#794d00] hover:bg-[#794d00]/5"}`}
+                                    className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-[10px] sm:text-[11px] font-extrabold uppercase tracking-[0.12em] sm:tracking-[0.14em] transition-all whitespace-nowrap cursor-pointer ${
+                                        activeCategory === null
+                                            ? "bg-[#794d00] text-white shadow-sm"
+                                            : "bg-[#fffbf5] border border-[#794d00]/15 text-slate-700 hover:border-[#794d00]/40 hover:text-[#794d00]"
+                                    }`}
                                 >
                                     Top Picks
                                 </button>
                             )}
-                            {categories.map(cat => (
+                            {categories.map((cat) => (
                                 <button
                                     key={cat}
+                                    type="button"
                                     onClick={() => scrollToCategory(cat)}
-                                    className={`px-4 py-2 rounded-xl text-[11px] font-black uppercase tracking-widest transition-all whitespace-nowrap ${activeCategory === cat ? "bg-[#794d00] text-white" : "text-slate-500 hover:text-[#794d00] hover:bg-[#794d00]/5"}`}
+                                    className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-[10px] sm:text-[11px] font-extrabold uppercase tracking-[0.12em] sm:tracking-[0.14em] transition-all whitespace-nowrap cursor-pointer ${
+                                        activeCategory === cat
+                                            ? "bg-[#794d00] text-white shadow-sm"
+                                            : "bg-slate-50 border border-slate-200/80 text-slate-600 hover:border-[#794d00]/35 hover:text-[#794d00]"
+                                    }`}
                                 >
                                     {cat}
                                 </button>
@@ -180,202 +213,184 @@ function CoursesContent() {
                 </div>
             )}
 
-            <div className="container-custom max-w-[1400px] mx-auto px-6 sm:px-8 md:px-12 py-12 md:py-16 space-y-16 md:space-y-20">
-
-                {/* ── Most Searched / Popular ── */}
+            <div className="container-custom mx-auto px-4 sm:px-6 py-8 sm:py-14 md:py-16 space-y-10 sm:space-y-20">
+                {/* ── Top Picks / Most Searched Programs (No Icons) ── */}
                 {!loading && searchTerm === "" && popularCourses.length > 0 && (
-                    <div className="popular-section space-y-10">
-                        {/* Section header — same style as FeaturedCourses */}
-                        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
-                            <div className="space-y-3">
-                                <span className="text-[#794d00] font-bold tracking-widest text-xs uppercase flex items-center gap-2">
-                                    <TrendingUp size={14} className="text-blue-500" /> Most Searched Programs
+                    <section className="space-y-5 sm:space-y-10">
+                        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-2.5 sm:gap-6">
+                            <div className="space-y-1 sm:space-y-2.5">
+                                <span className="text-[#794d00] font-bold tracking-[0.2em] text-[10px] sm:text-xs uppercase block">
+                                    Most Searched Programs
                                 </span>
-                                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#794d00] tracking-tight uppercase max-w-xl leading-tight">
+                                <h2 className="text-xl sm:text-3xl md:text-4xl font-bold text-[#794d00] tracking-tight uppercase leading-tight">
                                     Top Picks <span className="text-slate-900">This Month.</span>
                                 </h2>
                             </div>
-                            <p className="text-slate-600 text-base max-w-sm leading-relaxed">
-                                The most requested certifications by professionals across the Abu Dhabi right now.
+                            <p className="text-slate-600 text-xs sm:text-base max-w-md leading-relaxed">
+                                The most requested certifications by professionals across Abu Dhabi right now.
                             </p>
                         </div>
 
-                        {/* Popular cards — same styling as FeaturedCourses cards */}
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
                             {popularCourses.map((course, idx) => (
-                                <div
+                                <article
                                     key={course.id}
-                                    className="bg-white p-5 pb-3 sm:p-8 rounded-[20px] border border-slate-100 shadow-xl shadow-slate-200/50 transition-all hover:scale-[1.01] duration-300 flex flex-col gap-3 sm:gap-6 group relative hover:shadow-[0_15px_40px_-5px_rgba(0,0,0,0.15)]"
+                                    className="group relative bg-[#fffbf5] rounded-[18px] sm:rounded-[24px] border border-[#794d00]/15 p-4 sm:p-7 flex flex-col justify-between gap-3.5 sm:gap-5 hover:border-[#794d00]/40 hover:shadow-[0_14px_34px_rgba(121,77,0,0.08)] transition-all duration-300"
                                 >
-                                    {/* Clickable Overlay Link covering the entire card */}
                                     <Link
                                         href={`/courses/${course.id}`}
                                         className="absolute inset-0 z-20 cursor-pointer"
                                         aria-label={`Explore ${course.title}`}
                                     />
 
-                                    {/* Content Wrapper for event transparency */}
-                                    <div className="flex flex-col gap-3 sm:gap-6 flex-1 pointer-events-none animate-all duration-300">
-                                        {/* Trending badge */}
-                                        <div className="absolute top-5 right-5 text-amber-500 bg-amber-50 p-1.5 rounded-lg z-20">
-                                            <Star size={14} fill="currentColor" />
-                                        </div>
-
-                                        {/* Icon row */}
-                                        <div className="flex items-center justify-between">
-                                            <div className="text-blue-500 transform group-hover:scale-110 transition-transform duration-300">
-                                                <BookOpen className="w-6 h-6 sm:w-8 sm:h-8" />
-                                            </div>
-                                            <span className="text-2xl sm:text-3xl font-black text-slate-100 group-hover:text-slate-200 transition-colors select-none">
-                                                0{idx + 1}
-                                            </span>
-                                        </div>
-
-                                        {/* Content */}
-                                        <div className="space-y-1 sm:space-y-3 flex-1">
-                                            <h3 className="text-[16px] sm:text-[19px] font-bold text-[#0f172a] leading-[1.3]">
-                                                {course.title}
-                                            </h3>
-                                            <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">
-                                                {course.category}
-                                            </p>
-                                            <p className="text-[12px] sm:text-[14px] text-slate-500 font-medium leading-relaxed line-clamp-2">
-                                                {course.description}
-                                            </p>
-                                        </div>
-
-                                        {/* Styled CTA at bottom */}
-                                        <div className="hidden sm:flex items-center justify-between mt-auto pt-3 border-t border-slate-50">
-                                            <span className="text-[10px] font-black tracking-widest uppercase text-[#794d00]">Learn More</span>
-                                            <div className="w-7 h-7 rounded-full bg-slate-50 flex items-center justify-center text-[#794d00] group-hover/link:bg-[#794d00] group-hover/link:text-white transition-all duration-300">
-                                                <ArrowRight size={12} className="group-hover/link:translate-x-0.5 transition-transform" />
-                                            </div>
-                                        </div>
+                                    <div className="flex items-center justify-between gap-3 pointer-events-none">
+                                        <span className="text-[11px] sm:text-xs font-black tracking-[0.18em] text-[#794d00]/70">
+                                            0{idx + 1}
+                                        </span>
+                                        <span className="px-2.5 py-0.5 sm:py-1 rounded-full bg-[#794d00] text-white text-[9px] sm:text-[10px] font-extrabold uppercase tracking-wider">
+                                            Popular
+                                        </span>
                                     </div>
-                                </div>
+
+                                    <div className="space-y-1.5 sm:space-y-2 flex-1 pointer-events-none">
+                                        <p className="text-[9px] sm:text-[10px] text-[#794d00] font-extrabold uppercase tracking-[0.16em]">
+                                            {course.category}
+                                        </p>
+                                        <h3 className="text-base sm:text-xl font-extrabold text-slate-950 leading-snug tracking-tight">
+                                            {course.title}
+                                        </h3>
+                                        <p className="text-xs sm:text-sm text-slate-600 leading-relaxed line-clamp-2">
+                                            {course.description}
+                                        </p>
+                                    </div>
+
+                                    <div className="pt-3 sm:pt-4 border-t border-[#794d00]/10 flex items-center justify-between pointer-events-none">
+                                        <span className="text-[11px] font-bold text-slate-500">
+                                            {course.duration}
+                                        </span>
+                                        <span className="inline-flex items-center gap-1.5 text-[10px] font-black tracking-widest uppercase text-[#794d00] group-hover:text-slate-950 transition-colors">
+                                            Explore
+                                            <ArrowRight size={13} className="group-hover:translate-x-1 transition-transform" />
+                                        </span>
+                                    </div>
+                                </article>
                             ))}
                         </div>
-
-                        {/* Footer divider */}
-                        <div className="pt-10 border-t border-slate-100/80" />
-                    </div>
+                    </section>
                 )}
 
                 {/* ── Loading State ── */}
                 {loading && (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5 sm:gap-5">
                         {[1, 2, 3, 4, 5, 6].map((i) => (
-                            <div key={i} className="bg-white/50 animate-pulse h-[280px] rounded-[20px] border border-slate-100" />
+                            <div
+                                key={i}
+                                className="bg-slate-100 animate-pulse h-[180px] sm:h-[240px] rounded-[18px] sm:rounded-[24px]"
+                            />
                         ))}
                     </div>
                 )}
 
-                {/* ── Categorized Courses ── */}
+                {/* ── Categorized Courses (Redesigned Editorial Cards — Zero Icons) ── */}
                 {!loading && (
-                    <div className="space-y-24">
+                    <div className="space-y-10 sm:space-y-20">
                         {categories.map((cat) => (
-                            <div
+                            <section
                                 key={cat}
                                 id={`cat-${cat.replace(/\s+/g, "-").toLowerCase()}`}
-                                className="scroll-mt-40 space-y-10"
+                                className="scroll-mt-32 sm:scroll-mt-36 space-y-4 sm:space-y-8"
                             >
-                                {/* Category header — matching FeaturedCourses style */}
-                                <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 pb-4 border-b border-slate-100">
-                                    <div className="space-y-2">
-                                        <span className="text-[#794d00] font-bold tracking-widest text-xs uppercase flex items-center gap-2">
-                                            <BookOpen size={13} className="text-blue-500" />
-                                            {groupedCourses[cat].length} Specialized Tracks
+                                {/* Category Header */}
+                                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-2 sm:gap-3 pb-3 sm:pb-4 border-b border-slate-200/70">
+                                    <div className="space-y-0.5 sm:space-y-1">
+                                        <span className="text-[#794d00] font-bold tracking-[0.2em] text-[10px] sm:text-xs uppercase block">
+                                            {groupedCourses[cat].length} Specialized {groupedCourses[cat].length === 1 ? "Track" : "Tracks"}
                                         </span>
-                                        <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-[#794d00] tracking-tight uppercase leading-tight">
+                                        <h2 className="text-xl sm:text-3xl font-bold text-slate-950 tracking-tight uppercase leading-tight">
                                             {cat}
                                         </h2>
                                     </div>
-                                    <Link
-                                        href={`#cat-${cat.replace(/\s+/g, "-").toLowerCase()}`}
-                                        className="group inline-flex items-center gap-2 text-[10px] font-black tracking-widest uppercase text-[#794d00] hover:text-slate-900 transition-colors shrink-0"
-                                    >
-                                        View All {cat}
-                                        <ArrowRight size={13} className="group-hover:translate-x-1 transition-transform" />
-                                    </Link>
+                                    <span className="px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full bg-[#f5f5f7] border border-slate-200/80 text-[10px] sm:text-[11px] font-bold text-slate-600">
+                                        ACTVET Approved
+                                    </span>
                                 </div>
 
-                                {/* Course cards — matching FeaturedCourses card style */}
-                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                    {groupedCourses[cat].map((course) => (
-                                        <div
+                                {/* Course Cards */}
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5">
+                                    {groupedCourses[cat].map((course, idx) => (
+                                        <article
                                             key={course.id}
-                                            className="group relative bg-white p-5 pb-3 sm:p-8 rounded-[20px] border border-slate-100 shadow-xl shadow-slate-200/50 transition-all hover:scale-[1.01] duration-300 flex flex-col gap-3 sm:gap-6 hover:shadow-[0_15px_40px_-5px_rgba(0,0,0,0.15)]"
+                                            className="group relative bg-white rounded-[18px] sm:rounded-[24px] border border-slate-200/80 p-4 sm:p-7 flex flex-col justify-between gap-3.5 sm:gap-5 shadow-[0_6px_24px_rgba(15,23,42,0.03)] hover:shadow-[0_14px_34px_rgba(15,23,42,0.08)] hover:border-[#794d00]/35 transition-all duration-300"
                                         >
-                                            {/* Clickable Overlay Link covering the entire card */}
                                             <Link
                                                 href={`/courses/${course.id}`}
                                                 className="absolute inset-0 z-20 cursor-pointer"
                                                 aria-label={`Explore ${course.title}`}
                                             />
 
-                                            {/* Content Wrapper for event transparency */}
-                                            <div className="flex flex-col gap-3 sm:gap-6 flex-1 pointer-events-none">
-                                                {/* Top row */}
-                                                <div className="flex items-center justify-between">
-                                                    <div className="text-blue-500 transform group-hover:scale-110 transition-transform duration-300">
-                                                        <BookOpen className="w-6 h-6 sm:w-8 sm:h-8" />
-                                                    </div>
-                                                    <span className="px-3 py-1 bg-slate-50 text-[10px] font-black text-slate-400 uppercase tracking-widest rounded-lg group-hover:bg-blue-50 group-hover:text-blue-600 transition-colors">
-                                                        {course.level}
-                                                    </span>
-                                                </div>
-
-                                                {/* Content */}
-                                                <div className="space-y-1 sm:space-y-3 flex-1">
-                                                    <h3 className="text-[16px] sm:text-[19px] font-bold text-[#0f172a] leading-[1.25]">
-                                                        {course.title}
-                                                    </h3>
-                                                    <p className="text-[12px] sm:text-[14px] text-slate-500 font-medium leading-relaxed line-clamp-2">
-                                                        {course.description}
-                                                    </p>
-                                                    <div className="flex items-center gap-2 text-[11px] sm:text-[12px] text-slate-400 font-bold mt-1 sm:mt-2">
-                                                        <Clock size={14} className="text-blue-500" />
-                                                        {course.duration}
-                                                    </div>
-                                                </div>
-
-                                                {/* Styled CTA at bottom */}
-                                                <div className="hidden sm:flex items-center justify-between mt-auto pt-3 border-t border-slate-50">
-                                                    <span className="text-[10px] font-black tracking-widest uppercase text-[#794d00]">View Details</span>
-                                                    <div className="w-7 h-7 rounded-full bg-slate-50 flex items-center justify-center text-[#794d00] group-hover/link:bg-[#794d00] group-hover/link:text-white transition-all duration-300">
-                                                        <ArrowRight size={12} className="group-hover/link:translate-x-0.5 transition-transform" />
-                                                    </div>
-                                                </div>
+                                            {/* Top Meta Row */}
+                                            <div className="flex items-center justify-between gap-3 pointer-events-none">
+                                                <span className="text-[11px] sm:text-xs font-extrabold tracking-[0.16em] text-slate-400">
+                                                    {String(idx + 1).padStart(2, "0")}
+                                                </span>
+                                                <span className="px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full bg-[#f5f5f7] text-[9px] sm:text-[10px] font-extrabold text-slate-700 uppercase tracking-wider group-hover:bg-[#fffbf5] group-hover:text-[#794d00] transition-colors">
+                                                    {course.level}
+                                                </span>
                                             </div>
-                                        </div>
+
+                                            {/* Body */}
+                                            <div className="space-y-1.5 sm:space-y-2.5 flex-1 pointer-events-none">
+                                                <h3 className="text-base sm:text-xl font-extrabold text-slate-950 leading-snug tracking-tight group-hover:text-[#794d00] transition-colors">
+                                                    {course.title}
+                                                </h3>
+                                                <p className="text-xs sm:text-sm text-slate-500 leading-relaxed line-clamp-2">
+                                                    {course.description}
+                                                </p>
+                                            </div>
+
+                                            {/* Footer Row */}
+                                            <div className="pt-3 sm:pt-4 border-t border-slate-100 flex items-center justify-between gap-3 pointer-events-none">
+                                                <span className="text-[11px] font-bold text-slate-500">
+                                                    {course.duration}
+                                                </span>
+                                                <span className="inline-flex items-center gap-1.5 text-[10px] font-black tracking-widest uppercase text-[#794d00] group-hover:text-slate-950 transition-colors">
+                                                    View Details
+                                                    <ArrowRight size={13} className="group-hover:translate-x-1 transition-transform" />
+                                                </span>
+                                            </div>
+                                        </article>
                                     ))}
                                 </div>
-                            </div>
+                            </section>
                         ))}
                     </div>
                 )}
 
-                {/* ── Empty State ── */}
+                {/* ── Empty State (No Icons) ── */}
                 {!loading && categories.length === 0 && (
-                    <div className="text-center py-32 space-y-8">
-                        <div className="inline-flex items-center justify-center w-24 h-24 bg-[#794d00]/5 rounded-full">
-                            <Search size={40} className="text-[#794d00]/40" />
-                        </div>
-                        <div className="space-y-3">
-                            <h3 className="text-2xl font-bold text-slate-900">No programs found</h3>
-                            <p className="text-slate-500 max-w-md mx-auto text-base font-medium">
-                                We couldn&apos;t find any courses matching <strong>&quot;{searchTerm}&quot;</strong>. Try a different keyword like &quot;Excel&quot; or &quot;AutoCAD&quot;.
+                    <div className="max-w-xl mx-auto text-center py-10 sm:py-24 px-5 sm:px-6 bg-[#fffbf5] rounded-[20px] sm:rounded-[28px] border border-[#794d00]/15 space-y-4 sm:space-y-5">
+                        <span className="inline-block px-3.5 py-1 rounded-full bg-white border border-[#794d00]/15 text-[10px] sm:text-[11px] font-extrabold uppercase tracking-wider text-[#794d00]">
+                            No Match Found
+                        </span>
+                        <div className="space-y-2">
+                            <h3 className="text-xl sm:text-2xl font-extrabold text-slate-950">
+                                No programs found
+                            </h3>
+                            <p className="text-slate-500 text-xs sm:text-base font-medium leading-relaxed">
+                                We couldn&apos;t find any courses matching <strong>&quot;{searchTerm}&quot;</strong>. Try searching for &quot;Excel&quot;, &quot;AutoCAD&quot;, or &quot;IELTS&quot;.
                             </p>
                         </div>
                         <button
+                            type="button"
                             onClick={() => setSearchTerm("")}
-                            className="bg-[#794d00] text-white px-8 py-4 rounded-2xl font-bold text-[15px] transition-all hover:bg-[#1e2a3b] hover:text-blue-500 hover:scale-[1.02] active:scale-[0.98] shadow-xl shadow-[#794d00]/20"
+                            className="inline-flex items-center justify-center rounded-full bg-[#794d00] hover:bg-[#1e2a3b] text-white px-6 sm:px-7 py-3 sm:py-3.5 font-bold text-xs uppercase tracking-widest transition-all cursor-pointer"
                         >
                             View All Programs
                         </button>
                     </div>
                 )}
             </div>
+
             <ContactForm />
             <FAQ />
         </div>
@@ -384,11 +399,13 @@ function CoursesContent() {
 
 export default function CoursesClient() {
     return (
-        <Suspense fallback={
-            <div className="min-h-screen bg-[#fffbf5] flex items-center justify-center">
-                <div className="w-10 h-10 border-4 border-[#794d00]/20 border-t-[#794d00] rounded-full animate-spin" />
-            </div>
-        }>
+        <Suspense
+            fallback={
+                <div className="min-h-screen bg-[#fffbf5] flex items-center justify-center">
+                    <div className="w-10 h-10 border-4 border-[#794d00]/20 border-t-[#794d00] rounded-full animate-spin" />
+                </div>
+            }
+        >
             <CoursesContent />
         </Suspense>
     )
