@@ -97,6 +97,7 @@ export function buildHomepageJsonLd() {
   const featuredCourses = FEATURED_COURSE_IDS.map((id) => coursesData[id]).filter(
     (c): c is Course => Boolean(c)
   );
+  const activeOffers = getActiveOffers();
   const addressNode = {
     "@type": "PostalAddress",
     streetAddress: ORGANIZATION_INFO.address.streetAddress,
@@ -149,6 +150,27 @@ export function buildHomepageJsonLd() {
         },
         openingHours: "Mo-Su 09:00-21:00",
         sameAs: ORGANIZATION_INFO.sameAs,
+        ...(activeOffers.length > 0
+          ? {
+              hasOfferCatalog: {
+                "@type": "OfferCatalog",
+                name: "Active Course Offers",
+                itemListElement: activeOffers.map((offer) => {
+                  const priceMatch = offer.subtitle?.match(/AED\s*([\d,]+(?:\.\d+)?)/i);
+                  return {
+                    "@type": "Offer",
+                    name: offer.badge ? `${offer.title} (${offer.badge})` : offer.title,
+                    description: offer.subtitle || offer.description || offer.title,
+                    url: `${SITE_URL}/offers/#${encodeURIComponent(offer.id)}`,
+                    availability: "https://schema.org/InStock",
+                    ...(priceMatch
+                      ? { price: priceMatch[1].replace(/,/g, ""), priceCurrency: "AED" }
+                      : {}),
+                  };
+                }),
+              },
+            }
+          : {}),
       },
       {
         "@type": "WebSite",

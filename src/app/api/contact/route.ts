@@ -45,6 +45,7 @@ export async function POST(req: Request) {
     const contact = typeof body.contact === "string" ? body.contact.trim() : "";
     const course = typeof body.course === "string" ? body.course.trim() : "";
     const location = typeof body.location === "string" ? body.location.trim() : "";
+    const offer = typeof body.offer === "string" ? body.offer.trim() : "";
 
     if (!name || !email || !contact) {
       return NextResponse.json(
@@ -67,7 +68,7 @@ export async function POST(req: Request) {
       );
     }
 
-    if (course.length > 150 || location.length > 150) {
+    if (course.length > 150 || location.length > 150 || offer.length > 200) {
       return NextResponse.json(
         { message: "Input exceeds maximum allowed length." },
         { status: 400 }
@@ -125,14 +126,29 @@ export async function POST(req: Request) {
             socketTimeout: 10000,
           });
 
-    const safeSubjectCourse = sanitizeHeaderValue(course || "General");
+    const isOfferInquiry = offer.length > 0;
+    const safeSubjectTarget = sanitizeHeaderValue(
+      isOfferInquiry ? offer : course || "General"
+    );
 
     await transporter.sendMail({
-      from: `"Website Contact" <${emailUser}>`,
+      from: isOfferInquiry
+        ? `"Offer Inquiry - AIMS" <${emailUser}>`
+        : `"Website Contact" <${emailUser}>`,
       to: emailTo ?? emailUser,
       replyTo: sanitizeHeaderValue(email),
-      subject: `New Inquiry - ${safeSubjectCourse}`,
-      html: `
+      subject: isOfferInquiry
+        ? `Offer Inquiry - ${safeSubjectTarget}`
+        : `New Inquiry - ${safeSubjectTarget}`,
+      html: isOfferInquiry
+        ? `
+        <h2>Offer Inquiry: ${escapeHtml(offer)}</h2>
+        <p><strong>Selected Offer:</strong> ${escapeHtml(offer)}</p>
+        <p><strong>Name:</strong> ${escapeHtml(name)}</p>
+        <p><strong>Mobile Number:</strong> ${escapeHtml(contact)}</p>
+        <p><strong>Email:</strong> ${escapeHtml(email)}</p>
+      `
+        : `
         <h2>New Inquiry</h2>
         <p><strong>Name:</strong> ${escapeHtml(name)}</p>
         <p><strong>Email:</strong> ${escapeHtml(email)}</p>

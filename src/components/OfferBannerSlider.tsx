@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from "react"
 import Link from "next/link"
 import { AnimatePresence, motion } from "framer-motion"
 import type { Offer } from "@/data/offer"
+import OfferClaimModal from "@/components/OfferClaimModal"
 
 interface OfferBannerSliderProps {
     offers: Offer[]
@@ -21,6 +22,7 @@ export default function OfferBannerSlider({
     const [currentIndex, setCurrentIndex] = useState(0)
     const [direction, setDirection] = useState(1)
     const [isPaused, setIsPaused] = useState(false)
+    const [selectedOffer, setSelectedOffer] = useState<Offer | null>(null)
 
     const count = offers.length
 
@@ -37,10 +39,10 @@ export default function OfferBannerSlider({
     }
 
     useEffect(() => {
-        if (count <= 1 || isPaused) return
+        if (count <= 1 || isPaused || selectedOffer) return
         const timer = setInterval(goToNext, autoPlayInterval)
         return () => clearInterval(timer)
-    }, [count, isPaused, autoPlayInterval, goToNext])
+    }, [count, isPaused, selectedOffer, autoPlayInterval, goToNext])
 
     if (count === 0) return null
 
@@ -48,12 +50,6 @@ export default function OfferBannerSlider({
     const currentOffer = offers[safeIndex]
 
     const hasImage = Boolean(currentOffer.image && currentOffer.image.trim().length > 0)
-    const hasText = Boolean(
-        (currentOffer.title && currentOffer.title.trim().length > 0) ||
-        (currentOffer.subtitle && currentOffer.subtitle.trim().length > 0) ||
-        (currentOffer.eyebrow && currentOffer.eyebrow.trim().length > 0)
-    )
-
     const isHero = variant === "hero"
     const ctaHref = currentOffer.ctaLink?.trim() || "/offers"
     const ctaLabel = currentOffer.ctaText?.trim() || "View Offer"
@@ -75,7 +71,7 @@ export default function OfferBannerSlider({
 
     return (
         <div
-            className={`relative w-full overflow-hidden rounded-[18px] sm:rounded-[28px] border shadow-[0_12px_36px_rgba(15,23,42,0.12)] transition-shadow duration-300 hover:shadow-[0_16px_44px_rgba(15,23,42,0.16)] group ${hasImage
+            className={`relative w-full overflow-hidden rounded-[12px] sm:rounded-[22px] md:rounded-[28px] border shadow-[0_12px_36px_rgba(15,23,42,0.12)] transition-shadow duration-300 hover:shadow-[0_16px_44px_rgba(15,23,42,0.16)] group ${hasImage
                 ? "bg-[#0f172a] border-slate-800/70"
                 : "bg-[#f5f5f7] border-slate-200/80"
                 } ${isHero ? "max-w-[960px] mb-5 sm:mb-8" : "max-w-full"}`}
@@ -84,13 +80,8 @@ export default function OfferBannerSlider({
             aria-roledescription="carousel"
             aria-label="Special Offers"
         >
-            {/* Slide Content Area */}
-            <div
-                className={`relative w-full ${isHero
-                    ? "min-h-[160px] sm:min-h-[225px]"
-                    : "min-h-[200px] sm:min-h-[320px]"
-                    } flex items-center justify-center`}
-            >
+            {/* Proportional Banner Area (auto-scales smoothly on mobile & desktop with zero cropping) */}
+            <div className="relative w-full aspect-[7671/1978]">
                 <AnimatePresence mode="wait" custom={direction}>
                     <motion.div
                         key={currentOffer.id || safeIndex}
@@ -100,9 +91,9 @@ export default function OfferBannerSlider({
                         animate="center"
                         exit="exit"
                         transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                        className="relative w-full h-full flex items-center justify-center"
+                        className="relative w-full h-full"
                     >
-                        {/* Full-Bleed Background Image Layer */}
+                        {/* Full-Bleed Banner Image */}
                         {hasImage && (
                             <>
                                 <img
@@ -110,122 +101,54 @@ export default function OfferBannerSlider({
                                     alt={currentOffer.imageAlt || currentOffer.title || "Special offer"}
                                     className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-[1.03]"
                                 />
-                                {hasText && (
-                                    <div className="absolute inset-0 bg-gradient-to-r from-[#0f172a]/85 via-[#0f172a]/70 to-[#0f172a]/75 pointer-events-none" />
-                                )}
+                                {/* Subtle bottom gradient solely to keep overlaid buttons & dots legible */}
+                                <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/55 via-black/15 to-transparent pointer-events-none" />
                             </>
                         )}
 
-                        {hasImage && !hasText ? (
-                            /* Image-only full clickable banner mode */
-                            <Link
-                                href={ctaHref}
-                                className={`relative z-10 block w-full ${isHero ? "min-h-[160px] sm:min-h-[225px]" : "min-h-[200px] sm:min-h-[320px]"
-                                    }`}
-                                aria-label={currentOffer.imageAlt || "View special offer"}
-                            />
-                        ) : (
-                            /* Foreground Offer Content */
-                            <div
-                                className={`relative z-10 w-full flex flex-col items-center text-center max-w-2xl mx-auto ${isHero
-                                    ? "px-4 sm:px-10 md:px-12 pt-5 pb-9 sm:pt-7 sm:pb-11"
-                                    : "px-4 sm:px-10 md:px-14 pt-6 pb-10 sm:pt-11 sm:pb-14"
+                        {/* Clickable Banner Trigger + Overlaid Action Buttons */}
+                        <button
+                            type="button"
+                            onClick={() => setSelectedOffer(currentOffer)}
+                            aria-label={currentOffer.imageAlt || currentOffer.title || "Claim special offer"}
+                            className="absolute inset-0 z-10 cursor-pointer"
+                        />
+
+                        <div
+                            className="absolute left-[66.5%] -translate-x-1/2 bottom-[13%] z-20 flex flex-nowrap items-center justify-center gap-1 sm:gap-2 md:gap-3"
+                        >
+                            <button
+                                type="button"
+                                onClick={() => setSelectedOffer(currentOffer)}
+                                className={`inline-flex items-center justify-center whitespace-nowrap rounded-[5px] sm:rounded-lg md:rounded-xl font-semibold leading-none transition-all duration-200 active:scale-95 cursor-pointer ${isHero
+                                    ? "px-2 py-1 sm:px-3.5 sm:py-1.5 md:px-5 md:py-2 text-[8px] sm:text-[11px] md:text-[13px]"
+                                    : "px-2.5 py-1 sm:px-5 sm:py-2 md:px-7 md:py-2.5 text-[9px] sm:text-xs md:text-sm"
+                                    } ${hasImage
+                                        ? "bg-white text-slate-950 hover:bg-[#fffbf5] shadow-md"
+                                        : "border border-slate-900 bg-slate-900 text-white hover:bg-[#794d00] hover:border-[#794d00]"
                                     }`}
                             >
-                                {/* Eyebrow & Badge */}
-                                {(currentOffer.eyebrow?.trim() || currentOffer.badge?.trim()) && (
-                                    <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 mb-1.5 sm:mb-2.5">
-                                        {currentOffer.badge && currentOffer.badge.trim() && (
-                                            <span
-                                                className={`px-2 sm:px-2.5 py-0.5 rounded-full text-[9px] sm:text-[10px] font-extrabold tracking-wider uppercase ${hasImage
-                                                    ? "bg-[#794d00] text-white shadow-sm"
-                                                    : "bg-slate-900 text-white"
-                                                    }`}
-                                            >
-                                                {currentOffer.badge}
-                                            </span>
-                                        )}
-                                        {currentOffer.eyebrow && currentOffer.eyebrow.trim() && (
-                                            <span
-                                                className={`font-extrabold tracking-[0.16em] sm:tracking-[0.18em] uppercase ${isHero ? "text-[9px] sm:text-xs" : "text-[10px] sm:text-[13px]"
-                                                    } ${hasImage ? "text-amber-300" : "text-[#794d00]"}`}
-                                            >
-                                                {currentOffer.eyebrow}
-                                            </span>
-                                        )}
-                                    </div>
-                                )}
+                                {ctaLabel}
+                            </button>
 
-                                {/* Headline */}
-                                {currentOffer.title && currentOffer.title.trim() && (
-                                    <h2
-                                        className={`font-extrabold tracking-tight leading-[1.12] ${isHero
-                                            ? "text-lg sm:text-3xl md:text-[34px]"
-                                            : "text-xl sm:text-4xl md:text-[44px]"
-                                            } ${hasImage ? "text-white drop-shadow-sm" : "text-slate-950"}`}
-                                    >
-                                        {currentOffer.title}
-                                    </h2>
-                                )}
-
-                                {/* Subtitle / Price */}
-                                {currentOffer.subtitle && currentOffer.subtitle.trim() && (
-                                    <p
-                                        className={`font-medium mt-1.5 sm:mt-2 ${isHero ? "text-xs sm:text-sm md:text-base" : "text-xs sm:text-base md:text-lg"
-                                            } ${hasImage ? "text-slate-200" : "text-slate-600"}`}
-                                    >
-                                        {currentOffer.subtitle}
-                                    </p>
-                                )}
-
-                                {/* Action Buttons */}
-                                <div
-                                    className={`flex flex-wrap items-center justify-center gap-2 sm:gap-2.5 ${isHero ? "mt-3 sm:mt-4" : "mt-4 sm:mt-6"
+                            {isHero && ctaHref !== "/offers" && (
+                                <Link
+                                    href="/offers"
+                                    className={`inline-flex items-center justify-center whitespace-nowrap rounded-[5px] sm:rounded-lg md:rounded-xl font-semibold leading-none transition-colors px-2 py-1 sm:px-3.5 sm:py-1.5 md:px-5 md:py-2 text-[8px] sm:text-[11px] md:text-[13px] ${hasImage
+                                        ? "border border-white/40 bg-black/35 backdrop-blur-sm text-white hover:bg-black/55"
+                                        : "border border-slate-300 bg-white text-[#794d00] hover:bg-[#794d00]/10"
                                         }`}
                                 >
-                                    <Link
-                                        href={ctaHref}
-                                        className={`inline-flex items-center justify-center rounded-full font-semibold transition-all duration-200 active:scale-95 ${isHero
-                                            ? "px-4 py-1.5 sm:px-5 text-[11px] sm:text-[13px]"
-                                            : "px-5 py-2 sm:px-7 sm:py-2.5 text-xs sm:text-sm"
-                                            } ${hasImage
-                                                ? "bg-white text-slate-950 hover:bg-[#fffbf5] shadow-md"
-                                                : "border border-slate-900 text-slate-900 hover:bg-slate-900 hover:text-white"
-                                            }`}
-                                    >
-                                        {ctaLabel}
-                                    </Link>
-
-                                    {isHero && ctaHref !== "/offers" && (
-                                        <Link
-                                            href="/offers"
-                                            className={`inline-flex items-center justify-center rounded-full px-3.5 sm:px-4 py-1.5 text-[11px] sm:text-xs font-semibold transition-colors ${hasImage
-                                                ? "border border-white/35 bg-white/10 backdrop-blur-sm text-white hover:bg-white/20"
-                                                : "text-[#794d00] hover:bg-[#794d00]/10"
-                                                }`}
-                                        >
-                                            All Offers
-                                        </Link>
-                                    )}
-                                </div>
-
-                                {/* Footnote */}
-                                {currentOffer.footnote && currentOffer.footnote.trim() && (
-                                    <p
-                                        className={`font-normal leading-snug max-w-lg ${isHero ? "text-[9px] sm:text-[10px] mt-2.5 sm:mt-3.5" : "text-[10px] sm:text-xs mt-3.5 sm:mt-5"
-                                            } ${hasImage ? "text-slate-300/85" : "text-slate-400"}`}
-                                    >
-                                        {currentOffer.footnote}
-                                    </p>
-                                )}
-                            </div>
-                        )}
+                                    All Offers
+                                </Link>
+                            )}
+                        </div>
                     </motion.div>
                 </AnimatePresence>
 
-                {/* Pagination Dots (overlaid cleanly at the bottom) */}
+                {/* Pagination Dots */}
                 {count > 1 && (
-                    <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 flex items-center justify-center gap-2">
+                    <div className="absolute bottom-1 sm:bottom-2 md:bottom-2.5 left-1/2 -translate-x-1/2 z-20 flex items-center justify-center gap-1 sm:gap-2">
                         {offers.map((offer, idx) => (
                             <button
                                 key={offer.id || idx}
@@ -233,19 +156,25 @@ export default function OfferBannerSlider({
                                 onClick={() => goToSlide(idx)}
                                 aria-label={`Go to offer ${idx + 1}`}
                                 aria-current={idx === safeIndex ? "true" : "false"}
-                                className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${idx === safeIndex
+                                className={`h-1 sm:h-1.5 rounded-full transition-all duration-300 cursor-pointer ${idx === safeIndex
                                     ? hasImage
-                                        ? "w-6 bg-white"
-                                        : "w-6 bg-slate-900"
+                                        ? "w-3.5 sm:w-5 md:w-6 bg-white"
+                                        : "w-3.5 sm:w-5 md:w-6 bg-slate-900"
                                     : hasImage
-                                        ? "w-1.5 bg-white/40 hover:bg-white/75"
-                                        : "w-1.5 bg-slate-300 hover:bg-slate-400"
+                                        ? "w-1 sm:w-1.5 bg-white/45 hover:bg-white/80"
+                                        : "w-1 sm:w-1.5 bg-slate-300 hover:bg-slate-400"
                                     }`}
                             />
                         ))}
                     </div>
                 )}
             </div>
+
+            {/* Selected Offer Claim Popup */}
+            <OfferClaimModal
+                offer={selectedOffer}
+                onClose={() => setSelectedOffer(null)}
+            />
         </div>
     )
 }
