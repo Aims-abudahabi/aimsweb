@@ -160,7 +160,7 @@ export default function OfferClaimModal({ offer, onClose }: OfferClaimModalProps
                                             Request Received!
                                         </h3>
                                         <p className="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-sm mx-auto">
-                                            Thank you! Our Abu Dhabi admissions team has received your request for{" "}
+                                            Thank you! Our AIMS admissions team has received your request for{" "}
                                             <strong className="text-white">{offerLabel}</strong> and will contact you shortly.
                                         </p>
                                     </div>
@@ -293,7 +293,7 @@ export default function OfferClaimModal({ offer, onClose }: OfferClaimModalProps
                                             )}
                                         </button>
                                         <p className="text-[11px] text-slate-400">
-                                            Our admissions counselor in Abu Dhabi will reach out shortly.
+                                            Our admissions counselor in AIMS will reach out shortly.
                                         </p>
                                     </div>
                                 </form>
