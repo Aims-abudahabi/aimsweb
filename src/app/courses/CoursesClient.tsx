@@ -383,7 +383,7 @@ function CoursesContent() {
                         <button
                             type="button"
                             onClick={() => setSearchTerm("")}
-                            className="inline-flex items-center justify-center rounded-full bg-[#794d00] hover:bg-[#1e2a3b] text-white px-6 sm:px-7 py-3 sm:py-3.5 font-bold text-xs uppercase tracking-widest transition-all cursor-pointer"
+                            className="inline-flex items-center justify-center rounded-full bg-[#794d00] hover:bg-[#0f172a] text-white px-6 sm:px-7 py-3 sm:py-3.5 font-bold text-xs uppercase tracking-widest transition-all cursor-pointer"
                         >
                             View All Programs
                         </button>

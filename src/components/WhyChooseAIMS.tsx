@@ -78,14 +78,17 @@ export default function WhyChooseAIMS() {
                                 key={feature.title}
                                 className={`relative overflow-hidden rounded-[18px] sm:rounded-[26px] p-4 sm:p-7 flex flex-col justify-between gap-3.5 sm:gap-5 transition-all duration-300 ${
                                     isDark
-                                        ? "bg-[#1e2a3b] text-white border border-slate-700/80 shadow-[0_14px_38px_rgba(15,23,42,0.14)]"
+                                        ? "bg-[#0F172A] text-white border border-slate-800/50 shadow-[0_14px_38px_rgba(15,23,42,0.14)]"
                                         : i === 1
                                             ? "bg-[#fffbf5] border border-[#794d00]/15 hover:border-[#794d00]/35 hover:shadow-[0_14px_34px_rgba(121,77,0,0.08)]"
                                             : "bg-white border border-slate-200/80 shadow-[0_6px_24px_rgba(15,23,42,0.03)] hover:shadow-[0_14px_34px_rgba(15,23,42,0.08)] hover:border-[#794d00]/35"
                                 }`}
                             >
                                 {isDark && (
-                                    <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:26px_26px] pointer-events-none" />
+                                    <>
+                                        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[120px] pointer-events-none" />
+                                        <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-blue-500/5 rounded-full blur-[100px] pointer-events-none" />
+                                    </>
                                 )}
 
                                 <div className="relative z-10 flex items-center justify-between gap-3">

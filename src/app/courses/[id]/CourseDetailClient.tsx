@@ -397,7 +397,7 @@ export default function CourseDetail() {
                     </div>
                     <Link
                         href="/courses"
-                        className="inline-flex items-center justify-center rounded-full bg-[#794d00] hover:bg-[#1e2a3b] text-white px-7 py-3.5 font-bold text-xs uppercase tracking-widest transition-all"
+                        className="inline-flex items-center justify-center rounded-full bg-[#794d00] hover:bg-[#0f172a] text-white px-7 py-3.5 font-bold text-xs uppercase tracking-widest transition-all"
                     >
                         Back to All Courses
                     </Link>
@@ -492,7 +492,7 @@ export default function CourseDetail() {
                             <div className="hero-reveal flex flex-wrap items-center gap-2.5 sm:gap-3 pt-0.5 sm:pt-1">
                                 <a
                                     href="#curriculum"
-                                    className="inline-flex items-center justify-center bg-white text-[#1e2a3b] px-5 sm:px-8 py-3 sm:py-4 rounded-full font-black text-[11px] sm:text-[13px] tracking-widest uppercase transition-all hover:bg-[#fffbf5] hover:scale-[1.02] active:scale-[0.98] shadow-xl"
+                                    className="inline-flex items-center justify-center bg-white text-[#0f172a] px-5 sm:px-8 py-3 sm:py-4 rounded-full font-black text-[11px] sm:text-[13px] tracking-widest uppercase transition-all hover:bg-[#fffbf5] hover:scale-[1.02] active:scale-[0.98] shadow-xl"
                                 >
                                     Explore Syllabus
                                 </a>
@@ -559,8 +559,10 @@ export default function CourseDetail() {
 
                         {/* Visual Card */}
                         <div className="lg:col-span-6">
-                            <div className="relative rounded-[20px] sm:rounded-[28px] overflow-hidden bg-[#1e2a3b] shadow-xl border border-slate-200/60">
-                                <div className="relative w-full h-[175px] sm:h-[260px] overflow-hidden">
+                            <div className="relative rounded-[20px] sm:rounded-[28px] overflow-hidden bg-[#0F172A] shadow-xl border border-slate-800/50">
+                                <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[120px] pointer-events-none" />
+                                <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-blue-500/5 rounded-full blur-[100px] pointer-events-none" />
+                                <div className="relative z-10 w-full h-[175px] sm:h-[260px] overflow-hidden">
                                     <Image
                                         src={categoryImage}
                                         alt={course.title}
@@ -569,10 +571,10 @@ export default function CourseDetail() {
                                         sizes="(max-width: 1024px) 100vw, 50vw"
                                         className="object-cover object-center"
                                     />
-                                    <div className="absolute inset-0 bg-gradient-to-t from-[#1e2a3b] via-[#1e2a3b]/35 to-transparent" />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-[#0F172A] via-[#0F172A]/35 to-transparent" />
                                 </div>
 
-                                <div className="p-4 sm:p-8 space-y-1 sm:space-y-1.5">
+                                <div className="relative z-10 p-4 sm:p-8 space-y-1 sm:space-y-1.5">
                                     <p className="text-[9px] sm:text-[10px] font-black tracking-[0.2em] uppercase text-amber-300">
                                         {course.category}
                                     </p>
@@ -633,7 +635,7 @@ export default function CourseDetail() {
 
                             {course.courseIsFor && course.courseIsFor.length > 0 && (
                                 <div className="rounded-[18px] sm:rounded-[28px] border border-slate-200/80 bg-[#f5f5f7] p-4 sm:p-8 space-y-3 sm:space-y-4">
-                                    <span className="inline-block px-3 sm:px-3.5 py-0.5 sm:py-1 rounded-full bg-[#1e2a3b] text-white text-[9px] sm:text-[10px] font-extrabold uppercase tracking-wider">
+                                    <span className="inline-block px-3 sm:px-3.5 py-0.5 sm:py-1 rounded-full bg-[#0f172a] text-white text-[9px] sm:text-[10px] font-extrabold uppercase tracking-wider">
                                         Who Should Attend
                                     </span>
                                     <h3 className="text-lg sm:text-xl font-extrabold text-slate-950 tracking-tight">

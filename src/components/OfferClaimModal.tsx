@@ -120,12 +120,16 @@ export default function OfferClaimModal({ offer, onClose }: OfferClaimModalProps
                         exit={{ opacity: 0, scale: 0.96, y: 12 }}
                         transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
                         data-lenis-prevent
-                        className="relative w-full max-w-[480px] max-h-[92vh] overflow-y-auto rounded-[20px] sm:rounded-[28px] bg-[#0f172a] border border-white/15 shadow-[0_32px_90px_rgba(0,0,0,0.7)] text-white"
+                        className="relative w-full max-w-[480px] max-h-[92vh] overflow-x-hidden overflow-y-auto rounded-[20px] sm:rounded-[28px] bg-[#0F172A] border border-slate-800/50 shadow-[0_32px_90px_rgba(0,0,0,0.7)] text-white"
                     >
-                        {/* Top Accent Line */}
-                        <div className="h-1 w-full bg-gradient-to-r from-[#794d00] via-[#c8915a] to-blue-500" />
+                        {/* Footer-Matched Ambient Blue Shading */}
+                        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[120px] pointer-events-none" />
+                        <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-blue-500/5 rounded-full blur-[100px] pointer-events-none" />
 
-                        <div className="p-5 sm:p-8 space-y-5 sm:space-y-6">
+                        {/* Top Accent Line */}
+                        <div className="relative z-10 h-1 w-full bg-gradient-to-r from-[#794d00] via-[#c8915a] to-blue-500" />
+
+                        <div className="relative z-10 p-5 sm:p-8 space-y-5 sm:space-y-6">
                             {/* Header */}
                             <div className="flex items-start justify-between gap-4">
                                 <div className="space-y-1">

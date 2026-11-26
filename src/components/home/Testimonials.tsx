@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react"
 import gsap from "gsap"
 import { useGSAP } from "@gsap/react"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
-import { Star, BadgeCheck, MessageCircle, ArrowRight } from "lucide-react"
+import { Star, BadgeCheck, ArrowRight } from "lucide-react"
 import { getGoogleRating } from "@/data/googleReviews"
 
 interface ReviewData {

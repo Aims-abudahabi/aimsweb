@@ -54,7 +54,7 @@ export default function Navbar() {
                 }`}
         >
             {/* Pill Navbar Container */}
-            <nav className="w-full max-w-[1300px] mx-3 sm:mx-8 md:mx-10 lg:mx-16 xl:mx-auto bg-[#1e2a3b] rounded-full px-4 sm:px-8 py-2.5 sm:py-4 flex items-center justify-between shadow-[0_4px_30px_rgba(0,0,0,0.25)]">
+            <nav className="w-full max-w-[1300px] mx-3 sm:mx-8 md:mx-10 lg:mx-16 xl:mx-auto bg-[#0F172A] border border-slate-800/50 rounded-full px-4 sm:px-8 py-2.5 sm:py-4 flex items-center justify-between shadow-[0_4px_30px_rgba(0,0,0,0.25)]">
 
                 {/* Logo */}
                 <Link href="/" className="flex items-center shrink-0">
@@ -115,7 +115,7 @@ export default function Navbar() {
 
                 {/* Language Toggle & Enquire Now */}
                 <div className="hidden md:flex items-center gap-4">
-                    <div className="flex bg-[#2d3f55]/50 border border-white/10 rounded-full p-1 backdrop-blur-md relative z-50">
+                    <div className="flex bg-slate-800/50 border border-slate-700/80 rounded-full p-1 backdrop-blur-md relative z-50">
                         <button
                             onClick={() => handleLanguageChange('EN')}
                             className={`px-3 py-1.5 rounded-full text-[11px] font-black pointer-events-auto tracking-widest transition-colors ${currentLang === 'EN' ? 'bg-blue-500 text-white' : 'text-slate-300 hover:text-white'}`}
@@ -132,7 +132,7 @@ export default function Navbar() {
 
                     <Link
                         href="/contact"
-                        className="inline-flex items-center justify-center px-7 py-3 rounded-full font-bold text-white text-[13px] tracking-widest bg-[#2d3f55] hover:bg-[#374e6a] border border-white/10 transition-all duration-300"
+                        className="inline-flex items-center justify-center px-7 py-3 rounded-full font-bold text-white text-[13px] tracking-widest bg-slate-800/70 hover:bg-slate-800 border border-slate-700 transition-all duration-300"
                     >
                         ENQUIRE NOW
                     </Link>
@@ -150,7 +150,7 @@ export default function Navbar() {
 
             {/* Mobile Menu Overlay */}
             <div
-                className={`fixed inset-0 bg-[#0f172a] z-[-1] pt-28 px-8 pb-8 flex flex-col transition-all duration-500 ease-in-out md:hidden overflow-y-auto ${isOpen ? "opacity-100 visible" : "opacity-0 invisible pointer-events-none"
+                className={`fixed inset-0 bg-[#0F172A] z-[-1] pt-28 px-8 pb-8 flex flex-col transition-all duration-500 ease-in-out md:hidden overflow-y-auto ${isOpen ? "opacity-100 visible" : "opacity-0 invisible pointer-events-none"
                     }`}
             >
                 <div className="flex flex-col gap-6 items-start mt-8 w-full max-w-full pb-20">

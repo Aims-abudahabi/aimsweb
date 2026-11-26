@@ -254,8 +254,10 @@ export default function BlogsClient() {
                     </div>
 
                     {/* Bottom CTA Banner */}
-                    <div className="mt-4 sm:mt-8 bg-[#1e2a3b] rounded-[20px] sm:rounded-[28px] p-5 sm:p-10 lg:p-12 text-white flex flex-col lg:flex-row items-start lg:items-center justify-between gap-5 sm:gap-6 shadow-xl">
-                        <div className="space-y-1.5 sm:space-y-2 max-w-2xl">
+                    <div className="relative overflow-hidden mt-4 sm:mt-8 bg-[#0F172A] border border-slate-800/50 rounded-[20px] sm:rounded-[28px] p-5 sm:p-10 lg:p-12 text-white flex flex-col lg:flex-row items-start lg:items-center justify-between gap-5 sm:gap-6 shadow-xl">
+                        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[120px] pointer-events-none" />
+                        <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-blue-500/5 rounded-full blur-[100px] pointer-events-none" />
+                        <div className="relative z-10 space-y-1.5 sm:space-y-2 max-w-2xl">
                             <span className="text-[10px] sm:text-[11px] font-extrabold tracking-[0.2em] uppercase text-amber-300 block">
                                 Turn Insights Into Skills
                             </span>
@@ -268,7 +270,7 @@ export default function BlogsClient() {
                         </div>
                         <Link
                             href="/courses"
-                            className="w-full sm:w-auto inline-flex items-center justify-center rounded-full bg-white text-slate-950 hover:bg-[#fffbf5] px-6 sm:px-7 py-3 sm:py-3.5 text-xs font-extrabold uppercase tracking-[0.14em] shrink-0 transition-all active:scale-95"
+                            className="relative z-10 w-full sm:w-auto inline-flex items-center justify-center rounded-full bg-white text-slate-950 hover:bg-[#fffbf5] px-6 sm:px-7 py-3 sm:py-3.5 text-xs font-extrabold uppercase tracking-[0.14em] shrink-0 transition-all active:scale-95"
                         >
                             Explore Courses
                         </Link>

@@ -239,9 +239,10 @@ export default function BlogDetailClient() {
                             </div>
 
                             {/* CTA Card */}
-                            <div className="bg-[#1e2a3b] p-4 sm:p-7 rounded-[18px] sm:rounded-[24px] text-white space-y-4 sm:space-y-5 shadow-xl relative overflow-hidden">
-                                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#794d00] to-amber-500" />
-                                <div className="space-y-1.5 sm:space-y-2">
+                            <div className="bg-[#0F172A] border border-slate-800/50 p-4 sm:p-7 rounded-[18px] sm:rounded-[24px] text-white space-y-4 sm:space-y-5 shadow-xl relative overflow-hidden">
+                                <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[120px] pointer-events-none" />
+                                <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-blue-500/5 rounded-full blur-[100px] pointer-events-none" />
+                                <div className="relative z-10 space-y-1.5 sm:space-y-2">
                                     <span className="text-[9px] sm:text-[10px] font-extrabold uppercase tracking-[0.2em] text-amber-300 block">
                                         AIMS Abu Dhabi
                                     </span>
@@ -254,7 +255,7 @@ export default function BlogDetailClient() {
                                 </div>
                                 <Link
                                     href="/courses"
-                                    className="inline-flex items-center justify-center w-full rounded-full bg-white text-slate-950 hover:bg-[#fffbf5] px-5 sm:px-6 py-2.5 sm:py-3 text-[11px] sm:text-xs font-extrabold uppercase tracking-[0.14em] transition-all active:scale-95"
+                                    className="relative z-10 inline-flex items-center justify-center w-full rounded-full bg-white text-slate-950 hover:bg-[#fffbf5] px-5 sm:px-6 py-2.5 sm:py-3 text-[11px] sm:text-xs font-extrabold uppercase tracking-[0.14em] transition-all active:scale-95"
                                 >
                                     Browse Courses
                                 </Link>

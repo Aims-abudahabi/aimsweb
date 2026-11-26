@@ -46,10 +46,10 @@ export default function Stats() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true, amount: 0.2 }}
                         transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-                        className="md:col-span-2 lg:col-span-5 relative overflow-hidden rounded-[20px] sm:rounded-[28px] bg-[#1e2a3b] text-white p-4 sm:p-8 lg:p-9 flex flex-col justify-between gap-4 sm:gap-7 shadow-[0_14px_40px_rgba(15,23,42,0.14)]"
+                        className="md:col-span-2 lg:col-span-5 relative overflow-hidden rounded-[20px] sm:rounded-[28px] bg-[#0F172A] border border-slate-800/50 text-white p-4 sm:p-8 lg:p-9 flex flex-col justify-between gap-4 sm:gap-7 shadow-[0_14px_40px_rgba(15,23,42,0.14)]"
                     >
-                        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:26px_26px] pointer-events-none" />
-                        <div className="absolute -top-20 -right-20 w-60 h-60 rounded-full bg-[#794d00]/25 blur-[80px] pointer-events-none" />
+                        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] rounded-full bg-blue-600/10 blur-[120px] pointer-events-none" />
+                        <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] rounded-full bg-blue-500/5 blur-[100px] pointer-events-none" />
 
                         <div className="relative z-10 flex items-center justify-between gap-3">
                             <span className="text-[11px] sm:text-xs font-extrabold tracking-[0.2em] uppercase text-slate-400">

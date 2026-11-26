@@ -108,11 +108,17 @@ export default function Stats() {
                                 transition={{ duration: 0.5, delay: index * 0.06, ease: [0.22, 1, 0.36, 1] }}
                                 className={`relative overflow-hidden rounded-[18px] sm:rounded-[26px] p-3.5 sm:p-7 flex flex-col justify-between gap-3 sm:gap-6 transition-all duration-300 ${
                                     isDark
-                                        ? "bg-[#1e2a3b] text-white border border-slate-700/80 shadow-[0_14px_38px_rgba(15,23,42,0.14)]"
+                                        ? "bg-[#0F172A] text-white border border-slate-800/50 shadow-[0_14px_38px_rgba(15,23,42,0.14)]"
                                         : "bg-white border border-slate-200/80 shadow-[0_6px_24px_rgba(15,23,42,0.03)] hover:shadow-[0_14px_34px_rgba(15,23,42,0.08)] hover:border-[#794d00]/35"
                                 }`}
                             >
-                                <div className="flex items-center justify-between gap-1.5">
+                                {isDark && (
+                                    <>
+                                        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[120px] pointer-events-none" />
+                                        <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-blue-500/5 rounded-full blur-[100px] pointer-events-none" />
+                                    </>
+                                )}
+                                <div className="relative z-10 flex items-center justify-between gap-1.5">
                                     <span className="text-[10px] sm:text-xs font-extrabold tracking-[0.18em] text-slate-400">
                                         0{index + 1}
                                     </span>
@@ -127,7 +133,7 @@ export default function Stats() {
                                     </span>
                                 </div>
 
-                                <div className="space-y-1 sm:space-y-2">
+                                <div className="relative z-10 space-y-1 sm:space-y-2">
                                     <div className="flex items-baseline gap-0.5 tabular-nums">
                                         <span
                                             className={`text-2xl sm:text-4xl font-black tracking-tight leading-none ${

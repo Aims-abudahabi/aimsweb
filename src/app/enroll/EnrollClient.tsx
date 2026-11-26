@@ -5,7 +5,7 @@ import gsap from "gsap"
 import { useGSAP } from "@gsap/react"
 import Image from "next/image"
 import Link from "next/link"
-import { ArrowRight, AlertCircle, BookOpen, GraduationCap } from "lucide-react"
+import { ArrowRight, AlertCircle } from "lucide-react"
 import FAQ from "@/components/FAQ"
 import { coursesData } from "@/data/courses"
 import _ from "lodash"
@@ -325,8 +325,9 @@ export default function EnrollClient() {
                         </div>
 
                         {/* Card 03 — Your Dream. Our Mission. */}
-                        <div className="md:col-span-2 lg:col-span-3 relative overflow-hidden rounded-[18px] sm:rounded-[28px] bg-[#1e2a3b] text-white p-4 sm:p-8 flex flex-col justify-between gap-4 sm:gap-6 shadow-[0_14px_40px_rgba(15,23,42,0.14)]">
-                            <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:26px_26px] pointer-events-none" />
+                        <div className="md:col-span-2 lg:col-span-3 relative overflow-hidden rounded-[18px] sm:rounded-[28px] bg-[#0F172A] border border-slate-800/50 text-white p-4 sm:p-8 flex flex-col justify-between gap-4 sm:gap-6 shadow-[0_14px_40px_rgba(15,23,42,0.14)]">
+                            <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[120px] pointer-events-none" />
+                            <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-blue-500/5 rounded-full blur-[100px] pointer-events-none" />
                             <div className="relative z-10 flex items-center justify-between">
                                 <span className="text-[11px] sm:text-xs font-extrabold tracking-[0.18em] uppercase text-slate-400">
                                     03
@@ -368,7 +369,7 @@ export default function EnrollClient() {
                         </div>
 
                         <div className="lg:col-span-7 rounded-[18px] sm:rounded-[28px] bg-[#f5f5f7] border border-slate-200/80 p-5 sm:p-10 lg:p-12 relative overflow-hidden">
-                            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#794d00] via-amber-600 to-[#1e2a3b]" />
+                            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#794d00] via-amber-600 to-[#0f172a]" />
 
                             <div className="space-y-4 sm:space-y-8">
                                 <p className="text-base sm:text-2xl lg:text-[26px] text-slate-900 font-bold leading-[1.45] tracking-tight">

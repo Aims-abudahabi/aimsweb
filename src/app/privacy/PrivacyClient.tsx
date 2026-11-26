@@ -126,15 +126,17 @@ export default function PrivacyClient() {
 
                     {/* Contact block */}
                     <div className="max-w-[860px] mx-auto mt-10">
-                        <div className="bg-[#0f172a] rounded-[20px] p-8 space-y-4">
-                            <div className="flex items-center gap-3">
+                        <div className="relative overflow-hidden bg-[#0F172A] border border-slate-800/50 rounded-[20px] p-8 space-y-4">
+                            <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[120px] pointer-events-none" />
+                            <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-blue-500/5 rounded-full blur-[100px] pointer-events-none" />
+                            <div className="relative z-10 flex items-center gap-3">
                                 <Mail size={20} className="text-blue-400" />
                                 <h3 className="text-white font-bold text-lg">Contact Our Data Protection Officer</h3>
                             </div>
-                            <p className="text-slate-400 font-medium text-[14px] leading-relaxed">
+                            <p className="relative z-10 text-slate-400 font-medium text-[14px] leading-relaxed">
                                 If you have any questions or concerns about this Privacy Policy, please reach out:
                             </p>
-                            <div className="flex flex-wrap gap-x-8 gap-y-2 text-[13px] text-slate-300 font-medium pt-1">
+                            <div className="relative z-10 flex flex-wrap gap-x-8 gap-y-2 text-[13px] text-slate-300 font-medium pt-1">
                                 <a href="mailto:contactus@edu-aims.com" className="flex items-center gap-2 text-blue-400 hover:text-blue-300 transition-colors">
                                     <Mail size={13} /> contactus@edu-aims.com
                                 </a>

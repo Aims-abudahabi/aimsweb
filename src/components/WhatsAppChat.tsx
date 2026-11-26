@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { MessageCircle, X, Send } from "lucide-react"
+import { X, Send } from "lucide-react"
 
 function WhatsAppIcon({ className = "w-7 h-7" }: { className?: string }) {
     return (
@@ -49,8 +49,10 @@ export default function WhatsAppChat() {
                 {/* Header */}
                 <div className="bg-[#075e54] p-6 text-white relative">
                     <button
+                        type="button"
+                        aria-label="Close WhatsApp chat"
                         onClick={() => setIsOpen(false)}
-                        className="absolute top-4 right-4 text-white/70 hover:text-white transition-colors"
+                        className="absolute top-4 right-4 text-white/70 hover:text-white transition-colors cursor-pointer"
                     >
                         <X size={20} />
                     </button>
@@ -113,6 +115,8 @@ export default function WhatsAppChat() {
                 <div className="flex items-center gap-3">
 
                     <button
+                        type="button"
+                        aria-label={isOpen ? "Close WhatsApp widget" : "Open WhatsApp chat"}
                         onClick={() => {
                             setIsOpen(!isOpen)
                             setShowTooltip(false)

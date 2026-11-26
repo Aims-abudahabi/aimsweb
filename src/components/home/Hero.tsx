@@ -1,7 +1,6 @@
 "use client"
 
 import Link from "next/link"
-import Image from "next/image"
 import { Star, ArrowUpRight } from "lucide-react"
 import { useState, useEffect } from "react"
 import { getGoogleRating } from "@/data/googleReviews"
@@ -64,7 +63,7 @@ export default function Hero() {
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mt-6 sm:mt-8 w-full sm:w-auto">
                     <Link
                         href="/courses"
-                        className="w-full sm:w-auto bg-[#794d00] text-white px-7 sm:px-8 py-3.5 sm:py-4 rounded-2xl font-bold text-[15px] sm:text-[16px] transition-all hover:bg-[#1e2a3b] hover:text-white hover:scale-[1.02] active:scale-[0.98] shadow-xl shadow-[#794d00]/25 flex items-center justify-center gap-2 border-t border-white/20"
+                        className="w-full sm:w-auto bg-[#794d00] text-white px-7 sm:px-8 py-3.5 sm:py-4 rounded-2xl font-bold text-[15px] sm:text-[16px] transition-all hover:bg-[#0f172a] hover:text-white hover:scale-[1.02] active:scale-[0.98] shadow-xl shadow-[#794d00]/25 flex items-center justify-center gap-2 border-t border-white/20"
                     >
                         Explore Courses
                         <ArrowUpRight size={18} strokeWidth={2.5} />

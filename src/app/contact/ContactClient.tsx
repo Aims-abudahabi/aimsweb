@@ -1,10 +1,10 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { useRef, useState } from "react"
 import gsap from "gsap"
 import { useGSAP } from "@gsap/react"
 import Image from "next/image"
-import { Send, MapPin, Phone, Mail, ArrowRight, AlertCircle } from "lucide-react"
+import { AlertCircle } from "lucide-react"
 import FAQ from "@/components/FAQ"
 import GoogleMap from "@/components/GoogleMap"
 import { useForm } from "react-hook-form"

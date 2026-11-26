@@ -67,8 +67,8 @@ const CARD_THEMES: CardTheme[] = [
         imageFrame: "border-white shadow-md",
     },
     {
-        surface: "bg-[#1e2a3b]",
-        border: "border-slate-700/80 hover:border-amber-400/40",
+        surface: "bg-[#0F172A]",
+        border: "border-slate-800/50 hover:border-amber-400/40",
         indexColor: "text-amber-300",
         titleColor: "text-white",
         descColor: "text-slate-300",
@@ -111,8 +111,8 @@ const CARD_THEMES: CardTheme[] = [
         imageFrame: "border-white shadow-md",
     },
     {
-        surface: "bg-[#1e2a3b]",
-        border: "border-slate-700/80 hover:border-amber-400/40",
+        surface: "bg-[#0F172A]",
+        border: "border-slate-800/50 hover:border-amber-400/40",
         indexColor: "text-amber-300",
         titleColor: "text-white",
         descColor: "text-slate-300",
@@ -137,6 +137,7 @@ function CourseStackCard({
     smoothProgress,
 }: CourseStackCardProps) {
     const theme = CARD_THEMES[index % CARD_THEMES.length];
+    const isDarkCard = theme.surface.includes("#0F172A");
 
     // Derive all transforms from the non-sticky parent stackRef progress (avoids sticky target jitter)
     const step = 1 / total;
@@ -182,6 +183,14 @@ function CourseStackCard({
                     style={{ opacity: depthShade }}
                     className="absolute inset-0 bg-slate-950 pointer-events-none z-10"
                 />
+
+                {/* Footer-Matched Ambient Blue Shading for Dark Cards */}
+                {isDarkCard && (
+                    <>
+                        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[120px] pointer-events-none" />
+                        <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-blue-500/5 rounded-full blur-[100px] pointer-events-none" />
+                    </>
+                )}
 
                 <div className="grid grid-cols-1 md:grid-cols-12 items-stretch gap-3 sm:gap-6 md:gap-7 p-4 sm:p-7 lg:p-8 relative z-0">
                     {/* Image — compact on top for mobile, right side for md+ */}

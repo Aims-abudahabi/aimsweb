@@ -71,10 +71,10 @@ export default function WhyChooseUs() {
                 {/* ── 12-Column Editorial Bento Grid ── */}
                 <div className="wcu-bento grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-3 sm:gap-4 md:gap-5">
                     {/* 01 — ACTVET Licenced (Hero Spotlight Card) */}
-                    <div className="wcu-card md:col-span-2 lg:col-span-7 relative overflow-hidden rounded-[18px] sm:rounded-[28px] bg-[#1e2a3b] text-white p-4 sm:p-7 lg:p-9 flex flex-col justify-between gap-4 sm:gap-8 shadow-[0_14px_40px_rgba(15,23,42,0.14)] group">
-                        {/* Subtle Architectural Grid & Glow */}
-                        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:28px_28px] pointer-events-none" />
-                        <div className="absolute -top-24 -right-24 w-72 h-72 rounded-full bg-[#794d00]/25 blur-[90px] pointer-events-none" />
+                    <div className="wcu-card md:col-span-2 lg:col-span-7 relative overflow-hidden rounded-[18px] sm:rounded-[28px] bg-[#0F172A] border border-slate-800/50 text-white p-4 sm:p-7 lg:p-9 flex flex-col justify-between gap-4 sm:gap-8 shadow-[0_14px_40px_rgba(15,23,42,0.14)] group">
+                        {/* Footer Background Shading */}
+                        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] rounded-full bg-blue-600/10 blur-[120px] pointer-events-none" />
+                        <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] rounded-full bg-blue-500/5 blur-[100px] pointer-events-none" />
 
                         <div className="relative z-10 flex items-center justify-end">
                             <span className="px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full bg-white/10 border border-white/15 text-[10px] sm:text-[11px] font-bold tracking-wider uppercase text-amber-200">

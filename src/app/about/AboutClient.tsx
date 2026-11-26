@@ -90,7 +90,7 @@ export default function AboutClient() {
                         <div className="reveal-item flex flex-wrap items-center justify-center gap-2.5 sm:gap-3 pt-1">
                             <Link
                                 href="/courses"
-                                className="inline-flex items-center justify-center bg-white text-[#1e2a3b] px-5 sm:px-8 py-3 sm:py-4 rounded-full font-black text-[11px] sm:text-[13px] tracking-widest uppercase transition-all hover:bg-[#fffbf5] hover:scale-[1.02] active:scale-[0.98] shadow-xl"
+                                className="inline-flex items-center justify-center bg-white text-[#0f172a] px-5 sm:px-8 py-3 sm:py-4 rounded-full font-black text-[11px] sm:text-[13px] tracking-widest uppercase transition-all hover:bg-[#fffbf5] hover:scale-[1.02] active:scale-[0.98] shadow-xl"
                             >
                                 Explore Courses
                             </Link>
@@ -110,10 +110,10 @@ export default function AboutClient() {
             {/* Redesigned Company Profile Download Section (Zero Icons) */}
             <section className="py-10 sm:py-20 bg-white relative overflow-hidden font-figtree border-t border-slate-100">
                 <div className="container-custom mx-auto px-4 sm:px-6 relative z-10">
-                    <div className="rounded-[20px] sm:rounded-[28px] bg-[#1e2a3b] text-white p-5 sm:p-10 lg:p-14 shadow-[0_18px_48px_rgba(15,23,42,0.16)] relative overflow-hidden">
-                        {/* Subtle Architectural Grid & Glow */}
-                        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:28px_28px] pointer-events-none" />
-                        <div className="absolute -top-24 -right-24 w-72 h-72 rounded-full bg-[#794d00]/25 blur-[90px] pointer-events-none" />
+                    <div className="rounded-[20px] sm:rounded-[28px] bg-[#0F172A] border border-slate-800/50 text-white p-5 sm:p-10 lg:p-14 shadow-[0_18px_48px_rgba(15,23,42,0.16)] relative overflow-hidden">
+                        {/* Footer-Matched Ambient Blue Shading */}
+                        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[120px] pointer-events-none" />
+                        <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-blue-500/5 rounded-full blur-[100px] pointer-events-none" />
 
                         <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 items-center gap-6 sm:gap-8 lg:gap-12">
                             {/* Left: Corporate Brochure Copy & Actions */}

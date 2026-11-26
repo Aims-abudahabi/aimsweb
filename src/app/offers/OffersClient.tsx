@@ -53,7 +53,7 @@ export default function OffersClient() {
                         <div className="flex flex-wrap items-center justify-center gap-2.5 sm:gap-3 pt-1">
                             <Link
                                 href="/courses"
-                                className="inline-flex items-center justify-center bg-white text-[#1e2a3b] px-5 sm:px-8 py-3 sm:py-4 rounded-full font-black text-[11px] sm:text-[13px] tracking-widest uppercase transition-all hover:bg-[#fffbf5] hover:scale-[1.02] active:scale-[0.98] shadow-xl"
+                                className="inline-flex items-center justify-center bg-white text-[#0f172a] px-5 sm:px-8 py-3 sm:py-4 rounded-full font-black text-[11px] sm:text-[13px] tracking-widest uppercase transition-all hover:bg-[#fffbf5] hover:scale-[1.02] active:scale-[0.98] shadow-xl"
                             >
                                 Explore Courses
                             </Link>
@@ -205,7 +205,7 @@ export default function OffersClient() {
                             <div className="flex flex-col sm:flex-row items-center justify-center gap-2.5 sm:gap-3 mt-6 sm:mt-8">
                                 <Link
                                     href="/courses"
-                                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full bg-[#794d00] hover:bg-[#1e2a3b] text-white px-6 sm:px-7 py-3 sm:py-3.5 text-xs sm:text-sm font-bold transition-all"
+                                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full bg-[#794d00] hover:bg-[#0f172a] text-white px-6 sm:px-7 py-3 sm:py-3.5 text-xs sm:text-sm font-bold transition-all"
                                 >
                                     Explore Courses
                                     <ArrowUpRight className="w-4 h-4" />
@@ -221,8 +221,10 @@ export default function OffersClient() {
                     )}
 
                     {/* Bottom Help / Custom Corporate Package Banner */}
-                    <div className="mt-10 sm:mt-16 bg-[#1e2a3b] rounded-[20px] sm:rounded-[28px] p-5 sm:p-12 text-white flex flex-col lg:flex-row items-start lg:items-center justify-between gap-5 sm:gap-6 shadow-xl">
-                        <div className="space-y-1.5 sm:space-y-2 max-w-2xl">
+                    <div className="relative overflow-hidden mt-10 sm:mt-16 bg-[#0F172A] border border-slate-800/50 rounded-[20px] sm:rounded-[28px] p-5 sm:p-12 text-white flex flex-col lg:flex-row items-start lg:items-center justify-between gap-5 sm:gap-6 shadow-xl">
+                        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[120px] pointer-events-none" />
+                        <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-blue-500/5 rounded-full blur-[100px] pointer-events-none" />
+                        <div className="relative z-10 space-y-1.5 sm:space-y-2 max-w-2xl">
                             <span className="text-[10px] sm:text-xs font-extrabold tracking-[0.18em] uppercase text-blue-400">
                                 Group & Corporate Training
                             </span>
@@ -235,7 +237,7 @@ export default function OffersClient() {
                         </div>
                         <Link
                             href="/contact"
-                            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full bg-white text-slate-950 hover:bg-[#fffbf5] px-6 sm:px-7 py-3 sm:py-3.5 text-xs sm:text-sm font-bold shrink-0 transition-all hover:scale-[1.02] active:scale-95"
+                            className="relative z-10 w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full bg-white text-slate-950 hover:bg-[#fffbf5] px-6 sm:px-7 py-3 sm:py-3.5 text-xs sm:text-sm font-bold shrink-0 transition-all hover:scale-[1.02] active:scale-95"
                         >
                             Request Custom Quote
                             <ArrowUpRight className="w-4 h-4" />

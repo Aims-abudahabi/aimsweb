@@ -32,11 +32,10 @@ export default function CTA() {
             className="py-8 sm:py-12 md:py-16 bg-[#fffbf5] relative font-figtree border-t border-slate-100/60"
         >
             <div className="container-custom mx-auto px-4 sm:px-6">
-                <div className="cta-banner relative overflow-hidden rounded-[20px] sm:rounded-[28px] bg-[#1e2a3b] text-white p-5 sm:p-9 md:p-11 lg:p-14 shadow-[0_18px_48px_rgba(15,23,42,0.16)] flex flex-col lg:flex-row items-start lg:items-center justify-between gap-5 sm:gap-8">
-                    {/* Subtle Architectural Grid & Warm Accent Glow */}
-                    <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:28px_28px] pointer-events-none" />
-                    <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#794d00] via-amber-500 to-transparent pointer-events-none" />
-                    <div className="absolute -bottom-24 -right-20 w-72 h-72 rounded-full bg-[#794d00]/25 blur-[90px] pointer-events-none" />
+                <div className="cta-banner relative overflow-hidden rounded-[20px] sm:rounded-[28px] bg-[#0F172A] border border-slate-800/50 text-white p-5 sm:p-9 md:p-11 lg:p-14 shadow-[0_18px_48px_rgba(15,23,42,0.16)] flex flex-col lg:flex-row items-start lg:items-center justify-between gap-5 sm:gap-8">
+                    {/* Footer Background Shading */}
+                    <div className="absolute top-0 left-1/4 w-[500px] h-[500px] rounded-full bg-blue-600/10 blur-[120px] pointer-events-none" />
+                    <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] rounded-full bg-blue-500/5 blur-[100px] pointer-events-none" />
 
                     {/* Content Left */}
                     <div className="relative z-10 max-w-2xl space-y-2.5 sm:space-y-3.5">

@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from "react"
 import gsap from "gsap"
 import { useGSAP } from "@gsap/react"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
-import { ArrowRight, MapPin, Phone, Mail, Download, Loader2 } from "lucide-react"
+import { MapPin, Phone, Mail, Download, Loader2 } from "lucide-react"
 import { Facebook, Twitter, Linkedin, Instagram, Youtube } from "@/components/BrandIcons"
 
 export default function Footer() {
@@ -64,11 +64,11 @@ export default function Footer() {
     ]
 
     const socialLinks = [
-        { icon: <Facebook size={20} />, path: "https://www.facebook.com/share/18BgQojbuX/" },
-        { icon: <Twitter size={20} />, path: "https://x.com/AimsTrainingCen" },
-        { icon: <Linkedin size={20} />, path: "https://www.linkedin.com/in/aims-training-center/" },
-        { icon: <Instagram size={20} />, path: "https://www.instagram.com/aims.training.center?igsh=MWV3eDdkMzd4NGh0bw==" },
-        { icon: <Youtube size={20} />, path: "https://www.youtube.com/channel/UCujIydyHEVpkjxQQkXrMWDQ" },
+        { label: "Facebook", icon: <Facebook size={20} />, path: "https://www.facebook.com/share/18BgQojbuX/" },
+        { label: "X (Twitter)", icon: <Twitter size={20} />, path: "https://x.com/AimsTrainingCen" },
+        { label: "LinkedIn", icon: <Linkedin size={20} />, path: "https://www.linkedin.com/in/aims-training-center/" },
+        { label: "Instagram", icon: <Instagram size={20} />, path: "https://www.instagram.com/aims.training.center?igsh=MWV3eDdkMzd4NGh0bw==" },
+        { label: "YouTube", icon: <Youtube size={20} />, path: "https://www.youtube.com/channel/UCujIydyHEVpkjxQQkXrMWDQ" },
     ]
 
     // Fetch user location based on IP
@@ -152,10 +152,11 @@ export default function Footer() {
                         <div className="flex flex-wrap gap-3 sm:gap-4">
                             {socialLinks.map((social, i) => (
                                 <Link
-                                    key={i}
+                                    key={social.label}
                                     href={social.path}
                                     target="_blank"
                                     rel="noopener noreferrer"
+                                    aria-label={`AIMS Training Center on ${social.label}`}
                                     className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-slate-800/50 border border-slate-700 flex items-center justify-center text-slate-400 hover:bg-blue-600 hover:text-white hover:border-blue-600 transition-all duration-300"
                                 >
                                     {social.icon}
